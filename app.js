@@ -1,4 +1,4 @@
-const API_URL = "https://cohi-p46b.vercel.app/api/chat";
+const VERCEL_API_URL = "https://cohi-p46b.vercel.app/api/chat";
 
 async function askCouncil() {
     const userInput = document.getElementById("user-input").value;
