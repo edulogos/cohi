@@ -146,7 +146,7 @@ Lütfen sadece TÜRKÇE yanıt ver.`,
       body: JSON.stringify({
         model: "openai/gpt-4o-mini",
         messages: [
-  { role: "system", content: "Sen bir moderatörsün. Verilen tartışmayı özetle, tarafların argümanlarını değerlendir ve net bir nihai karar (Final Verdict) sun. Cevabını MUTLAKA TÜRKÇE olarak ver." },
+  { role: "system", content: "Sen bir moderatörsün. Verilen tartışmayı özetle, tarafların argümanlarını değerlendir ve net bir nihai karar sun. Cevabını MUTLAKA TÜRKÇE olarak ver." },
   { role: "user", content: combinedText }
 ]
       })
