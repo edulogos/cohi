@@ -17,6 +17,7 @@ export default async function handler(req, res) {
 
   const { message, members } = req.body;
 
+
   // === COUNCIL MEMBERS ===
   const councilMembers = {
     socrates: {
@@ -25,7 +26,7 @@ export default async function handler(req, res) {
 - Kullanıcının düşünme biçimine meydan oku
 - Hemen doğrudan cevap verme, düşündürücü sorular sor.
 Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "openai/gpt-4o-mini"
+      model: "google/gemini-2.0-flash-exp:free" // Google'ın çok hızlı ücretsiz modeli
     },
     feynman: {
       prompt: `Sen Richard Feynman'sın.
@@ -33,7 +34,7 @@ Lütfen sadece TÜRKÇE yanıt ver.`,
 - Problemleri ilk prensiplerine (first principles) kadar indirge
 - Anlaşılır ve net örnekler kullan.
 Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "openai/gpt-4o-mini"
+      model: "meta-llama/llama-3.1-8b-instruct:free" // Meta'nın (Facebook) ücretsiz modeli
     },
     machiavelli: {
       prompt: `Sen Machiavelli'sin.
@@ -41,7 +42,7 @@ Lütfen sadece TÜRKÇE yanıt ver.`,
 - Pragmatik (faydacı) ve gerçekçi ol
 - Avantaj elde etme üzerine düşün.
 Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "meta-llama/llama-3.1-8b-instruct"
+      model: "mistralai/mistral-7b-instruct:free" // Mistral (Avrupa merkezli) ücretsiz modeli
     },
     torvalds: {
       prompt: `Sen Linus Torvalds'sın. 
@@ -49,7 +50,7 @@ Lütfen sadece TÜRKÇE yanıt ver.`,
 - Laf kalabalığını sevmez, "Konuşmak ucuzdur, bana çalışan çözümü göster" dersin.
 - Teorik mükemmellik yerine, hızlıca çalışan ve işi çözen yapıları savunursun.
 Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "openai/gpt-4o-mini" // Hızlı ve net cevaplar için
+      model: "qwen/qwen-2.5-7b-instruct:free" // Alibaba'nın başarılı ücretsiz modeli
     },
     aurelius: {
       prompt: `Sen Marcus Aurelius'sun. 
@@ -57,7 +58,7 @@ Lütfen sadece TÜRKÇE yanıt ver.`,
 - Olayları ahlaki bir netlikle ve duygulardan arınmış şekilde değerlendirirsin.
 - Sadece kontrol edebildiğin şeylere odaklanmayı, gerisini kabullenmeyi tavsiye edersin.
 Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "openai/gpt-4o-mini"
+      model: "google/gemini-2.0-flash-exp:free" 
     },
     suntzu: {
       prompt: `Sen Sun Tzu'sun. 
@@ -65,7 +66,7 @@ Lütfen sadece TÜRKÇE yanıt ver.`,
 - Çatışmaları girmeden kazanmayı, rekabeti ve "araziyi" doğru okumayı savunursun.
 - Kararları rakiplerin hamlelerini önceden tahmin ederek şekillendirirsin.
 Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "openai/gpt-4o-mini"
+      model: "meta-llama/llama-3.1-8b-instruct:free"
     },
     kahneman: {
       prompt: `Sen Daniel Kahneman'sın. 
@@ -73,7 +74,7 @@ Lütfen sadece TÜRKÇE yanıt ver.`,
 - İnsanların bilişsel önyargılarını (cognitive bias) ve mantıksal hatalarını ararsın.
 - "Kendi düşünce yapın, yaptığın ilk hatadır" prensibiyle analitik ve yavaş düşünmeyi önerirsin.
 Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "openai/gpt-4o-mini"
+      model: "mistralai/mistral-7b-instruct:free"
     }
   };
 
@@ -133,22 +134,22 @@ Lütfen sadece TÜRKÇE yanıt ver.`,
     // === FINAL VERDICT ===
     const combinedText = responses
       .map(r => `${r.member}: ${r.answer}`)
-      .join("\n");
+      .join("\n\n"); // Araya biraz daha boşluk koymak iyi olur
 
     const finalResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
         'HTTP-Referer': 'https://educaprof.github.io/cohi',
-        'X-Title': 'Yüksek Zeka Konseyi',
+        'X-Title': 'Council of High Intelligence',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: "openai/gpt-4o-mini",
+        model: "google/gemini-2.0-flash-exp:free", // BURASI GÜNCELLENDİ
         messages: [
-  { role: "system", content: "Sen bir moderatörsün. Verilen tartışmayı özetle, tarafların argümanlarını değerlendir ve net bir nihai karar sun. Cevabını MUTLAKA TÜRKÇE olarak ver." },
-  { role: "user", content: combinedText }
-]
+          { role: "system", content: "Sen bir moderatörsün. Verilen tartışmayı özetle, tarafların argümanlarını değerlendir ve net bir nihai karar (Final Verdict) sun. Cevabını MUTLAKA TÜRKÇE olarak ver." },
+          { role: "user", content: combinedText }
+        ]
       })
     });
 
