@@ -1,387 +1,421 @@
 :root {
-    --bg-dark: #0a0f1a;
-    --panel-bg: #141b2d;
-    --text-main: #e2e8f0;
-    --text-muted: #94a3b8;
-    --accent-glow: #38bdf8;
-    --accent-purple: #818cf8;
+  --bg-dark: #0a0f1a;
+  --panel-bg: #141b2d;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent-glow: #38bdf8;
+  --accent-purple: #818cf8;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    font-family: 'Inter', sans-serif;
-    background-image: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.1), transparent 50%);
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: "Inter", sans-serif;
+  background-image: radial-gradient(
+    circle at 50% 0%,
+    rgba(56, 189, 248, 0.1),
+    transparent 50%
+  );
 }
 
 .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
 header {
-    text-align: center;
-    margin-bottom: 3rem;
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
 header h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(to right, var(--accent-glow), var(--accent-purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(
+    to right,
+    var(--accent-glow),
+    var(--accent-purple)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .dashboard {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
 }
 
 @media (max-width: 768px) {
-    .dashboard {
-        grid-template-columns: 1fr;
-    }
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
 }
 
-.input-panel, .output-panel {
-    background-color: var(--panel-bg);
-    padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+.input-panel,
+.output-panel {
+  background-color: var(--panel-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .control-group {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
-
-select, textarea {
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-main);
-    padding: 1rem;
-    border-radius: 8px;
-    font-family: 'Inter', sans-serif;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
+select,
+textarea {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
-select:focus, textarea:focus {
-    outline: none;
-    border-color: var(--accent-glow);
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent-glow);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
 }
 
 button {
-    width: 100%;
-    background: linear-gradient(135deg, var(--accent-purple), var(--accent-glow));
-    color: white;
-    border: none;
-    padding: 1rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-glow));
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
 }
 
 .output-panel h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 1rem;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid rgba(74, 144, 226, 0.3);
+  font-family: "Space Grotesk", sans-serif;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(74, 144, 226, 0.3);
 }
-
-
 
 .placeholder-text {
-    color: var(--text-muted);
-    font-style: italic;
+  color: var(--text-muted);
+  font-style: italic;
 }
 
-.hidden { display: none !important; }
+.hidden {
+  display: none !important;
+}
 
 /* Basit bir yükleniyor animasyonu */
 #loading {
-    text-align: center;
-    color: var(--accent-glow);
-    padding: 2rem 0;
+  text-align: center;
+  color: var(--accent-glow);
+  padding: 2rem 0;
 }
 .spinner {
-    width: 40px; height: 40px;
-    border: 4px solid rgba(255,255,255,0.1);
-    border-top-color: var(--accent-glow);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 1rem auto;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--accent-glow);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem auto;
 }
 .checkbox-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .cb-container {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    user-select: none;
-    color: var(--text-main);
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  user-select: none;
+  color: var(--text-main);
 }
 
 .cb-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0; width: 0;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
 }
 
 .checkmark {
-    position: absolute;
-    top: 0; left: 0;
-    height: 20px; width: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--accent-glow);
-    border-radius: 4px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--accent-glow);
+  border-radius: 4px;
 }
 
 .cb-container:hover input ~ .checkmark {
-    background-color: rgba(56, 189, 248, 0.2);
+  background-color: rgba(56, 189, 248, 0.2);
 }
 
 .cb-container input:checked ~ .checkmark {
-    background-color: var(--accent-glow);
+  background-color: var(--accent-glow);
 }
 
 .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
+  content: "";
+  position: absolute;
+  display: none;
 }
 
 .cb-container input:checked ~ .checkmark:after {
-    display: block;
+  display: block;
 }
 
 .cb-container .checkmark:after {
-    left: 7px; top: 3px;
-    width: 5px; height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
 }
 
 .limit-warning {
-    background: rgba(255, 165, 0, 0.1);
-    border: 1px solid orange;
-    color: #ffcc00;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    line-height: 1.6;
-    animation: pulse 2s infinite;
+  background: rgba(255, 165, 0, 0.1);
+  border: 1px solid orange;
+  color: #ffcc00;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 1.6;
+  animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(255, 165, 0, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 165, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 165, 0, 0);
+  }
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .triads-container {
-    margin-bottom: 20px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .triads-container p {
-    font-size: 0.9rem;
-    color: #aaa;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .triad-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .triad-btn {
-    background: transparent;
-    border: 1px solid #4a90e2;
-    color: #4a90e2;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
+  background: transparent;
+  border: 1px solid #4a90e2;
+  color: #4a90e2;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
 }
 
 .triad-btn:hover {
-    background: #4a90e2;
-    color: white;
-    box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+  background: #4a90e2;
+  color: white;
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
 }
-
-
 
 /* 2. Her üye kartının kendi içindeki boşluklarını düzenliyoruz */
 .member-response {
-    margin-top: 0 !important;    /* Kartın üst dış boşluğunu siler */
-    padding: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Ayırıcı ince bir çizgi */
-    background: rgba(255, 255, 255, 0.02);
+  margin-top: 0 !important; /* Kartın üst dış boşluğunu siler */
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Ayırıcı ince bir çizgi */
+  background: rgba(255, 255, 255, 0.02);
 }
 
 /* İlk üye kartının üstündeki çizgiyi kaldırarak tam yapışma sağlarız */
 .member-response:first-child {
-    border-top: none;
+  border-top: none;
 }
 
 /* 3. İsim başlıklarının (Sokrates vb.) yukarı yapışmasını sağlıyoruz */
-.member-response h3, .final-verdict h3 {
-    margin-top: 0 !important;    /* Başlığın üstündeki tarayıcı boşluğunu siler */
-    margin-bottom: 8px;          /* Sadece alt metinle arasına mesafe koyar */
-    color: #4a90e2;              /* Başlık rengini belirginleştirir */
-    font-size: 1.1rem;
-    text-transform: uppercase;
+.member-response h3,
+.final-verdict h3 {
+  margin-top: 0 !important; /* Başlığın üstündeki tarayıcı boşluğunu siler */
+  margin-bottom: 8px; /* Sadece alt metinle arasına mesafe koyar */
+  color: #4a90e2; /* Başlık rengini belirginleştirir */
+  font-size: 1.1rem;
+  text-transform: uppercase;
 }
-.output-panel {padding-top: 0 !important;}
-.member-response,.output-panel h3:first-of-type { margin-top: 10px !important;padding-top: 0 !important;}
-h3,p {margin-top: 0 !important;}
+.output-panel {
+  padding-top: 0 !important;
+}
+.member-response,
+.output-panel h3:first-of-type {
+  margin-top: 10px !important;
+  padding-top: 0 !important;
+}
+h3,
+p {
+  margin-top: 0 !important;
+}
 /* 4. Çıktı panelinin genel başlığını ve iç boşluğunu da daraltalım */
 /* Ana etiketlerin boyutunu küçültüyoruz */
 .cb-container {
-    font-size: 13px; /* Genel yazı boyutunu daralttık */
-    color: #e0e0e0;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+  font-size: 13px; /* Genel yazı boyutunu daralttık */
+  color: #e0e0e0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 /* --- ÇIKTI PANELİ DÜZENLEMELERİ (YUKARI YAPIŞTIRMA) --- */
 .output-panel {
-    padding-top: 1rem !important;
+  padding-top: 1rem !important;
 }
 
 .response-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 0 !important;
-    margin-top: 0 !important;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  gap: 15px;
 }
 
 .member-response {
-    margin-top: 0 !important;
-    padding: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.02);
+  margin-top: 0 !important;
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .member-response:first-child {
-    border-top: none;
+  border-top: none;
 }
 
-.member-response h3, 
+.member-response h3,
 .member-response p {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 /* --- ÜYE LİSTESİ (LABEL & TRAIT) DÜZENLEMELERİ --- */
 .cb-container {
-    font-size: 13px !important; /* Küçültülmüş boyut */
-    color: #e2e8f0;
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-    cursor: pointer;
+  font-size: 13px !important; /* Küçültülmüş boyut */
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  cursor: pointer;
 }
 
 .member-trait {
-    color: #94a3b8; /* Gri tonu */
-    font-size: 0.85em;
-    margin-left: 6px;
-    font-weight: normal;
-    opacity: 0.7;
-    font-style: italic;
+  color: #94a3b8; /* Gri tonu */
+  font-size: 0.85em;
+  margin-left: 6px;
+  font-weight: normal;
+  opacity: 0.7;
+  font-style: italic;
 }
 
 .checkmark {
-    height: 16px !important;
-    width: 16px !important;
-    top: 2px;
+  height: 16px !important;
+  width: 16px !important;
+  top: 2px;
 }
 
 /* --- TRIADS BUTONLARI --- */
 .triads-container {
-    margin-bottom: 20px;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 20px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .triad-btn {
-    background: transparent;
-    border: 1px solid var(--accent-glow);
-    color: var(--accent-glow);
-    padding: 6px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: all 0.3s ease;
+  background: transparent;
+  border: 1px solid var(--accent-glow);
+  color: var(--accent-glow);
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
 }
 
 .triad-btn:hover {
-    background: var(--accent-glow);
-    color: var(--bg-dark);
+  background: var(--accent-glow);
+  color: var(--bg-dark);
 }
 
 /* Checkmark kutusunu yazı boyutuyla orantılı küçültmek gerekirse */
 .checkmark {
-    height: 16px;
-    width: 16px;
+  height: 16px;
+  width: 16px;
 }
 
 /* Pasif (Disabled) Buton Stili */
 button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    filter: grayscale(0.8);
-    transform: none !important; /* Hover efektini iptal eder */
-    box-shadow: none !important;
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+  transform: none !important; /* Hover efektini iptal eder */
+  box-shadow: none !important;
 }
 
 /* Kaydırma efektinin tüm tarayıcılarda pürüzsüz olması için */
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
