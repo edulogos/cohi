@@ -26,7 +26,6 @@ async function askCouncil() {
         return;
     }
 
-    // Butonu pasif yap ve üst scrolling yap
     submitBtn.disabled = true;
     window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -86,3 +85,20 @@ function displayResults(data) {
 
     responseBox.innerHTML = htmlContent;
 }
+
+// Tanıtım kutusu fonksiyonları
+function closeIntroBox() {
+    const introBox = document.getElementById("intro-box");
+    introBox.classList.add("hidden");
+    localStorage.setItem("cohi_intro_shown", "true");
+}
+
+function showIntroBoxIfNeeded() {
+    const introBox = document.getElementById("intro-box");
+    const shown = localStorage.getItem("cohi_intro_shown");
+    if (!shown) {
+        introBox.classList.remove("hidden");
+    }
+}
+
+window.addEventListener("DOMContentLoaded", showIntroBoxIfNeeded);
