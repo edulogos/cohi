@@ -20,7 +20,15 @@
 
         <!-- INPUT PANEL -->
         <section class="input-panel"> 
-            
+            <div class="triads-container">
+    <p>Hızlı Grup Seçimi (Triads):</p>
+    <div class="triad-buttons">
+        <button type="button" class="triad-btn" onclick="selectTriad(['suntzu', 'machiavelli', 'aurelius'])">Strateji & Güç</button>
+        <button type="button" class="triad-btn" onclick="selectTriad(['socrates', 'feynman', 'kahneman'])">Mantık & Analiz</button>
+        <button type="button" class="triad-btn" onclick="selectTriad(['torvalds', 'feynman', 'machiavelli'])">Uygulama & Pragmatizm</button>
+        <button type="button" class="triad-btn" onclick="selectTriad(['aurelius', 'socrates', 'suntzu'])">Etik & Disiplin</button>
+    </div>
+</div>
             <div class="control-group">
     <label>Konsey Üyelerini Seçin:</label>
     <div id="member-checkboxes" class="checkbox-grid">
