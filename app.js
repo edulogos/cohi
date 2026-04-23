@@ -49,7 +49,7 @@ async function askCouncil() {
     // === FINAL VERDICT ===
     const verdictHTML = data.verdict ? `
       <div class="verdict">
-        <h2>Final Verdict</h2>
+        <h2>Soh Tahlilde !</h2>
         <p>${data.verdict}</p>
       </div>
     ` : "";
