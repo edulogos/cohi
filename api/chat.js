@@ -19,62 +19,34 @@ export default async function handler(req, res) {
 
 
   // === COUNCIL MEMBERS ===
-  const councilMembers = {
+ const councilMembers = {
     socrates: {
-      prompt: `Sen Sokrates'sin.
-- Varsayımları sorgula
-- Kullanıcının düşünme biçimine meydan oku
-- Hemen doğrudan cevap verme, düşündürücü sorular sor.
-Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "google/gemini-2.0-flash-exp:free" // Google'ın çok hızlı ücretsiz modeli
+      prompt: `Sen Sokrates'sin. Varsayımları sorgula. Lütfen sadece TÜRKÇE yanıt ver.`,
+      model: "google/gemini-2.0-flash-exp:free" // En stabil ücretsiz model
     },
     feynman: {
-      prompt: `Sen Richard Feynman'sın.
-- Konuları basitleştirerek açıkla
-- Problemleri ilk prensiplerine (first principles) kadar indirge
-- Anlaşılır ve net örnekler kullan.
-Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "meta-llama/llama-3.1-8b-instruct:free" // Meta'nın (Facebook) ücretsiz modeli
+      prompt: `Sen Richard Feynman'sın. Konuları basitleştir. Lütfen sadece TÜRKÇE yanıt ver.`,
+      model: "google/gemini-2.0-flash-exp:free"
     },
     machiavelli: {
-      prompt: `Sen Machiavelli'sin.
-- Güç ve stratejiye odaklan
-- Pragmatik (faydacı) ve gerçekçi ol
-- Avantaj elde etme üzerine düşün.
-Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "mistralai/mistral-7b-instruct:free" // Mistral (Avrupa merkezli) ücretsiz modeli
+      prompt: `Sen Machiavelli'sin. Stratejik ve gerçekçi ol. Lütfen sadece TÜRKÇE yanıt ver.`,
+      model: "meta-llama/llama-3.1-8b-instruct:free" // Çok güçlü ve ücretsiz
     },
     torvalds: {
-      prompt: `Sen Linus Torvalds'sın. 
-- Pragmatik (faydacı) mühendisliğe odaklanırsın.
-- Laf kalabalığını sevmez, "Konuşmak ucuzdur, bana çalışan çözümü göster" dersin.
-- Teorik mükemmellik yerine, hızlıca çalışan ve işi çözen yapıları savunursun.
-Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "qwen/qwen-2.5-7b-instruct:free" // Alibaba'nın başarılı ücretsiz modeli
+      prompt: `Sen Linus Torvalds'sın. Pragmatik ol. Lütfen sadece TÜRKÇE yanıt ver.`,
+      model: "meta-llama/llama-3.1-8b-instruct:free" 
     },
     aurelius: {
-      prompt: `Sen Marcus Aurelius'sun. 
-- Stoacı bir imparatorsun.
-- Olayları ahlaki bir netlikle ve duygulardan arınmış şekilde değerlendirirsin.
-- Sadece kontrol edebildiğin şeylere odaklanmayı, gerisini kabullenmeyi tavsiye edersin.
-Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "google/gemini-2.0-flash-exp:free" 
+      prompt: `Sen Marcus Aurelius'sun. Stoacı ol. Lütfen sadece TÜRKÇE yanıt ver.`,
+      model: "google/gemini-2.0-flash-exp:free"
     },
     suntzu: {
-      prompt: `Sen Sun Tzu'sun. 
-- Strateji ve savaş sanatının ustasısın.
-- Çatışmaları girmeden kazanmayı, rekabeti ve "araziyi" doğru okumayı savunursun.
-- Kararları rakiplerin hamlelerini önceden tahmin ederek şekillendirirsin.
-Lütfen sadece TÜRKÇE yanıt ver.`,
+      prompt: `Sen Sun Tzu'sun. Strateji üzerine odaklan. Lütfen sadece TÜRKÇE yanıt ver.`,
       model: "meta-llama/llama-3.1-8b-instruct:free"
     },
     kahneman: {
-      prompt: `Sen Daniel Kahneman'sın. 
-- Karar bilimi ve davranışsal ekonomi uzmanısın.
-- İnsanların bilişsel önyargılarını (cognitive bias) ve mantıksal hatalarını ararsın.
-- "Kendi düşünce yapın, yaptığın ilk hatadır" prensibiyle analitik ve yavaş düşünmeyi önerirsin.
-Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "mistralai/mistral-7b-instruct:free"
+      prompt: `Sen Daniel Kahneman'sın. Karar bilimine odaklan. Lütfen sadece TÜRKÇE yanıt ver.`,
+      model: "google/gemini-2.0-flash-exp:free"
     }
   };
 
@@ -144,13 +116,14 @@ Lütfen sadece TÜRKÇE yanıt ver.`,
         'X-Title': 'Council of High Intelligence',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        model: "google/gemini-2.0-flash-exp:free", // BURASI GÜNCELLENDİ
-        messages: [
-          { role: "system", content: "Sen bir moderatörsün. Verilen tartışmayı özetle, tarafların argümanlarını değerlendir ve net bir nihai karar (Final Verdict) sun. Cevabını MUTLAKA TÜRKÇE olarak ver." },
-          { role: "user", content: combinedText }
-        ]
-      })
+   
+    body: JSON.stringify({
+      model: "google/gemini-2.0-flash-exp:free", // Burayı bu şekilde sabitleyin
+      messages: [
+        { role: "system", content: "Sen bir moderatörsün. Tartışmayı TÜRKÇE özetle." },
+        { role: "user", content: combinedText }
+      ]
+    })
     });
 
     const finalData = await finalResponse.json();
