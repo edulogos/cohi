@@ -1,38 +1,38 @@
 const API_URL = "https://cohi-p46b.vercel.app/api/chat";
 
 async function askCouncil() {
-  const input = document.getElementById("user-input").value;
-  const loading = document.getElementById("loading");
-  const responseBox = document.getElementById("response-box");
+    const userInput = document.getElementById("user-input").value;
+    
+    // Tik atılmış (checked) tüm checkbox'ları bul ve değerlerini bir listeye al
+    const checkedCheckboxes = document.querySelectorAll('input[name="council-member"]:checked');
+    const selectedMembers = Array.from(checkedCheckboxes).map(cb => cb.value);
 
-  const selectedMembers = Array.from(
-    document.querySelectorAll('input[type="checkbox"]:checked')
-  ).map(el => el.value);
+    const responseBox = document.getElementById("response-box");
+    const loadingDiv = document.getElementById("loading");
+    const submitBtn = document.getElementById("submit-btn");
 
-  if (!input) {
-    alert("Lütfen bir fikir gir.");
-    return;
-  }
+    if (selectedMembers.length === 0) {
+        alert("Lütfen tartışma için en az 1 konsey üyesi seçin.");
+        return;
+    }
 
-  if (selectedMembers.length === 0) {
-    alert("En az 1 üye seç.");
-    return;
-  }
+    if (!userInput.trim()) {
+        alert("Lütfen tartışılacak bir fikir yazın.");
+        return;
+    }
 
   loading.classList.remove("hidden");
   responseBox.innerHTML = "";
 
   try {
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: input,
-        members: selectedMembers
-      })
-    });
+        const response = await fetch(VERCEL_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: userInput,
+                members: selectedMembers // Artık bir liste gönderiliyor
+            })
+        });
 
     const data = await res.json();
 
