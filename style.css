@@ -287,7 +287,9 @@ button:hover {
     font-size: 1.1rem;
     text-transform: uppercase;
 }
-
+.output-panel {padding-top: 0 !important;}
+.response-box,.member-response,.output-panel h3:first-of-type { margin-top: 0 !important;padding-top: 0 !important;}
+h3,p {margin-top: 0 !important;}
 /* 4. Çıktı panelinin genel başlığını ve iç boşluğunu da daraltalım */
 .output-panel h2 {
     margin-top: 0;
