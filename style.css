@@ -126,12 +126,13 @@ button:hover {
   display: none !important;
 }
 
-/* Basit bir yükleniyor animasyonu */
+/* Loading animasyonu */
 #loading {
   text-align: center;
   color: var(--accent-glow);
   padding: 2rem 0;
 }
+
 .spinner {
   width: 40px;
   height: 40px;
@@ -141,6 +142,7 @@ button:hover {
   animation: spin 1s linear infinite;
   margin: 0 auto 1rem auto;
 }
+
 .checkbox-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -151,14 +153,17 @@ button:hover {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Checkbox container - flex ile dikey ortalama */
 .cb-container {
-  display: block;
+  display: flex;
+  align-items: center;
   position: relative;
-  padding-left: 35px;
+  padding-left: 32px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 13px;
   user-select: none;
   color: var(--text-main);
+  min-height: 24px;
 }
 
 .cb-container input {
@@ -169,12 +174,14 @@ button:hover {
   width: 0;
 }
 
+/* Checkmark kutusu */
 .checkmark {
   position: absolute;
-  top: 0;
   left: 0;
-  height: 20px;
-  width: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 18px;
+  width: 18px;
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid var(--accent-glow);
   border-radius: 4px;
@@ -199,13 +206,23 @@ button:hover {
 }
 
 .cb-container .checkmark:after {
-  left: 7px;
-  top: 3px;
-  width: 5px;
-  height: 10px;
+  left: 6px;
+  top: 2px;
+  width: 4px;
+  height: 9px;
   border: solid white;
-  border-width: 0 3px 3px 0;
+  border-width: 0 2px 2px 0;
   transform: rotate(45deg);
+}
+
+/* Member trait (parantez içi metin) */
+.member-trait {
+  color: #94a3b8;
+  font-size: 0.85em;
+  margin-left: 6px;
+  font-weight: normal;
+  opacity: 0.7;
+  font-style: italic;
 }
 
 .limit-warning {
@@ -220,32 +237,25 @@ button:hover {
 }
 
 @keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(255, 165, 0, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 165, 0, 0);
-  }
+  0% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 165, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0); }
 }
+
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 .triads-container {
   margin-bottom: 20px;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .triads-container p {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #aaa;
   margin-bottom: 10px;
   text-transform: uppercase;
@@ -255,133 +265,7 @@ button:hover {
 .triad-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-}
-
-.triad-btn {
-  background: transparent;
-  border: 1px solid #4a90e2;
-  color: #4a90e2;
-  padding: 8px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: all 0.3s ease;
-}
-
-.triad-btn:hover {
-  background: #4a90e2;
-  color: white;
-  box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
-}
-
-/* 2. Her üye kartının kendi içindeki boşluklarını düzenliyoruz */
-.member-response {
-  margin-top: 0 !important; /* Kartın üst dış boşluğunu siler */
-  padding: 15px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Ayırıcı ince bir çizgi */
-  background: rgba(255, 255, 255, 0.02);
-}
-
-/* İlk üye kartının üstündeki çizgiyi kaldırarak tam yapışma sağlarız */
-.member-response:first-child {
-  border-top: none;
-}
-
-/* 3. İsim başlıklarının (Sokrates vb.) yukarı yapışmasını sağlıyoruz */
-.member-response h3,
-.final-verdict h3 {
-  margin-top: 0 !important; /* Başlığın üstündeki tarayıcı boşluğunu siler */
-  margin-bottom: 8px; /* Sadece alt metinle arasına mesafe koyar */
-  color: #4a90e2; /* Başlık rengini belirginleştirir */
-  font-size: 1.1rem;
-  text-transform: uppercase;
-}
-.output-panel {
-  padding-top: 0 !important;
-}
-.member-response,
-.output-panel h3:first-of-type {
-  margin-top: 10px !important;
-  padding-top: 0 !important;
-}
-h3,
-p {
-  margin-top: 0 !important;
-}
-/* 4. Çıktı panelinin genel başlığını ve iç boşluğunu da daraltalım */
-/* Ana etiketlerin boyutunu küçültüyoruz */
-.cb-container {
-  font-size: 13px; /* Genel yazı boyutunu daralttık */
-  color: #e0e0e0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-/* --- ÇIKTI PANELİ DÜZENLEMELERİ (YUKARI YAPIŞTIRMA) --- */
-.output-panel {
-  padding-top: 1rem !important;
-}
-
-.response-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding-top: 0 !important;
-  margin-top: 0 !important;
-  gap: 15px;
-}
-
-.member-response {
-  margin-top: 0 !important;
-  padding: 15px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.member-response:first-child {
-  border-top: none;
-}
-
-.member-response h3,
-.member-response p {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-}
-
-/* --- ÜYE LİSTESİ (LABEL & TRAIT) DÜZENLEMELERİ --- */
-.cb-container {
-  font-size: 13px !important; /* Küçültülmüş boyut */
-  color: #e2e8f0;
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  cursor: pointer;
-}
-
-.member-trait {
-  color: #94a3b8; /* Gri tonu */
-  font-size: 0.85em;
-  margin-left: 6px;
-  font-weight: normal;
-  opacity: 0.7;
-  font-style: italic;
-}
-
-.checkmark {
-  height: 16px !important;
-  width: 16px !important;
-  top: 2px;
-}
-
-/* --- TRIADS BUTONLARI --- */
-.triads-container {
-  margin-bottom: 20px;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 8px;
 }
 
 .triad-btn {
@@ -400,22 +284,67 @@ p {
   color: var(--bg-dark);
 }
 
-/* Checkmark kutusunu yazı boyutuyla orantılı küçültmek gerekirse */
-.checkmark {
-  height: 16px;
-  width: 16px;
+/* Member response kartları */
+.member-response {
+  margin-top: 0;
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
 }
 
-/* Pasif (Disabled) Buton Stili */
+.member-response:first-child {
+  border-top: none;
+}
+
+.member-response h3 {
+  margin: 0 0 8px 0;
+  color: #4a90e2;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+.member-response p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.output-panel {
+  padding-top: 1rem;
+}
+
+.output-panel h2 {
+  margin-top: 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(74, 144, 226, 0.3);
+}
+
+.response-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.final-verdict {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid var(--accent-glow);
+  background: rgba(56, 189, 248, 0.05);
+}
+
+.final-verdict h3 {
+  margin: 0 0 10px 0;
+  color: var(--accent-glow);
+  font-size: 1.2rem;
+}
+
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   filter: grayscale(0.8);
-  transform: none !important; /* Hover efektini iptal eder */
-  box-shadow: none !important;
+  transform: none;
+  box-shadow: none;
 }
 
-/* Kaydırma efektinin tüm tarayıcılarda pürüzsüz olması için */
 html {
   scroll-behavior: smooth;
 }
