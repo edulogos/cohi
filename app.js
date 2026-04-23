@@ -46,10 +46,26 @@ async function askCouncil() {
         displayResults(data);
 
     } catch (error) {
-        console.error("Hata:", error);
-        responseBox.innerHTML = `<p class="error">Bir sorun oluştu: ${error.message}</p>`;
+        console.error("Hata Detayı:", error);
+        
+        let friendlyMessage = `Bir sorun oluştu: ${error.message}`;
+        
+        // Eğer hata mesajı içinde bütçe sınırıyla ilgili bir ibare varsa (402 veya LIMIT)
+        if (error.message.includes("LIMIT_EXCEEDED") || error.message.includes("402")) {
+            friendlyMessage = `
+                <div class="limit-warning">
+                    <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
+                    <strong>Konsey Dinlenmeye Çekildi</strong><br>
+                    Bugünlük bilgelik kotamız dolmuştur (Günlük bütçe limitine ulaşıldı). <br>
+                    Lütfen yarın tekrar ziyaret edin.
+                </div>
+            `;
+        }
+
+        responseBox.innerHTML = `<p class="error">${friendlyMessage}</p>`;
+        
     } finally {
-        // İşlem bitince yükleniyor simgesini gizle
+        // İşlem bitince yükleniyor simgesini her durumda gizle
         loading.classList.add("hidden");
     }
 }
