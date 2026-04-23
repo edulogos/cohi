@@ -294,4 +294,26 @@ button:hover {
 .response-box,.member-response,.output-panel h3:first-of-type { margin-top: 0 !important;padding-top: 0 !important;}
 h3,p {margin-top: 0 !important;}
 /* 4. Çıktı panelinin genel başlığını ve iç boşluğunu da daraltalım */
+/* Ana etiketlerin boyutunu küçültüyoruz */
+.cb-container {
+    font-size: 13px; /* Genel yazı boyutunu daralttık */
+    color: #e0e0e0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
 
+/* Parantez içindeki sıfatları özelleştiriyoruz */
+.member-trait {
+    color: #888;           /* Daha soluk, gri tonu */
+    font-size: 0.85em;     /* İsimden biraz daha küçük */
+    margin-left: 6px;      /* İsimle arasına mesafe */
+    font-weight: normal;   /* Daha ince görünüm */
+    opacity: 0.8;
+}
+
+/* Checkmark kutusunu yazı boyutuyla orantılı küçültmek gerekirse */
+.checkmark {
+    height: 16px;
+    width: 16px;
+}
