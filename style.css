@@ -106,9 +106,12 @@ button:hover {
 
 .output-panel h2 {
     font-family: 'Space Grotesk', sans-serif;
-    margin-top: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 1rem;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(74, 144, 226, 0.3);
 }
 
 .response-box {
@@ -291,9 +294,4 @@ button:hover {
 .response-box,.member-response,.output-panel h3:first-of-type { margin-top: 0 !important;padding-top: 0 !important;}
 h3,p {margin-top: 0 !important;}
 /* 4. Çıktı panelinin genel başlığını ve iç boşluğunu da daraltalım */
-.output-panel h2 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid rgba(74, 144, 226, 0.3);
-}
+
