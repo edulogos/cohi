@@ -22,31 +22,31 @@ export default async function handler(req, res) {
  const councilMembers = {
     socrates: {
       prompt: `Sen Sokrates'sin. Varsayımları sorgula. Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "google/gemini-2.0-flash:free" // 'exp' takısı kaldırıldı, stabil sürüme geçildi
+      model: "google/gemini-2.0-flash-lite:free" // Daha hafif ve daha stabil sürüm
     },
     feynman: {
       prompt: `Sen Richard Feynman'sın. Konuları basitleştir. Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "google/gemini-2.0-flash:free"
+      model: "google/gemini-2.0-flash-lite:free"
     },
     machiavelli: {
       prompt: `Sen Machiavelli'sin. Stratejik ve gerçekçi ol. Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "meta-llama/llama-3.3-70b-instruct:free" // 3.1 yerine 3.3 sürümü eklendi
+      model: "meta-llama/llama-3.1-8b-instruct:free" // 3.3 hata veriyorsa 3.1 daha stabildir
     },
     torvalds: {
       prompt: `Sen Linus Torvalds'sın. Pragmatik ol. Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "qwen/qwen-2.5-72b-instruct:free" // Alibaba'nın güçlü ücretsiz modeli
+      model: "openrouter/auto" // ÇALIŞMA GARANTİSİ: En uygun modeli otomatik seçer
     },
     aurelius: {
       prompt: `Sen Marcus Aurelius'sun. Stoacı ol. Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "google/gemini-2.0-flash:free"
+      model: "google/gemini-2.0-flash-lite:free"
     },
     suntzu: {
       prompt: `Sen Sun Tzu'sun. Strateji üzerine odaklan. Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "meta-llama/llama-3.3-70b-instruct:free"
+      model: "openrouter/auto"
     },
     kahneman: {
       prompt: `Sen Daniel Kahneman'sın. Karar bilimine odaklan. Lütfen sadece TÜRKÇE yanıt ver.`,
-      model: "deepseek/deepseek-chat:free" // Psikolojik analiz için DeepSeek ücretsiz modeli
+      model: "google/gemini-2.0-flash-lite:free"
     }
   };
 
@@ -118,12 +118,12 @@ export default async function handler(req, res) {
       },
    
     body: JSON.stringify({
-        model: "google/gemini-2.0-flash:free", // Stabil ücretsiz model
-        messages: [
-          { role: "system", content: "Sen bir moderatörsün. Tartışmayı TÜRKÇE özetle ve nihai bir yargıya var." },
-          { role: "user", content: combinedText }
-        ]
-      })
+  model: "google/gemini-2.0-flash-lite:free", // Burayı 'lite' yapmanız başarı oranını artırır
+  messages: [
+    { role: "system", content: "Sen bir moderatörsün. Tartışmayı TÜRKÇE özetle." },
+    { role: "user", content: combinedText }
+  ]
+})
     });
 
     const finalData = await finalResponse.json();
