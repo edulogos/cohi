@@ -1,17 +1,26 @@
 // api/chat.js
 export default async function handler(req, res) {
-  // Sadece dışarıdan gelen POST isteklerini kabul et
+  // CORS HEADERS
+  res.setHeader("Access-Control-Allow-Origin", "https://educaprof.github.io");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  // Preflight request (EN KRİTİK KISIM)
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  // Sadece POST kabul et
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Yalnızca POST istekleri kabul edilir.' });
   }
 
   const { message, member } = req.body;
 
-  // Konsey Üyeleri ve Karakterleri (Burayı repodaki 18 karakterle genişleteceksiniz)
   const councilMembers = {
     socrates: {
       prompt: "Sen Sokrates'sin. Varsayımları yıkar, derin ve sorgulayıcı cevaplar verirsin.",
-      model: "anthropic/claude-3.5-sonnet" // OpenRouter model ID'leri
+      model: "anthropic/claude-3.5-sonnet"
     },
     feynman: {
       prompt: "Sen Richard Feynman'sın. Karmaşık problemleri ilk prensiplerine ayırarak basitçe açıklarsın.",
@@ -23,7 +32,6 @@ export default async function handler(req, res) {
     }
   };
 
-  // Varsayılan bir karakter seçimi
   const selectedMember = councilMembers[member] || councilMembers['socrates'];
 
   try {
@@ -31,13 +39,12 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        // OpenRouter'ın projenizi tanıması için gerekli başlıklar
-        'HTTP-Referer': 'https://educaprof.github.io/cohi', 
+        'HTTP-Referer': 'https://educaprof.github.io/cohi',
         'X-Title': 'Council of High Intelligence',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: selectedMember.model, // Her karaktere farklı bir model atayabilirsiniz!
+        model: selectedMember.model,
         messages: [
           { role: 'system', content: selectedMember.prompt },
           { role: 'user', content: message }
@@ -48,7 +55,7 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (!response.ok) {
-       throw new Error(data.error?.message || 'API Hatası');
+      throw new Error(data.error?.message || 'API Hatası');
     }
 
     res.status(200).json({ answer: data.choices[0].message.content });
