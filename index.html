@@ -7,53 +7,84 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1 class="glow-text">Yüksek Zeka Konseyi</h1>
-            <p>Fikirlerinizi tarihin en büyük zihinleriyle tartışın.</p>
-        </header>
 
-        <main class="dashboard">
+<div class="container">
 
-            <!-- INPUT -->
-            <section class="input-panel">
+    <!-- HEADER -->
+    <header>
+        <h1 class="glow-text">Yüksek Zeka Konseyi</h1>
+        <p>Fikirlerinizi tarihin en büyük zihinleriyle tartışın.</p>
+    </header>
 
-                <div class="control-group">
-                    <label>Konsey Üyeleri:</label>
+    <main class="dashboard">
 
-                    <label><input type="checkbox" value="socrates" checked> Sokrates</label>
-                    <label><input type="checkbox" value="feynman" checked> Feynman</label>
-                    <label><input type="checkbox" value="machiavelli" checked> Machiavelli</label>
+        <!-- INPUT PANEL -->
+        <section class="input-panel">
+
+            <!-- MEMBER SELECTION -->
+            <div class="control-group">
+                <label>Konsey Üyeleri:</label>
+
+                <div class="members">
+                    <label>
+                        <input type="checkbox" value="socrates" checked>
+                        Sokrates
+                    </label>
+
+                    <label>
+                        <input type="checkbox" value="feynman" checked>
+                        Feynman
+                    </label>
+
+                    <label>
+                        <input type="checkbox" value="machiavelli" checked>
+                        Machiavelli
+                    </label>
                 </div>
+            </div>
 
-                <div class="control-group">
-                    <label for="user-input">Tartışılacak Fikir:</label>
-                    <textarea id="user-input" rows="5"
-                        placeholder="Örn: Startup için hangi iş modelini seçmeliyim?"></textarea>
-                </div>
+            <!-- USER INPUT -->
+            <div class="control-group">
+                <label for="user-input">Tartışılacak Fikir:</label>
+                <textarea 
+                    id="user-input" 
+                    rows="5"
+                    placeholder="Örn: Startup için hangi iş modelini seçmeliyim?"
+                ></textarea>
+            </div>
 
-                <button id="submit-btn" onclick="askCouncil()">
-                    Konseye Sun ➔
-                </button>
-            </section>
+            <!-- BUTTON -->
+            <button id="submit-btn" onclick="askCouncil()">
+                Konseye Sun ➔
+            </button>
 
-            <!-- OUTPUT -->
-            <section class="output-panel">
-                <h2>Konseyin Analizi</h2>
+        </section>
 
-                <div id="loading" class="hidden">
-                    <div class="spinner"></div>
-                    <p>Zihinler tartışıyor...</p>
-                </div>
+        <!-- OUTPUT PANEL -->
+        <section class="output-panel">
 
-                <div id="response-box" class="response-box">
-                    <p class="placeholder-text">Henüz bir fikir sunulmadı.</p>
-                </div>
-            </section>
+            <h2>Konseyin Analizi</h2>
 
-        </main>
-    </div>
+            <!-- LOADING -->
+            <div id="loading" class="hidden">
+                <div class="spinner"></div>
+                <p>Zihinler tartışıyor...</p>
+            </div>
 
-    <script src="app.js"></script>
+            <!-- RESPONSES -->
+            <div id="response-box" class="response-box">
+                <p class="placeholder-text">
+                    Henüz bir fikir sunulmadı.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="app.js"></script>
+
 </body>
 </html>
