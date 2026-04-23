@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yüksek Zeka Konseyi (COHI)</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="glow-text">Yüksek Zeka Konseyi</h1>
+            <p>Fikirlerinizi tarihin en büyük zihinleriyle tartışın.</p>
+        </header>
+
+        <main class="dashboard">
+            <section class="input-panel">
+                <div class="control-group">
+                    <label for="member-select">Konsey Üyesi Seçin:</label>
+                    <select id="member-select">
+                        <option value="socrates">Sokrates (Varsayımları Yıkar)</option>
+                        <option value="feynman">Richard Feynman (Basitleştirir)</option>
+                        <option value="machiavelli">Machiavelli (Strateji ve Güç)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="user-input">Tartışılacak Fikir veya Karar:</label>
+                    <textarea id="user-input" rows="5" placeholder="Örn: Projemde veritabanı olarak ne kullanmalıyım?"></textarea>
+                </div>
+
+                <button id="submit-btn" onclick="askCouncil()">Konseye Sun <span class="icon">➔</span></button>
+            </section>
+
+            <section class="output-panel">
+                <h2>Konseyin Analizi</h2>
+                <div id="loading" class="hidden">
+                    <div class="spinner"></div>
+                    <p>Zihinler bağlanıyor...</p>
+                </div>
+                <div id="response-box" class="response-box">
+                    <p class="placeholder-text">Henüz bir fikir sunulmadı.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
