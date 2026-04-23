@@ -25,7 +25,7 @@ async function askCouncil() {
   responseBox.innerHTML = "";
 
   try {
-        // Burada cevabı 'response' ismiyle alıyoruz
+        // 1. İstek gönderiliyor (Sonucu 'response' olarak isimlendirdik)
         const response = await fetch(VERCEL_API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -35,20 +35,25 @@ async function askCouncil() {
             })
         });
 
-        // HATA BURADAYDI: Aşağıdaki satırlarda 'res' değil, 'response' yazmalı!
+        // 2. Kontrol (Hata buradaydı, 'res' yerine 'response' kullanıyoruz)
         if (!response.ok) {
-            throw new Error("Ağ hatası veya API yanıt vermiyor.");
+            throw new Error("Sunucu yanıt vermedi veya bir hata oluştu.");
         }
 
-        const data = await response.json(); // Burada da 'response' olmalı
+        // 3. Veriyi dönüştürme (Yine 'response' üzerinden)
+        const data = await response.json();
         
-        // Cevapları ekrana yazdıran fonksiyonu çağır
+        // 4. Sonuçları ekrana basan fonksiyonu çağırıyoruz
         displayResults(data);
 
     } catch (error) {
-        console.error("Hata detayı:", error);
-        responseBox.innerHTML = `<p class="error">Hata: ${error.message}</p>`;
+        console.error("Detaylı Hata:", error);
+        // Hata durumunda kullanıcıya bilgi ver
+        const responseBox = document.getElementById("response-box");
+        responseBox.innerHTML = `<p class="error">Bir hata oluştu: ${error.message}</p>`;
     } finally {
+        // Yükleniyor animasyonunu her durumda kapat
+        const loading = document.getElementById("loading");
         loading.classList.add("hidden");
     }
 
