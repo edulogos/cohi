@@ -109,3 +109,14 @@ function selectTriad(memberIds) {
     // Görsel bir geri bildirim için kısa bir parlam efekti (isteğe bağlı)
     console.log("Seçilen Triad: " + memberIds.join(", "));
 }
+
+// app.js içine eklenebilir veya güncellenebilir
+function updateTriads() {
+    const triadButtons = document.querySelector('.triad-buttons');
+    triadButtons.innerHTML = `
+        <button type="button" class="triad-btn" onclick="selectTriad(['karpathy', 'sutskever', 'ada'])">AI & Gelecek</button>
+        <button type="button" class="triad-btn" onclick="selectTriad(['taleb', 'munger', 'kahneman'])">Risk & Karar</button>
+        <button type="button" class="triad-btn" onclick="selectTriad(['rams', 'torvalds', 'watts'])">Tasarım & Ürün</button>
+        <button type="button" class="triad-btn" onclick="selectTriad(['meadows', 'aristotle', 'feynman'])">Sistem & Bilim</button>
+    `;
+}
