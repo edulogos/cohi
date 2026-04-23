@@ -60,13 +60,6 @@ header h1 {
     margin-bottom: 1.5rem;
 }
 
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--accent-glow);
-    font-size: 0.9rem;
-    font-weight: 600;
-}
 
 select, textarea {
     width: 100%;
@@ -114,11 +107,7 @@ button:hover {
     border-bottom: 2px solid rgba(74, 144, 226, 0.3);
 }
 
-.response-box {
-    line-height: 1.6;
-    font-size: 0.95rem;
-    white-space: pre-wrap; /* Satır atlamalarını korur */
-}
+
 
 .placeholder-text {
     color: var(--text-muted);
@@ -260,14 +249,7 @@ button:hover {
     box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
 }
 
-/* 1. Ana kutunun içeriği en tepeden başlatmasını sağlıyoruz */
-.response-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* İçeriği yukarı yaslar */
-    padding-top: 0 !important;   /* Üst iç boşluğu sıfırlar */
-    gap: 15px;                   /* Üyeler arasında düzenli boşluk bırakır */
-}
+
 
 /* 2. Her üye kartının kendi içindeki boşluklarını düzenliyoruz */
 .member-response {
@@ -291,7 +273,7 @@ button:hover {
     text-transform: uppercase;
 }
 .output-panel {padding-top: 0 !important;}
-.response-box,.member-response,.output-panel h3:first-of-type { margin-top: 0 !important;padding-top: 0 !important;}
+.member-response,.output-panel h3:first-of-type { margin-top: 0 !important;padding-top: 0 !important;}
 h3,p {margin-top: 0 !important;}
 /* 4. Çıktı panelinin genel başlığını ve iç boşluğunu da daraltalım */
 /* Ana etiketlerin boyutunu küçültüyoruz */
@@ -303,13 +285,85 @@ h3,p {margin-top: 0 !important;}
     align-items: center;
 }
 
-/* Parantez içindeki sıfatları özelleştiriyoruz */
+/* --- ÇIKTI PANELİ DÜZENLEMELERİ (YUKARI YAPIŞTIRMA) --- */
+.output-panel {
+    padding-top: 1rem !important;
+}
+
+.response-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    gap: 15px;
+}
+
+.member-response {
+    margin-top: 0 !important;
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.member-response:first-child {
+    border-top: none;
+}
+
+.member-response h3, 
+.member-response p {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* --- ÜYE LİSTESİ (LABEL & TRAIT) DÜZENLEMELERİ --- */
+.cb-container {
+    font-size: 13px !important; /* Küçültülmüş boyut */
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
 .member-trait {
-    color: #888;           /* Daha soluk, gri tonu */
-    font-size: 0.85em;     /* İsimden biraz daha küçük */
-    margin-left: 6px;      /* İsimle arasına mesafe */
-    font-weight: normal;   /* Daha ince görünüm */
-    opacity: 0.8;
+    color: #94a3b8; /* Gri tonu */
+    font-size: 0.85em;
+    margin-left: 6px;
+    font-weight: normal;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.checkmark {
+    height: 16px !important;
+    width: 16px !important;
+    top: 2px;
+}
+
+/* --- TRIADS BUTONLARI --- */
+.triads-container {
+    margin-bottom: 20px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.triad-btn {
+    background: transparent;
+    border: 1px solid var(--accent-glow);
+    color: var(--accent-glow);
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.triad-btn:hover {
+    background: var(--accent-glow);
+    color: var(--bg-dark);
 }
 
 /* Checkmark kutusunu yazı boyutuyla orantılı küçültmek gerekirse */
