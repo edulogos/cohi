@@ -82,13 +82,19 @@ export default async function handler(req, res) {
             if (freeData.error) throw new Error(freeData.error.message);
             
             return freeData.choices?.[0]?.message?.content || "Cevap üretilemedi.";
-        } catch (err) {
-            console.warn(`${memberKey} için ücretli modele geçiliyor: ${err.message}`);
-            // 2. Hata Olursa Ücretli (GPT-4o-mini) Modeli Dene
-            const paidResponse = await callOpenRouter(STABLE_PAID_MODEL, member.prompt, userMsg);
-            const paidData = await paidResponse.json();
-            return paidData.choices?.[0]?.message?.content || "Yedek modelden de cevap alınamadı.";
-        }
+        // ... getResponseWithFallback fonksiyonu içinde ...
+            } catch (err) {
+                console.warn(`${memberKey} için ücretli modele geçiliyor...`);
+                const paidResponse = await callOpenRouter(STABLE_PAID_MODEL, member.prompt, userMsg);
+                
+                // BÜTÇE KONTROLÜ BURADA
+                if (paidResponse.status === 402) {
+                    throw new Error("LIMIT_EXCEEDED"); // Özel bir hata kodu fırlatıyoruz
+                }
+            
+                const paidData = await paidResponse.json();
+                return paidData.choices?.[0]?.message?.content || "Cevap alınamadı.";
+            }
     }
 
     try {
