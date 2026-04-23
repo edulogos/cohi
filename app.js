@@ -1,49 +1,69 @@
-// DİKKAT: Buraya Vercel'den aldığınız URL'yi yazın. Sonunda /api/chat olduğundan emin olun.
-const VERCEL_API_URL = "https://cohi-p46b.vercel.app/api/chat"; 
+const API_URL = "https://cohi-p46b.vercel.app/api/chat";
 
 async function askCouncil() {
-    const userInput = document.getElementById("user-input").value;
-    const memberSelect = document.getElementById("member-select").value;
-    const responseBox = document.getElementById("response-box");
-    const loadingDiv = document.getElementById("loading");
-    const submitBtn = document.getElementById("submit-btn");
+  const input = document.getElementById("user-input").value;
+  const loading = document.getElementById("loading");
+  const responseBox = document.getElementById("response-box");
 
-    if (!userInput.trim()) {
-        alert("Lütfen tartışmak için bir fikir yazın.");
-        return;
-    }
+  const selectedMembers = Array.from(
+    document.querySelectorAll('input[type="checkbox"]:checked')
+  ).map(el => el.value);
 
-    // Yükleniyor durumunu aç
-    responseBox.innerHTML = "";
-    loadingDiv.classList.remove("hidden");
-    submitBtn.disabled = true;
+  if (!input) {
+    alert("Lütfen bir fikir gir.");
+    return;
+  }
 
-    try {
-        const response = await fetch(VERCEL_API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                message: userInput,
-                member: memberSelect
-            })
-        });
+  if (selectedMembers.length === 0) {
+    alert("En az 1 üye seç.");
+    return;
+  }
 
-        const data = await response.json();
+  loading.classList.remove("hidden");
+  responseBox.innerHTML = "";
 
-        if (!response.ok) {
-            throw new Error(data.error || data.message || "Bilinmeyen bir hata oluştu.");
-        }
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: input,
+        members: selectedMembers
+      })
+    });
 
-        // Başarılı cevabı ekrana yazdır
-        responseBox.innerHTML = `<div class="answer-content">${data.answer}</div>`;
-        
-    } catch (error) {
-        responseBox.innerHTML = `<p style="color: #ef4444;">Hata: ${error.message}</p>`;
-    } finally {
-        // Yükleniyor durumunu kapat
-        loadingDiv.classList.add("hidden");
-        submitBtn.disabled = false;
-    }
+    const data = await res.json();
+
+    loading.classList.add("hidden");
+
+    // === ÜYELERİN CEVAPLARI ===
+    const responsesHTML = data.responses.map(r => `
+      <div class="member-response">
+        <h3>${capitalize(r.member)}</h3>
+        <p>${r.answer}</p>
+      </div>
+    `).join("");
+
+    // === FINAL VERDICT ===
+    const verdictHTML = data.verdict ? `
+      <div class="verdict">
+        <h2>Final Verdict</h2>
+        <p>${data.verdict}</p>
+      </div>
+    ` : "";
+
+    responseBox.innerHTML = responsesHTML + verdictHTML;
+
+  } catch (err) {
+    loading.classList.add("hidden");
+    responseBox.innerHTML = `<p style="color:red;">Hata oluştu.</p>`;
+    console.error(err);
+  }
+}
+
+// Küçük helper
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
