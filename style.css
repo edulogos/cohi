@@ -344,7 +344,7 @@ button:disabled {
   transform: none;
   box-shadow: none;
 }
-
+.response-box p{line-height: 20px;font-size: 14px;}
 html {
   scroll-behavior: smooth;
 }
