@@ -20,30 +20,27 @@ export default async function handler(req, res) {
   // === COUNCIL MEMBERS ===
   const councilMembers = {
     socrates: {
-      prompt: `
-You are Socrates.
-- Question assumptions
-- Challenge the user's thinking
-- Do not give direct answers immediately
-`,
+      prompt: `Sen Sokrates'sin.
+- Varsayımları sorgula
+- Kullanıcının düşünme biçimine meydan oku
+- Hemen doğrudan cevap verme, düşündürücü sorular sor.
+Lütfen sadece TÜRKÇE yanıt ver.`,
       model: "openai/gpt-4o-mini"
     },
     feynman: {
-      prompt: `
-You are Richard Feynman.
-- Explain simply
-- Break things into first principles
-- Use clear examples
-`,
+      prompt: `Sen Richard Feynman'sın.
+- Konuları basitleştirerek açıkla
+- Problemleri ilk prensiplerine (first principles) kadar indirge
+- Anlaşılır ve net örnekler kullan.
+Lütfen sadece TÜRKÇE yanıt ver.`,
       model: "openai/gpt-4o-mini"
     },
     machiavelli: {
-      prompt: `
-You are Machiavelli.
-- Focus on power and strategy
-- Be pragmatic and realistic
-- Think in terms of advantage
-`,
+      prompt: `Sen Machiavelli'sin.
+- Güç ve stratejiye odaklan
+- Pragmatik (faydacı) ve gerçekçi ol
+- Avantaj elde etme üzerine düşün.
+Lütfen sadece TÜRKÇE yanıt ver.`,
       model: "meta-llama/llama-3.1-8b-instruct"
     }
   };
@@ -111,21 +108,15 @@ You are Machiavelli.
       headers: {
         'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
         'HTTP-Referer': 'https://educaprof.github.io/cohi',
-        'X-Title': 'Council of High Intelligence',
+        'X-Title': 'Yüksek Zeka Konseyi',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: "openai/gpt-4o-mini",
         messages: [
-          {
-            role: "system",
-            content: "You are a moderator. Summarize the discussion and give a final verdict."
-          },
-          {
-            role: "user",
-            content: combinedText
-          }
-        ]
+  { role: "system", content: "Sen bir moderatörsün. Verilen tartışmayı özetle, tarafların argümanlarını değerlendir ve net bir nihai karar (Final Verdict) sun. Cevabını MUTLAKA TÜRKÇE olarak ver." },
+  { role: "user", content: combinedText }
+]
       })
     });
 
