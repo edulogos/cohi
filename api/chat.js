@@ -17,20 +17,20 @@ export default async function handler(req, res) {
 
   const { message, member } = req.body;
 
-  const councilMembers = {
-    socrates: {
-      prompt: "Sen Sokrates'sin. Varsayımları yıkar, derin ve sorgulayıcı cevaplar verirsin.",
-      model: "anthropic/claude-3.5-sonnet"
-    },
-    feynman: {
-      prompt: "Sen Richard Feynman'sın. Karmaşık problemleri ilk prensiplerine ayırarak basitçe açıklarsın.",
-      model: "openai/gpt-4o"
-    },
-    machiavelli: {
-      prompt: "Sen Machiavelli'sin. Güç dinamikleri, gerçekçilik ve insan doğası odaklı stratejiler sunarsın.",
-      model: "meta-llama/llama-3.1-70b-instruct"
-    }
-  };
+ const councilMembers = {
+  socrates: {
+    prompt: "...",
+    model: "openai/gpt-4o-mini"
+  },
+  feynman: {
+    prompt: "...",
+    model: "openai/gpt-4o-mini"
+  },
+  machiavelli: {
+    prompt: "...",
+    model: "meta-llama/llama-3.1-8b-instruct"
+  }
+};
 
   const selectedMember = councilMembers[member] || councilMembers['socrates'];
 
