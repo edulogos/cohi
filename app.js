@@ -2,30 +2,27 @@ const VERCEL_API_URL = "https://cohi-p46b.vercel.app/api/chat";
 
 async function askCouncil() {
     const userInput = document.getElementById("user-input").value;
-    
-    // Tik atılmış (checked) tüm checkbox'ları bul ve değerlerini bir listeye al
     const checkedCheckboxes = document.querySelectorAll('input[name="council-member"]:checked');
     const selectedMembers = Array.from(checkedCheckboxes).map(cb => cb.value);
 
     const responseBox = document.getElementById("response-box");
-    const loadingDiv = document.getElementById("loading");
-    const submitBtn = document.getElementById("submit-btn");
+    const loading = document.getElementById("loading");
 
     if (selectedMembers.length === 0) {
-        alert("Lütfen tartışma için en az 1 konsey üyesi seçin.");
+        alert("Lütfen en az bir üye seçin.");
         return;
     }
-
     if (!userInput.trim()) {
-        alert("Lütfen tartışılacak bir fikir yazın.");
+        alert("Lütfen bir fikir yazın.");
         return;
     }
 
-  loading.classList.remove("hidden");
-  responseBox.innerHTML = "";
+    // Arayüzü hazırla
+    loading.classList.remove("hidden");
+    responseBox.innerHTML = "";
 
-  try {
-        // 1. İstek gönderiliyor (Sonucu 'response' olarak isimlendirdik)
+    try {
+        // BURAYA DİKKAT: Değişken adı 'response'
         const response = await fetch(VERCEL_API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -35,27 +32,21 @@ async function askCouncil() {
             })
         });
 
-        // 2. Kontrol (Hata buradaydı, 'res' yerine 'response' kullanıyoruz)
+        // HATA BURADAYDI: 'res' değil 'response' kullanmalıyız
         if (!response.ok) {
-            throw new Error("Sunucu yanıt vermedi veya bir hata oluştu.");
+            throw new Error("Sunucu yanıt vermedi.");
         }
 
-        // 3. Veriyi dönüştürme (Yine 'response' üzerinden)
-        const data = await response.json();
-        
-        // 4. Sonuçları ekrana basan fonksiyonu çağırıyoruz
+        const data = await response.json(); // Burada da 'response' olmalı
         displayResults(data);
 
     } catch (error) {
-        console.error("Detaylı Hata:", error);
-        // Hata durumunda kullanıcıya bilgi ver
-        const responseBox = document.getElementById("response-box");
-        responseBox.innerHTML = `<p class="error">Bir hata oluştu: ${error.message}</p>`;
+        console.error("Hata:", error);
+        responseBox.innerHTML = `<p class="error">Bir sorun oluştu: ${error.message}</p>`;
     } finally {
-        // Yükleniyor animasyonunu her durumda kapat
-        const loading = document.getElementById("loading");
         loading.classList.add("hidden");
     }
+}
 
     const data = await res.json();
 
