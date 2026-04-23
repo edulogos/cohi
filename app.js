@@ -85,7 +85,7 @@ function displayResults(data) {
     // Nihai Karar (Verdict)
     htmlContent += `
         <div class="final-verdict">
-            <h2>Nihai Karar (Final Verdict)</h2>
+            <h2>Nihai Karar</h2>
             <p>${data.verdict}</p>
         </div>
     `;
