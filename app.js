@@ -10,6 +10,7 @@ function selectTriad(memberIds) {
 }
 
 async function askCouncil() {
+    const submitBtn = document.getElementById("submit-btn");
     const userInput = document.getElementById("user-input").value;
     const checkedCheckboxes = document.querySelectorAll('input[name="council-member"]:checked');
     const selectedMembers = Array.from(checkedCheckboxes).map(cb => cb.value);
@@ -24,6 +25,10 @@ async function askCouncil() {
         alert("Lütfen bir fikir yazın.");
         return;
     }
+
+    // Butonu pasif yap ve üst scrolling yap
+    submitBtn.disabled = true;
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     loading.classList.remove("hidden");
     responseBox.innerHTML = "";
@@ -59,6 +64,7 @@ async function askCouncil() {
         responseBox.innerHTML = `<p class="error">${friendlyMessage}</p>`;
     } finally {
         loading.classList.add("hidden");
+        submitBtn.disabled = false;
     }
 }
 
