@@ -19,22 +19,20 @@
     <main class="dashboard">
 
         <!-- INPUT PANEL -->
-        <section class="input-panel" id="member-select" multiple>
+        <section class="input-panel"> <div class="control-group">
+                <label for="member-select">Konsey Üyeleri (Çoklu seçim için CTRL/CMD basılı tutun):</label>
 
-            <!-- MEMBER SELECTION -->
-            <div class="control-group">
-                <label>Konsey Üyeleri:</label>
-
-                   <option value="socrates">Sokrates (Varsayımları Yıkar)</option>
+                <select id="member-select" multiple>
+                    <option value="socrates">Sokrates (Varsayımları Yıkar)</option>
                     <option value="feynman">Richard Feynman (Basitleştirir)</option>
                     <option value="machiavelli">Machiavelli (Strateji ve Güç)</option>
                     <option value="torvalds">Linus Torvalds (Pragmatik ve Pratik)</option>
                     <option value="aurelius">Marcus Aurelius (Stoacı ve Ahlaki)</option>
                     <option value="suntzu">Sun Tzu (Rekabet ve Strateji)</option>
                     <option value="kahneman">Daniel Kahneman (Önyargı Dedektifi)</option>
+                </select>
             </div>
 
-            <!-- USER INPUT -->
             <div class="control-group">
                 <label for="user-input">Tartışılacak Fikir:</label>
                 <textarea 
@@ -44,7 +42,6 @@
                 ></textarea>
             </div>
 
-            <!-- BUTTON -->
             <button id="submit-btn" onclick="askCouncil()">
                 Konseye Sun ➔
             </button>
