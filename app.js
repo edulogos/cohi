@@ -1,122 +1,109 @@
-// app.js dosyanızın en üstünde bu satırın olduğundan emin olun:
-const VERCEL_API_URL = "https://cohi-p46b.vercel.app/api/chat";
+// 1. ÜYELERİ SEÇMEYİ SAĞLAYAN FONKSİYON (TRIADS)
+function selectTriad(memberIds) {
+    // Önce tüm seçimleri temizle
+    const allCheckboxes = document.querySelectorAll('input[name="council-member"]');
+    allCheckboxes.forEach(cb => cb.checked = false);
 
+    // Seçilen triad üyelerini işaretle
+    memberIds.forEach(val => {
+        // HTML'de ID olmasa bile value üzerinden bulur
+        const checkbox = document.querySelector(`input[name="council-member"][value="${val}"]`);
+        if (checkbox) checkbox.checked = true;
+    });
+}
+
+// 2. KONSEYE SORU SORAN ANA FONKSİYON
 async function askCouncil() {
-    const userInput = document.getElementById("user-input").value;
-    const checkedCheckboxes = document.querySelectorAll('input[name="council-member"]:checked');
-    const selectedMembers = Array.from(checkedCheckboxes).map(cb => cb.value);
-
+    const submitBtn = document.getElementById("submit-btn");
+    const userInputField = document.getElementById("user-input");
+    const userInput = userInputField.value;
     const responseBox = document.getElementById("response-box");
     const loading = document.getElementById("loading");
 
-    // Seçim kontrolü
-    if (selectedMembers.length === 0) {
-        alert("Lütfen en az bir üye seçin.");
-        return;
-    }
+    // Giriş kontrolü
     if (!userInput.trim()) {
-        alert("Lütfen bir fikir yazın.");
+        alert("Lütfen bir fikir belirtin.");
         return;
     }
 
-    // Arayüzü temizle ve yükleniyor animasyonunu aç
-    loading.classList.remove("hidden");
-    responseBox.innerHTML = "";
+    // Seçili üyeleri al
+    const selectedMembers = Array.from(document.querySelectorAll('input[name="council-member"]:checked'))
+        .map(cb => cb.value);
+
+    if (selectedMembers.length === 0) {
+        alert("Lütfen en az bir konsey üyesi seçin.");
+        return;
+    }
+
+    // Arayüz Hazırlığı
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Yukarı kayma efekti
+    submitBtn.disabled = true; // Butonu kilitle
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = `<span>Düşünülüyor...</span>`;
+    
+    responseBox.innerHTML = ""; // Eski cevapları temizle
+    loading.classList.remove("hidden"); // Yükleniyor göster
 
     try {
-        // İSTEK GÖNDERME (Sonuç 'response' olarak tanımlandı)
-        const response = await fetch(VERCEL_API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                message: userInput,
-                members: selectedMembers
-            })
-        });
+        // Her üye için sırayla API'ye git
+        for (const member of selectedMembers) {
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ member, message: userInput })
+            });
+            
+            const data = await res.json();
+            if (data.error) throw new Error(data.error);
 
-        // 37. SATIR BURASI OLMALI: 'res' değil 'response' kullanılmalı
-        if (!response.ok) {
-            throw new Error("Sunucu yanıt vermedi.");
+            // Üye cevabını ekrana ekle
+            responseBox.innerHTML += `
+                <div class="member-response">
+                    <h3>${member.toUpperCase()}</h3>
+                    <p>${data.text}</p>
+                </div>
+            `;
         }
 
-        // VERİYİ ALMA (Yine 'response' kullanılmalı)
-        const data = await response.json();
+        // Tüm üyeler bitince Moderatör Özeti al
+        const modRes = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                member: 'moderator', 
+                message: userInput, 
+                context: responseBox.innerText 
+            })
+        });
+        const modData = await modRes.json();
         
-        // Sonuçları ekrana bas
-        displayResults(data);
+        responseBox.innerHTML += `
+            <div class="member-response moderator" style="border-top: 2px solid #38bdf8; background: rgba(56, 189, 248, 0.05);">
+                <h3 style="color: #38bdf8;">📜 KONSEY KARARI</h3>
+                <p>${modData.text}</p>
+            </div>
+        `;
 
     } catch (error) {
         console.error("Hata Detayı:", error);
         
         let friendlyMessage = `Bir sorun oluştu: ${error.message}`;
         
-        // Eğer hata mesajı içinde bütçe sınırıyla ilgili bir ibare varsa (402 veya LIMIT)
+        // Bütçe aşımı kontrolü
         if (error.message.includes("LIMIT_EXCEEDED") || error.message.includes("402")) {
             friendlyMessage = `
                 <div class="limit-warning">
-                    <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
                     <strong>Konsey Dinlenmeye Çekildi</strong><br>
-                    Bugünlük bilgelik kotamız dolmuştur (Günlük bütçe limitine ulaşıldı). <br>
-                    Lütfen yarın tekrar ziyaret edin.
+                    Bugünlük bilgelik kotamız dolmuştur. Yarın tekrar bekleriz.
                 </div>
             `;
         }
-
         responseBox.innerHTML = `<p class="error">${friendlyMessage}</p>`;
         
     } finally {
-        // İşlem bitince yükleniyor simgesini her durumda gizle
+        // İşlem bittiğinde her şeyi eski haline getir
         loading.classList.add("hidden");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
     }
-}
-
-// Sonuçları gösteren yardımcı fonksiyon (Eğer dosyanızda yoksa ekleyin)
-function displayResults(data) {
-    const responseBox = document.getElementById("response-box");
-    
-    // Konsey üyelerinin cevapları
-    let htmlContent = data.responses.map(res => `
-        <div class="member-response">
-            <h3>${res.member.toUpperCase()}</h3>
-            <p>${res.answer}</p>
-        </div>
-    `).join("");
-
-    // Nihai Karar (Verdict)
-    htmlContent += `
-        <div class="final-verdict">
-            <h3>Nihai Karar</h3>
-            <p>${data.verdict}</p>
-        </div>
-    `;
-
-    responseBox.innerHTML = htmlContent;
-}
-// Triad seçimi yapan fonksiyon
-function selectTriad(memberIds) {
-    // 1. Önce tüm checkbox seçimlerini kaldır
-    const allCheckboxes = document.querySelectorAll('input[name="council-member"]');
-    allCheckboxes.forEach(cb => cb.checked = false);
-
-    // 2. Seçilen triad üyelerini işaretle
-    memberIds.forEach(id => {
-        const checkbox = document.getElementById(id);
-        if (checkbox) {
-            checkbox.checked = true;
-        }
-    });
-
-    // Görsel bir geri bildirim için kısa bir parlam efekti (isteğe bağlı)
-    console.log("Seçilen Triad: " + memberIds.join(", "));
-}
-
-// app.js içine eklenebilir veya güncellenebilir
-function updateTriads() {
-    const triadButtons = document.querySelector('.triad-buttons');
-    triadButtons.innerHTML = `
-        <button type="button" class="triad-btn" onclick="selectTriad(['karpathy', 'sutskever', 'ada'])">AI & Gelecek</button>
-        <button type="button" class="triad-btn" onclick="selectTriad(['taleb', 'munger', 'kahneman'])">Risk & Karar</button>
-        <button type="button" class="triad-btn" onclick="selectTriad(['rams', 'torvalds', 'watts'])">Tasarım & Ürün</button>
-        <button type="button" class="triad-btn" onclick="selectTriad(['meadows', 'aristotle', 'feynman'])">Sistem & Bilim</button>
-    `;
 }
