@@ -73,7 +73,7 @@ function displayResults(data) {
 
     htmlContent += `
         <div class="final-verdict">
-            <h2>Nihai Karar (Final Verdict)</h2>
+            <h3>Nihai Karar</h3>
             <p>${data.verdict}</p>
         </div>
     `;
