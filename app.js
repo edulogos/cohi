@@ -92,3 +92,20 @@ function displayResults(data) {
 
     responseBox.innerHTML = htmlContent;
 }
+// Triad seçimi yapan fonksiyon
+function selectTriad(memberIds) {
+    // 1. Önce tüm checkbox seçimlerini kaldır
+    const allCheckboxes = document.querySelectorAll('input[name="council-member"]');
+    allCheckboxes.forEach(cb => cb.checked = false);
+
+    // 2. Seçilen triad üyelerini işaretle
+    memberIds.forEach(id => {
+        const checkbox = document.getElementById(id);
+        if (checkbox) {
+            checkbox.checked = true;
+        }
+    });
+
+    // Görsel bir geri bildirim için kısa bir parlam efekti (isteğe bağlı)
+    console.log("Seçilen Triad: " + memberIds.join(", "));
+}
