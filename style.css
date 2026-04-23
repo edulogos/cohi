@@ -106,7 +106,7 @@ button:hover {
 
 .output-panel h2 {
     font-family: 'Space Grotesk', sans-serif;
-    margin-top: 0;
+    margin-top: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 1rem;
 }
