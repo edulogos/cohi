@@ -19,19 +19,41 @@
     <main class="dashboard">
 
         <!-- INPUT PANEL -->
-        <section class="input-panel"> <div class="control-group">
-                <label for="member-select">Konsey Üyeleri (Çoklu seçim için CTRL/CMD basılı tutun):</label>
-
-                <select id="member-select" multiple>
-                    <option value="socrates">Sokrates (Varsayımları Yıkar)</option>
-                    <option value="feynman">Richard Feynman (Basitleştirir)</option>
-                    <option value="machiavelli">Machiavelli (Strateji ve Güç)</option>
-                    <option value="torvalds">Linus Torvalds (Pragmatik ve Pratik)</option>
-                    <option value="aurelius">Marcus Aurelius (Stoacı ve Ahlaki)</option>
-                    <option value="suntzu">Sun Tzu (Rekabet ve Strateji)</option>
-                    <option value="kahneman">Daniel Kahneman (Önyargı Dedektifi)</option>
-                </select>
-            </div>
+        <section class="input-panel"> 
+            
+            <div class="control-group">
+    <label>Konsey Üyelerini Seçin:</label>
+    <div id="member-checkboxes" class="checkbox-grid">
+        <label class="cb-container">
+            <input type="checkbox" name="council-member" value="socrates">
+            <span class="checkmark"></span> Sokrates (Varsayımları Yıkar)
+        </label>
+        <label class="cb-container">
+            <input type="checkbox" name="council-member" value="feynman">
+            <span class="checkmark"></span> Richard Feynman (Basitleştirir)
+        </label>
+        <label class="cb-container">
+            <input type="checkbox" name="council-member" value="machiavelli">
+            <span class="checkmark"></span> Machiavelli (Strateji ve Güç)
+        </label>
+        <label class="cb-container">
+            <input type="checkbox" name="council-member" value="torvalds">
+            <span class="checkmark"></span> Linus Torvalds (Pragmatik)
+        </label>
+        <label class="cb-container">
+            <input type="checkbox" name="council-member" value="aurelius">
+            <span class="checkmark"></span> Marcus Aurelius (Stoacı)
+        </label>
+        <label class="cb-container">
+            <input type="checkbox" name="council-member" value="suntzu">
+            <span class="checkmark"></span> Sun Tzu (Strateji)
+        </label>
+        <label class="cb-container">
+            <input type="checkbox" name="council-member" value="kahneman">
+            <span class="checkmark"></span> Daniel Kahneman (Psikoloji)
+        </label>
+    </div>
+</div>
 
             <div class="control-group">
                 <label for="user-input">Tartışılacak Fikir:</label>
