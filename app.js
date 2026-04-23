@@ -1,66 +1,49 @@
+const VERCEL_API_URL = "https://cohi-p46b.vercel.app/api/chat";
+
 function selectTriad(memberIds) {
     const allCheckboxes = document.querySelectorAll('input[name="council-member"]');
     allCheckboxes.forEach(cb => cb.checked = false);
-    memberIds.forEach(val => {
-        const checkbox = document.querySelector(`input[name="council-member"][value="${val}"]`);
+    memberIds.forEach(id => {
+        const checkbox = document.getElementById(id);
         if (checkbox) checkbox.checked = true;
     });
 }
 
 async function askCouncil() {
-    const submitBtn = document.getElementById("submit-btn");
-    const userInputField = document.getElementById("user-input");
-    const userInput = userInputField.value;
+    const userInput = document.getElementById("user-input").value;
+    const checkedCheckboxes = document.querySelectorAll('input[name="council-member"]:checked');
+    const selectedMembers = Array.from(checkedCheckboxes).map(cb => cb.value);
     const responseBox = document.getElementById("response-box");
     const loading = document.getElementById("loading");
 
-    if (!userInput.trim()) {
-        alert("Lütfen bir fikir belirtin.");
-        return;
-    }
-
-    const selectedMembers = Array.from(document.querySelectorAll('input[name="council-member"]:checked'))
-        .map(cb => cb.value);
-
     if (selectedMembers.length === 0) {
-        alert("Lütfen en az bir konsey üyesi seçin.");
+        alert("Lütfen en az bir üye seçin.");
+        return;
+    }
+    if (!userInput.trim()) {
+        alert("Lütfen bir fikir yazın.");
         return;
     }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    submitBtn.disabled = true;
-    const originalBtnText = submitBtn.innerHTML;
-    submitBtn.innerHTML = `<span>Düşünülüyor...</span>`;
-    responseBox.innerHTML = "";
     loading.classList.remove("hidden");
+    responseBox.innerHTML = "";
 
     try {
-        const res = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ members: selectedMembers, message: userInput })
+        const response = await fetch(VERCEL_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: userInput,
+                members: selectedMembers
+            })
         });
 
-        const data = await res.json();
-        if (data.error) throw new Error(data.error);
-
-        data.responses.forEach(r => {
-            responseBox.innerHTML += `
-                <div class="member-response">
-                    <h3>${r.member.toUpperCase()}</h3>
-                    <p>${r.answer}</p>
-                </div>
-            `;
-        });
-
-        if (data.verdict) {
-            responseBox.innerHTML += `
-                <div class="member-response moderator" style="border-top: 2px solid #38bdf8; background: rgba(56, 189, 248, 0.05);">
-                    <h3 style="color: #38bdf8;">📜 KONSEY KARARI</h3>
-                    <p>${data.verdict}</p>
-                </div>
-            `;
+        if (!response.ok) {
+            throw new Error("Sunucu yanıt vermedi.");
         }
+
+        const data = await response.json();
+        displayResults(data);
 
     } catch (error) {
         console.error("Hata Detayı:", error);
@@ -76,7 +59,24 @@ async function askCouncil() {
         responseBox.innerHTML = `<p class="error">${friendlyMessage}</p>`;
     } finally {
         loading.classList.add("hidden");
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
     }
+}
+
+function displayResults(data) {
+    const responseBox = document.getElementById("response-box");
+    let htmlContent = data.responses.map(res => `
+        <div class="member-response">
+            <h3>${res.member.toUpperCase()}</h3>
+            <p>${res.answer}</p>
+        </div>
+    `).join("");
+
+    htmlContent += `
+        <div class="final-verdict">
+            <h2>Nihai Karar (Final Verdict)</h2>
+            <p>${data.verdict}</p>
+        </div>
+    `;
+
+    responseBox.innerHTML = htmlContent;
 }
