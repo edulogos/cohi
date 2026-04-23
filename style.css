@@ -256,3 +256,42 @@ button:hover {
     color: white;
     box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
 }
+
+/* 1. Ana kutunun içeriği en tepeden başlatmasını sağlıyoruz */
+.response-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* İçeriği yukarı yaslar */
+    padding-top: 0 !important;   /* Üst iç boşluğu sıfırlar */
+    gap: 15px;                   /* Üyeler arasında düzenli boşluk bırakır */
+}
+
+/* 2. Her üye kartının kendi içindeki boşluklarını düzenliyoruz */
+.member-response {
+    margin-top: 0 !important;    /* Kartın üst dış boşluğunu siler */
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Ayırıcı ince bir çizgi */
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* İlk üye kartının üstündeki çizgiyi kaldırarak tam yapışma sağlarız */
+.member-response:first-child {
+    border-top: none;
+}
+
+/* 3. İsim başlıklarının (Sokrates vb.) yukarı yapışmasını sağlıyoruz */
+.member-response h3 {
+    margin-top: 0 !important;    /* Başlığın üstündeki tarayıcı boşluğunu siler */
+    margin-bottom: 8px;          /* Sadece alt metinle arasına mesafe koyar */
+    color: #4a90e2;              /* Başlık rengini belirginleştirir */
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
+
+/* 4. Çıktı panelinin genel başlığını ve iç boşluğunu da daraltalım */
+.output-panel h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(74, 144, 226, 0.3);
+}
