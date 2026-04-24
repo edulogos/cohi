@@ -137,13 +137,50 @@ button:hover {
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(255, 255, 255, 0.1);
-  border-top-color: var(--accent-glow);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+  position: relative;
+  width: 100px;
+  height: 100px;
   margin: 0 auto 1rem auto;
+}
+
+.spinner::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: var(--accent-glow);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--accent-glow), 0 0 30px var(--accent-glow);
+  animation: pulse-center 1.5s ease-in-out infinite;
+}
+
+.thought-particle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  border-top-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: rotate-thought 2s linear infinite;
+}
+
+.particle-1 { animation-delay: 0s; width: 100%; height: 100%; top: 0; left: 0; }
+.particle-2 { animation-delay: -0.5s; width: 80%; height: 80%; top: 10%; left: 10%; }
+.particle-3 { animation-delay: -1s; width: 60%; height: 60%; top: 20%; left: 20%; }
+.particle-4 { animation-delay: -1.5s; width: 40%; height: 40%; top: 30%; left: 30%; }
+
+@keyframes rotate-thought {
+  0% { transform: rotate(0deg); border-top-color: rgba(255, 255, 255, 0.1); }
+  50% { border-top-color: var(--accent-glow); }
+  100% { transform: rotate(360deg); border-top-color: rgba(255, 255, 255, 0.1); }
+}
+
+@keyframes pulse-center {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
 }
 
 /* Checkbox grid - scroll ile */
@@ -263,10 +300,6 @@ button:hover {
   0% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.4); }
   70% { box-shadow: 0 0 0 10px rgba(255, 165, 0, 0); }
   100% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0); }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
 }
 
 .triads-container {
