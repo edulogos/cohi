@@ -228,7 +228,7 @@ button:hover {
   transform: rotate(45deg);
 }
 
-/* Member trait (parantez içi metin) */
+/* Member trait (parantez içi metin) - checkbox ile aynı hizada */
 .member-trait {
   color: #94a3b8;
   font-size: 0.85em;
@@ -236,6 +236,8 @@ button:hover {
   font-weight: normal;
   opacity: 0.7;
   font-style: italic;
+  align-self: center;
+  display: inline-flex;
 }
 
 .limit-warning {
