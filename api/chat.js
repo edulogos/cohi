@@ -35,6 +35,39 @@ export default async function handler(req, res) {
         rams: { prompt: "Sen Dieter Rams'sın. Tasarımın netliği ve kullanıcı deneyimine odaklan. Yanıtın TÜRKÇE olsun.", freeModel: "google/gemini-2.0-flash-lite:free" }
     };
 
+    if (req.headers['content-type'] !== 'application/json') {
+        return res.status(400).json({ error: "Geçersiz Content-Type. application/json gerekli." });
+    }
+
+    if (message !== undefined && typeof message !== 'string') {
+        return res.status(400).json({ error: "message parametresi string olmalıdır." });
+    }
+
+    if (message && message.length > 2000) {
+        return res.status(400).json({ error: "Mesaj 2000 karakteri geçemez." });
+    }
+
+    if (message) {
+        const dangerousPatterns = [/<script/i, /javascript:/i, /on\w+\s*=/i];
+        if (dangerousPatterns.some(pattern => pattern.test(message))) {
+            return res.status(400).json({ error: "Mesaj içinde izin verilmeyen karakterler tespit edildi." });
+        }
+    }
+
+    if (members !== undefined) {
+        if (!Array.isArray(members)) {
+            return res.status(400).json({ error: "members parametresi array olmalıdır." });
+        }
+        if (members.length > 18) {
+            return res.status(400).json({ error: "En fazla 18 üye seçilebilir." });
+        }
+        const validMemberIds = Object.keys(councilMembers);
+        const invalidMembers = members.filter(m => !validMemberIds.includes(m));
+        if (invalidMembers.length > 0) {
+            return res.status(400).json({ error: `Geçersiz üye: ${invalidMembers.join(', ')}` });
+        }
+    }
+
     async function callOpenRouter(modelId, sysPrompt, userMsg) {
         return fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
@@ -79,7 +112,7 @@ export default async function handler(req, res) {
         const responses = await Promise.all(
             membersToUse.map(async (key) => {
                 if (!councilMembers[key]) return { member: key, answer: "Üye bulunamadı." };
-                const answer = await getResponseWithFallback(key, message);
+                const answer = await getResponseWithFallback(key, message || '');
                 return { member: key, answer };
             })
         );
@@ -97,6 +130,6 @@ export default async function handler(req, res) {
         res.status(200).json({ responses, verdict });
     } catch (error) {
         console.error("Genel Backend Hatası:", error);
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: "Sunucu hatası oluştu." });
     }
 }
