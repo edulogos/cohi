@@ -234,6 +234,7 @@ button:hover {
   align-self: center;
   line-height: 1;
   margin-right: 4px;
+  vertical-align: -webkit-baseline-middle;
 }
 
 /* Member trait - aligned with checkbox */
@@ -245,6 +246,7 @@ button:hover {
   font-style: italic;
   align-self: center;
   line-height: 1;
+  vertical-align: -webkit-baseline-middle;
 }
 
 .limit-warning {
