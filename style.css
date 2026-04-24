@@ -228,6 +228,12 @@ button:hover {
   transform: rotate(45deg);
 }
 
+/* Member name and trait - both aligned */
+.cb-container > span:first-of-type {
+  align-self: center;
+  line-height: 1;
+}
+
 /* Member trait (parantez içi metin) - checkbox ile aynı hizada */
 .member-trait {
   color: #94a3b8;
@@ -237,7 +243,7 @@ button:hover {
   opacity: 0.7;
   font-style: italic;
   align-self: center;
-  display: inline-flex;
+  line-height: 1;
 }
 
 .limit-warning {
@@ -318,7 +324,7 @@ button:hover {
 
 .member-response p {
   margin: 0;
-  line-height: 1.5;
+  line-height: -height;
 }
 
 .output-panel {
