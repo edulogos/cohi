@@ -228,7 +228,7 @@ button:hover {
   transform: rotate(45deg);
 }
 
-/* Member name and trait - both aligned */
+/* Member name and trait - both aligned with checkbox */
 .cb-container > span:first-of-type {
   align-self: center;
   line-height: 1;
@@ -324,7 +324,7 @@ button:hover {
 
 .member-response p {
   margin: 0;
-  line-height: -height;
+  line-height: 1.5;
 }
 
 .output-panel {
