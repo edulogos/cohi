@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <title>Yüksek Zeka Konseyi (COHI)</title>
     <meta name="description" content="Çoklu ajanlı Yapay zeka tartışma aracı. Mimari, Strateji, Etik, Hata Ayıklama, Yenilik, Çatışma, Karmaşıklık, Risk, Sevkiyat, Ürün, Kurucu, Yapay Zeka, Yapay Zeka Ürün, Yapay Zeka Güvenlik, Karar, Sistemler, Belirsizlik, Tasarım, Ekonomi, Yanlılık alanlarında uzmanlaşmış kişilerin görüşlerini alabilirsiniz." />
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/cohi/favicon.ico">
     <meta name="theme-color" content="#000000" />
-    
-    
+
+
     <meta property="og:title" content="Yüksek Zeka Konseyi (COHI)" />
     <meta property="og:description" content="Çoklu ajanlı Yapay zeka tartışma aracı. Mimari, Strateji, Etik, Hata Ayıklama, Yenilik, Çatışma, Karmaşıklık, Risk, Sevkiyat, Ürün, Kurucu, Yapay Zeka, Yapay Zeka Ürün, Yapay Zeka Güvenlik, Karar, Sistemler, Belirsizlik, Tasarım, Ekonomi, Yanlılık alanlarında uzmanlaşmış kişilerin görüşlerini alabilirsiniz." />
     <meta property="og:image" content="/cohi/og.png" />
     <meta property="og:type" content="website" />
-    
+
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Yüksek Zeka Konseyi (COHI)" />
     <meta name="twitter:description" content="Çoklu ajanlı Yapay zeka tartışma aracı. Mimari, Strateji, Etik, Hata Ayıklama, Yenilik, Çatışma, Karmaşıklık, Risk, Sevkiyat, Ürün, Kurucu, Yapay Zeka, Yapay Zeka Ürün, Yapay Zeka Güvenlik, Karar, Sistemler, Belirsizlik, Tasarım, Ekonomi, Yanlılık alanlarında uzmanlaşmış kişilerin görüşlerini alabilirsiniz." />
     <meta name="twitter:image" content="/cohi/og.png" />
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -36,7 +36,7 @@
 
     <main class="dashboard">
 
-        <section class="input-panel"> 
+        <section class="input-panel">
             <div class="triads-container">
                 <p>Uzmanlık Alanları Seçimi</p>
                 <div class="triad-buttons">
@@ -44,7 +44,7 @@
                     <button type="button" class="triad-btn" onclick="selectTriad(['suntzu', 'machiavelli', 'aurelius'])" title="Arazi + Teşvikler + Ahlaki Temel">Strateji</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['aurelius', 'socrates', 'laotzu'])" title="Görev + Sorgulama + Doğal Düzen">Etik</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['feynman', 'socrates', 'ada'])" title="Aşağıdan Yukarıya + Varsayım Testi + Biçimsel Doğrulama">Hata Ayıklama</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['ada', 'laotzu', 'aristotle'])" title="Soyutlama + Ortaya Çıkış + Sınıflandırma">Yenilik</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['ada', 'laotzu', 'aristotle'])" title="Soyutlama + ortaya Çıkış + Sınıflandırma">Yenilik</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['socrates', 'machiavelli', 'aurelius'])" title="Ortaya Çıkar + Tahmin Et + Temelle">Çatışma</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['laotzu', 'aristotle', 'ada'])" title="Ortaya Çıkış + Kategoriler + Biçimsellik">Karmaşıklık</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['suntzu', 'aurelius', 'feynman'])" title="Tehditler + Dayanıklılık + Ampirik Doğrulama">Risk</button>
@@ -55,42 +55,46 @@
                     <button type="button" class="triad-btn" onclick="selectTriad(['karpathy', 'torvalds', 'machiavelli'])" title="ML Yeteneği + Sevkiyat Pragmatizmi + Teşvikler">YZ-Ürün</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['sutskever', 'aurelius', 'socrates'])" title="Güvenlik Sınırı + Ahlaki Netlik + Varsayım Yıkımı">YZ-Güvenlik</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['kahneman', 'munger', 'aurelius'])" title="Yanlılık Tespiti + Tersine Çevirme + Ahlaki Netlik">Karar</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['meadows', 'laotzu', 'aristotle'])" title="Geri Bildirim Döngüleri + Ortaya Çıkış + Kategoriler">Sistemler</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['meadows', 'laotzu', 'aristotle'])" title="Geri Bildirim Döngüleri + ortaya Çıkış + Kategoriler">Sistemler</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['taleb', 'suntzu', 'sutskever'])" title="Kuyruk Riski + Arazi + Ölçeklenebilirlik">Belirsizlik</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['rams', 'torvalds', 'watts'])" title="Kullanıcı Netliği + Sürdürülebilirlik + Yeniden Çerçeveleme">Tasarım</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['munger', 'machiavelli', 'suntzu'])" title="Modeller + Teşvikler + Rekabet">Ekonomi</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['kahneman', 'socrates', 'watts'])" title="Bilişsel Yanlılık + Varsayım Yıkımı + Çerçeve Denetimi">Yanlılık</button>
                 </div>
             </div>
-            
+
             <div class="triads-container control-group">
-                <p>Konsey Üyelerini Seçin</p>
+                <p>Konsey Üyelerini Seçin <span id="selection-count" class="t2">(0/3 üye seçildi)</span></p>
                 <div id="member-checkboxes" class="checkbox-grid">
-                    <label class="cb-container"><input type="checkbox" id="socrates" name="council-member" value="socrates"><span class="checkmark"></span><span class="members">Sokrates</span> <span class="member-trait">(Sorgulama)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="aurelius" name="council-member" value="aurelius"><span class="checkmark"></span><span class="members">Marcus Aurelıus</span> <span class="member-trait">(Stoacılık)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="aristotle" name="council-member" value="aristotle"><span class="checkmark"></span><span class="members">Arısto</span> <span class="member-trait">(Mantık)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="laotzu" name="council-member" value="laotzu"><span class="checkmark"></span><span class="members">Lao Tzu</span> <span class="member-trait">(Doğal Akış)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="suntzu" name="council-member" value="suntzu"><span class="checkmark"></span><span class="members">Sun Tzu</span> <span class="member-trait">(Savaş Sanatı)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="machiavelli" name="council-member" value="machiavelli"><span class="checkmark"></span><span class="members">Machıavellı</span> <span class="member-trait">(Güç)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="musashi" name="council-member" value="musashi"><span class="checkmark"></span><span class="members">Mıyamoto Musashı</span> <span class="member-trait">(Zamanlama)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="munger" name="council-member" value="munger"><span class="checkmark"></span><span class="members">Charlıe Munger</span> <span class="member-trait">(Zihinsel Modeller)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="feynman" name="council-member" value="feynman"><span class="checkmark"></span><span class="members">Rıchard Feynman</span> <span class="member-trait">(İlk Prensipler)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="ada" name="council-member" value="ada"><span class="checkmark"></span><span class="members">Ada Lovelace</span> <span class="member-trait">(Algoritmalar)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="torvalds" name="council-member" value="torvalds"><span class="checkmark"></span><span class="members">Lınus Torvalds</span> <span class="member-trait">(Pragmatizm)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="karpathy" name="council-member" value="karpathy"><span class="checkmark"></span><span class="members">Andrej Karpathy</span> <span class="member-trait">(Uygulamalı AI)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="sutskever" name="council-member" value="sutskever"><span class="checkmark"></span><span class="members">Ilya Sutskever</span> <span class="member-trait">(AI Sınırları)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="kahneman" name="council-member" value="kahneman"><span class="checkmark"></span><span class="members">Danıel Kahneman</span> <span class="member-trait">(Karar Bilimi)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="taleb" name="council-member" value="taleb"><span class="checkmark"></span><span class="members">Nassım Taleb</span> <span class="member-trait">(Belirsizlik)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="meadows" name="council-member" value="meadows"><span class="checkmark"></span><span class="members">Donella Meadows</span> <span class="member-trait">(Sistemler)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="rams" name="council-member" value="rams"><span class="checkmark"></span><span class="members">Dıeter Rams</span> <span class="member-trait">(Minimalizm)</span></label>
-                    <label class="cb-container"><input type="checkbox" id="watts" name="council-member" value="watts"><span class="checkmark"></span><span class="members">Alan Watts</span> <span class="member-trait">(Reframing)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="socrates" name="council-member" value="socrates"><span class="checkmark"></span><span class="members">Sokrates</span> <span class="member-trait">(Sorgulama)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="aurelius" name="council-member" value="aurelius"><span class="checkmark"></span><span class="members">Marcus Aurelıus</span> <span class="member-trait">(Stoacılık)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="aristotle" name="council-member" value="aristotle"><span class="checkmark"></span><span class="members">Arısto</span> <span class="member-trait">(Mantık)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="laotzu" name="council-member" value="laotzu"><span class="checkmark"></span><span class="members">Lao Tzu</span> <span class="member-trait">(Doğal Akış)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="suntzu" name="council-member" value="suntzu"><span class="checkmark"></span><span class="members">Sun Tzu</span> <span class="member-trait">(Savaş Sanatı)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="machiavelli" name="council-member" value="machiavelli"><span class="checkmark"></span><span class="members">Machıavellı</span> <span class="member-trait">(Güç)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="musashi" name="council-member" value="musashi"><span class="checkmark"></span><span class="members">Mıyamoto Musashı</span> <span class="member-trait">(Zamanlama)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="munger" name="council-member" value="munger"><span class="checkmark"></span><span class="members">Charlıe Munger</span> <span class="member-trait">(Zihinsel Modeller)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="feynman" name="council-member" value="feynman"><span class="checkmark"></span><span class="members">Rıchard Feynman</span> <span class="member-trait">(İlk Prensipler)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="ada" name="council-member" value="ada"><span class="checkmark"></span><span class="members">Ada Lovelace</span> <span class="member-trait">(Algoritmalar)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="torvalds" name="council-member" value="torvalds"><span class="checkmark"></span><span class="members">Lınus Torvalds</span> <span class="member-trait">(Pragmatizm)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="karpathy" name="council-member" value="karpathy"><span class="checkmark"></span><span class="members">Andrej Karpathy</span> <span class="member-trait">(Uygulamalı AI)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="sutskever" name="council-member" value="sutskever"><span class="checkmark"></span><span class="members">Ilya Sutskever</span> <span class="member-trait">(AI Sınırları)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="kahneman" name="council-member" value="kahneman"><span class="checkmark"></span><span class="members">Danıel Kahneman</span> <span class="member-trait">(Karar Bilimi)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="taleb" name="council-member" value="taleb"><span class="checkmark"></span><span class="members">Nassım Taleb</span> <span class="member-trait">(Belirsizlik)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="meadows" name="council-member" value="meadows"><span class="checkmark"></span><span class="members">Donella Meadows</span> <span class="member-trait">(Sistemler)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="rams" name="council-member" value="rams"><span class="checkmark"></span><span class="members">Dıeter Rams</span> <span class="member-trait">(Minimalizm)</span></label>
+                    <label class="cb-container"><input type="checkbox" class="member-checkbox" id="watts" name="council-member" value="watts"><span class="checkmark"></span><span class="members">Alan Watts</span> <span class="member-trait">(Reframing)</span></label>
+                </div>
+                <div id="selection-warning" class="selection-warning hidden">
+                    <span class="warning-icon">⚠</span>
+                    <span class="warning-text">En fazla 3 seçim yapılabilir !</span>
                 </div>
             </div>
 
             <div class="triads-container control-group">
                 <p><span class="t1">Tartışılacak Fikrini Yaz !</span><span id="query-count" class="t2">(5 sorgu hakkınız bulunmakta)</span></p>
-                <textarea 
-                    id="user-input" 
+                <textarea
+                    id="user-input"
                     rows="5"
                     placeholder="Startup için hangi iş modelini seçmeliyim? | Post-truth nedir? | İnsan ne kadar rasyoneldir?"
                 ></textarea>
