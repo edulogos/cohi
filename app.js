@@ -1,12 +1,27 @@
 const VERCEL_API_URL = "https://cohi-p46b.vercel.app/api/chat";
 
+const MAX_MEMBERS = 3;
+let userManuallySelected = false;
+
 function selectTriad(memberIds) {
+    userManuallySelected = false;
+
     const allCheckboxes = document.querySelectorAll('input[name="council-member"]');
-    allCheckboxes.forEach(cb => cb.checked = false);
+    allCheckboxes.forEach(cb => {
+        cb.checked = false;
+        cb.closest('.cb-container').classList.remove('manual-select');
+    });
+
     memberIds.forEach(id => {
         const checkbox = document.getElementById(id);
-        if (checkbox) checkbox.checked = true;
+        if (checkbox) {
+            checkbox.checked = true;
+            checkbox.closest('.cb-container').classList.add('manual-select');
+        }
     });
+
+    hideSelectionWarning();
+    updateSelectionCount();
 
     const allTriadBtns = document.querySelectorAll('.triad-btn');
     allTriadBtns.forEach(btn => btn.classList.remove('selected'));
@@ -17,6 +32,70 @@ function selectTriad(memberIds) {
         return btnMemberIds.length === memberIds.length && btnMemberIds.every(id => memberIds.includes(id));
     });
     if (clickedBtn) clickedBtn.classList.add('selected');
+}
+
+function handleMemberCheckboxClick(event) {
+    const checkbox = event.target;
+    if (!checkbox.classList.contains('member-checkbox')) return;
+
+    const checkedCount = document.querySelectorAll('input[name="council-member"]:checked').length;
+
+    if (checkedCount > MAX_MEMBERS) {
+        checkbox.checked = false;
+        showSelectionWarning();
+        return;
+    }
+
+    if (checkbox.checked) {
+        checkbox.closest('.cb-container').classList.add('manual-select');
+    } else {
+        checkbox.closest('.cb-container').classList.remove('manual-select');
+    }
+
+    userManuallySelected = true;
+    hideTriadSelection();
+    hideSelectionWarning();
+    updateSelectionCount();
+}
+
+function showSelectionWarning() {
+    const warning = document.getElementById('selection-warning');
+    if (warning) {
+        warning.classList.remove('hidden');
+        setTimeout(() => {
+            hideSelectionWarning();
+        }, 3000);
+    }
+}
+
+function hideSelectionWarning() {
+    const warning = document.getElementById('selection-warning');
+    if (warning) {
+        warning.classList.add('hidden');
+    }
+}
+
+function hideTriadSelection() {
+    const allTriadBtns = document.querySelectorAll('.triad-btn');
+    allTriadBtns.forEach(btn => btn.classList.remove('selected'));
+}
+
+function updateSelectionCount() {
+    const checkedCount = document.querySelectorAll('input[name="council-member"]:checked').length;
+    const queryCountEl = document.getElementById('query-count');
+
+    if (checkedCount === 0) {
+        queryCountEl.textContent = `(5 sorgu hakkınız bulunmakta)`;
+    } else {
+        queryCountEl.textContent = `(${checkedCount}/3 üye seçildi)`;
+    }
+}
+
+function setupCheckboxListeners() {
+    const checkboxes = document.querySelectorAll('.member-checkbox');
+    checkboxes.forEach(cb => {
+        cb.addEventListener('click', handleMemberCheckboxClick);
+    });
 }
 
 const DAILY_LIMIT = 5;
@@ -32,7 +111,12 @@ function updateQueryCountDisplay() {
         queryCountEl.classList.add('exhausted');
         document.getElementById('submit-btn').disabled = true;
     } else {
-        queryCountEl.textContent = `(${limitCheck.remaining} sorgu hakkınız bulunmakta)`;
+        const checkedCount = document.querySelectorAll('input[name="council-member"]:checked').length;
+        if (checkedCount > 0) {
+            queryCountEl.textContent = `(${checkedCount}/3 üye seçildi)`;
+        } else {
+            queryCountEl.textContent = `(${limitCheck.remaining} sorgu hakkınız bulunmakta)`;
+        }
         queryCountEl.classList.remove('exhausted');
     }
 }
@@ -97,6 +181,10 @@ async function askCouncil() {
         alert("Lütfen en az bir üye seçin.");
         return;
     }
+    if (selectedMembers.length > MAX_MEMBERS) {
+        alert(`En fazla ${MAX_MEMBERS} üye seçebilirsiniz.`);
+        return;
+    }
     if (!userInput.trim()) {
         alert("Lütfen bir fikir yazın.");
         return;
@@ -113,6 +201,11 @@ async function askCouncil() {
 
     loading.classList.remove("hidden");
     responseBox.innerHTML = "";
+
+    const loadingText = loading.querySelector('p');
+    if (loadingText) {
+        loadingText.innerHTML = `Zihinler tartışıyor<span class="loading-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>`;
+    }
 
 
     try {
@@ -187,22 +280,67 @@ function displayResults(data) {
     responseBox.innerHTML = '';
 
 
-    data.responses.forEach(res => {
-        const div = document.createElement('div');
-        div.className = 'member-response';
+    if (data.round1) {
+        const round1Section = document.createElement('div');
+        round1Section.className = 'deliberation-round';
+        round1Section.innerHTML = '<h4>Round 1: Bağımsız Analiz</h4>';
+        data.round1.forEach(res => {
+            const div = document.createElement('div');
+            div.className = 'member-response';
 
-        const h3 = document.createElement('h3');
-        h3.textContent = res.member.toUpperCase();
+            const h3 = document.createElement('h3');
+            h3.textContent = res.member.toUpperCase();
 
-        const content = document.createElement('div');
-        content.className = 'member-content';
-        content.innerHTML = parseMarkdown(res.answer);
+            const content = document.createElement('div');
+            content.className = 'member-content';
+            content.innerHTML = parseMarkdown(res.answer);
 
+            div.appendChild(h3);
+            div.appendChild(content);
+            round1Section.appendChild(div);
+        });
+        responseBox.appendChild(round1Section);
+    }
 
-        div.appendChild(h3);
-        div.appendChild(content);
-        responseBox.appendChild(div);
-    });
+    if (data.round2) {
+        const round2Section = document.createElement('div');
+        round2Section.className = 'deliberation-round';
+        round2Section.innerHTML = '<h4>Round 2: Karşılıklı Sorgulama</h4>';
+        data.round2.forEach(res => {
+            const div = document.createElement('div');
+            div.className = 'member-response cross-exam';
+
+            const h3 = document.createElement('h3');
+            h3.textContent = res.member.toUpperCase();
+
+            const content = document.createElement('div');
+            content.className = 'member-content';
+            content.innerHTML = parseMarkdown(res.answer);
+
+            div.appendChild(h3);
+            div.appendChild(content);
+            round2Section.appendChild(div);
+        });
+        responseBox.appendChild(round2Section);
+    }
+
+    if (data.responses && !data.round1) {
+        data.responses.forEach(res => {
+            const div = document.createElement('div');
+            div.className = 'member-response';
+
+            const h3 = document.createElement('h3');
+            h3.textContent = res.member.toUpperCase();
+
+            const content = document.createElement('div');
+            content.className = 'member-content';
+            content.innerHTML = parseMarkdown(res.answer);
+
+            div.appendChild(h3);
+            div.appendChild(content);
+            responseBox.appendChild(div);
+        });
+    }
 
 
     const verdictDiv = document.createElement('div');
@@ -235,5 +373,8 @@ function showIntroBoxIfNeeded() {
     }
 }
 
-window.addEventListener("DOMContentLoaded", showIntroBoxIfNeeded);
-window.addEventListener("DOMContentLoaded", updateQueryCountDisplay);
+window.addEventListener("DOMContentLoaded", () => {
+    showIntroBoxIfNeeded();
+    updateQueryCountDisplay();
+    setupCheckboxListeners();
+});
