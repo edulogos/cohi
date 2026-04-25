@@ -241,7 +241,18 @@ function displayResults(data) {
     const responseBox = document.getElementById("response-box");
     responseBox.innerHTML = '';
 
-    if (data.round1 && data.round2) {
+    if (!data) {
+        const p = document.createElement('p');
+        p.className = 'error';
+        p.textContent = 'Sunucu yanıt vermedi.';
+        responseBox.appendChild(p);
+        return;
+    }
+
+    const hasRound1AndRound2 = Array.isArray(data.round1) && Array.isArray(data.round2);
+    const hasResponses = Array.isArray(data.responses);
+
+    if (hasRound1AndRound2) {
         const round1Div = document.createElement('div');
         round1Div.className = 'deliberation-round';
         const round1Title = document.createElement('h4');
@@ -253,11 +264,11 @@ function displayResults(data) {
             memberDiv.className = 'member-response';
 
             const h3 = document.createElement('h3');
-            h3.textContent = res.member.toUpperCase();
+            h3.textContent = (res.member || '').toUpperCase();
 
             const content = document.createElement('div');
             content.className = 'member-content';
-            content.innerHTML = parseMarkdown(res.answer);
+            content.innerHTML = parseMarkdown(res.answer || '');
 
             memberDiv.appendChild(h3);
             memberDiv.appendChild(content);
@@ -277,11 +288,11 @@ function displayResults(data) {
             memberDiv.className = 'member-response cross-exam';
 
             const h3 = document.createElement('h3');
-            h3.textContent = res.member.toUpperCase();
+            h3.textContent = (res.member || '').toUpperCase();
 
             const content = document.createElement('div');
             content.className = 'member-content';
-            content.innerHTML = parseMarkdown(res.answer);
+            content.innerHTML = parseMarkdown(res.answer || '');
 
             memberDiv.appendChild(h3);
             memberDiv.appendChild(content);
@@ -298,24 +309,23 @@ function displayResults(data) {
 
         const verdictContent = document.createElement('div');
         verdictContent.className = 'verdict-content';
-        verdictContent.innerHTML = parseMarkdown(data.verdict);
+        verdictContent.innerHTML = parseMarkdown(data.verdict || '');
 
         verdictDiv.appendChild(verdictH3);
         verdictDiv.appendChild(verdictContent);
         responseBox.appendChild(verdictDiv);
 
-    } else if (data.responses) {
+    } else if (hasResponses) {
         data.responses.forEach(res => {
             const div = document.createElement('div');
             div.className = 'member-response';
 
             const h3 = document.createElement('h3');
-            h3.textContent = res.member.toUpperCase();
+            h3.textContent = (res.member || '').toUpperCase();
 
             const content = document.createElement('div');
             content.className = 'member-content';
-            content.innerHTML = parseMarkdown(res.answer);
-
+            content.innerHTML = parseMarkdown(res.answer || '');
 
             div.appendChild(h3);
             div.appendChild(content);
@@ -331,12 +341,16 @@ function displayResults(data) {
 
         const verdictContent = document.createElement('div');
         verdictContent.className = 'verdict-content';
-        verdictContent.innerHTML = parseMarkdown(data.verdict);
-
+        verdictContent.innerHTML = parseMarkdown(data.verdict || '');
 
         verdictDiv.appendChild(verdictH3);
         verdictDiv.appendChild(verdictContent);
         responseBox.appendChild(verdictDiv);
+    } else {
+        const p = document.createElement('p');
+        p.className = 'error';
+        p.textContent = 'Beklenmeyen sunucu yanıtı.';
+        responseBox.appendChild(p);
     }
 }
 
