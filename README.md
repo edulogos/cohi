@@ -4,8 +4,8 @@
   <img src="assets/header.jpeg" alt="Council of High Intelligence" width="800">
 </p>
 
-## 🚀 Web Uygulaması (Demo)
-- <a href="https://edulogos.github.io/cohi/">Yüksek Zeka Konseyi 🔗</a>
+## 🔗 Web Uygulaması (Demo)
+- <a href="https://edulogos.github.io/cohi/">Yüksek Zeka Konseyi</a>
 
 ## 🚀 Bu Fork ile Gelen Yenilikler
 - Vercel ile AI API Maskeleme
