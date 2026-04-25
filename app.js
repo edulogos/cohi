@@ -130,6 +130,27 @@ async function askCouncil() {
     }
 }
 
+function parseMarkdown(text) {
+    if (!text) return '';
+
+    let html = text
+        .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+        .replace(/^### (.+)$/gm, '<h4>$1</h4>')
+        .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^# (.+)$/gm, '<h2>$1</h2>')
+        .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+        .replace(/^(\d+)\. (.+)$/gm, '<li><span class="list-number">$1.</span> $2</li>')
+        .replace(/^- (.+)$/gm, '<li>$1</li>');
+
+    html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+    html = html.replace(/\n/g, '<br>');
+
+    return html;
+}
+
 function displayResults(data) {
     const responseBox = document.getElementById("response-box");
     responseBox.innerHTML = '';
@@ -141,11 +162,12 @@ function displayResults(data) {
         const h3 = document.createElement('h3');
         h3.textContent = res.member.toUpperCase();
 
-        const p = document.createElement('p');
-        p.textContent = res.answer;
+        const content = document.createElement('div');
+        content.className = 'member-content';
+        content.innerHTML = parseMarkdown(res.answer);
 
         div.appendChild(h3);
-        div.appendChild(p);
+        div.appendChild(content);
         responseBox.appendChild(div);
     });
 
@@ -155,11 +177,12 @@ function displayResults(data) {
     const verdictH3 = document.createElement('h3');
     verdictH3.textContent = 'Nihai Karar';
 
-    const verdictP = document.createElement('p');
-    verdictP.textContent = data.verdict;
+    const verdictContent = document.createElement('div');
+    verdictContent.className = 'verdict-content';
+    verdictContent.innerHTML = parseMarkdown(data.verdict);
 
     verdictDiv.appendChild(verdictH3);
-    verdictDiv.appendChild(verdictP);
+    verdictDiv.appendChild(verdictContent);
     responseBox.appendChild(verdictDiv);
 }
 
