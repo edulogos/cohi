@@ -416,7 +416,7 @@ button:hover {
 
 .final-verdict {
   margin-top: 15px;
-  padding-top: 15px;
+  padding: 15px;
   border-top: 2px solid var(--accent-glow);
   background: rgba(56, 189, 248, 0.05);
 }
@@ -426,7 +426,6 @@ button:hover {
   color: var(--accent-glow);
   font-size: 1.2rem;
 }
-.final-verdict p {padding: 15px;}
 
 button:disabled {
   opacity: 0.5;
