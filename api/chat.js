@@ -15,114 +15,24 @@ export default async function handler(req, res) {
     const STABLE_PAID_MODEL = "openai/gpt-4o-mini";
 
     const councilMembers = {
-        socrates: { 
-            prompt: "Sen Sokrates'sin. Varsayımları sorgula. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Sokrates",
-            trait: "Varsayımları sorgulama"
-        },
-        feynman: { 
-            prompt: "Sen Richard Feynman'sın. Konuyu basitleştir, ilk prensiplere indir. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Richard Feynman",
-            trait: "İlk prensipler"
-        },
-        machiavelli: { 
-            prompt: "Sen Machiavelli'sin. Stratejik ve gerçekçi ol, güç dinamiklerini analiz et. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "meta-llama/llama-3.1-8b-instruct:free",
-            name: "Machiavelli",
-            trait: "Güç dinamikleri"
-        },
-        torvalds: { 
-            prompt: "Sen Linus Torvalds'sın. Pragmatik mühendisliğe odaklan, pragmatik çözümler sun. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "openrouter/auto",
-            name: "Linus Torvalds",
-            trait: "Pragmatizm"
-        },
-        aurelius: { 
-            prompt: "Sen Marcus Aurelius'sun. Stoacı perspektif sun, ahlaki netlik ver. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Marcus Aurelius",
-            trait: "Stoacılık"
-        },
-        suntzu: { 
-            prompt: "Sen Sun Tzu'sun. Strateji ve arazi avantajına odaklan. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "openrouter/auto",
-            name: "Sun Tzu",
-            trait: "Savaş Stratejisi"
-        },
-        kahneman: { 
-            prompt: "Sen Daniel Kahneman'sın. Bilişsel önyargıları analiz et, karar tuzaklarını göster. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Daniel Kahneman",
-            trait: "Bilişsel Yanlılıklar"
-        },
-        aristotle: { 
-            prompt: "Sen Aristo'sun. Sınıflandırma ve mantık çerçevesinde analiz et. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Aristo",
-            trait: "Mantık ve Sınıflandırma"
-        },
-        ada: { 
-            prompt: "Sen Ada Lovelace'sın. Matematiksel sınırlar ve algoritmik yapıya odaklan. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Ada Lovelace",
-            trait: "Algoritmalar"
-        },
-        laotzu: { 
-            prompt: "Sen Lao Tzu'sun. Doğal akış ve beliriş (emergence) üzerinden yorumla. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "openrouter/auto",
-            name: "Lao Tzu",
-            trait: "Doğal Akış"
-        },
-        musashi: { 
-            prompt: "Sen Miyamoto Musashi'sin. Zamanlama, disiplin ve tek odaklılık sun. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "meta-llama/llama-3.1-8b-instruct:free",
-            name: "Miyamoto Musashi",
-            trait: "Zamanlama ve Disiplin"
-        },
-        watts: { 
-            prompt: "Sen Alan Watts'sın. Konuyu farklı bir çerçeveye (reframing) oturt. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "openrouter/auto",
-            name: "Alan Watts",
-            trait: "Perspektif Çerçeveleme"
-        },
-        karpathy: { 
-            prompt: "Sen Andrej Karpathy'sin. Uygulamalı yapay zeka ve ampirik verilere odaklan. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Andrej Karpathy",
-            trait: "Uygulamalı AI"
-        },
-        sutskever: { 
-            prompt: "Sen Ilya Sutskever'sin. Yapay zekanın geleceği ve güvenlik sınırlarına odaklan. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Ilya Sutskever",
-            trait: "AI Güvenlik"
-        },
-        munger: { 
-            prompt: "Sen Charlie Munger'sın. Zihinsel modeller ve tersine çevirme (inversion) kullan. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "openrouter/auto",
-            name: "Charlie Munger",
-            trait: "Zihinsel Modeller"
-        },
-        meadows: { 
-            prompt: "Sen Donella Meadows'sun. Geri bildirim döngüleri ve sistem dinamiklerine odaklan. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "meta-llama/llama-3.1-8b-instruct:free",
-            name: "Donella Meadows",
-            trait: "Sistemler Düşüncesi"
-        },
-        taleb: { 
-            prompt: "Sen Nassim Taleb'sin. Kuyruk riskleri ve anti-kırılganlık üzerinden analiz et. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "openrouter/auto",
-            name: "Nassim Taleb",
-            trait: "Kuyruk Riski"
-        },
-        rams: { 
-            prompt: "Sen Dieter Rams'sın. Tasarımın netliği ve kullanıcı deneyimine odaklan. Yanıtın TÜRKÇE olsun.", 
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Dieter Rams",
-            trait: "Tasarım Netliği"
-        }
+        socrates: { prompt: "Sen Sokrates'sin. Varsayımları sorgula. Yanıtın TÜRKÇE olsun.", freeModel: "google/gemini-2.0-flash-lite:free" },
+        feynman: { prompt: "Sen Richard Feynman'sın. Konuyu basitleştir. Yanıtın TÜRKÇE olsun.", freeModel: "google/gemini-2.0-flash-lite:free" },
+        machiavelli: { prompt: "Sen Machiavelli'sin. Stratejik ve gerçekçi ol. Yanıtın TÜRKÇE olsun.", freeModel: "meta-llama/llama-3.1-8b-instruct:free" },
+        torvalds: { prompt: "Sen Linus Torvalds'sın. Pragmatik mühendisliğe odaklan. Yanıtın TÜRKÇE olsun.", freeModel: "openrouter/auto" },
+        aurelius: { prompt: "Sen Marcus Aurelius'sun. Stoacı perspektif sun. Yanıtın TÜRKÇE olsun.", freeModel: "google/gemini-2.0-flash-lite:free" },
+        suntzu: { prompt: "Sen Sun Tzu'sun. Strateji ve arazi avantajına odaklan. Yanıtın TÜRKÇE olsun.", freeModel: "openrouter/auto" },
+        kahneman: { prompt: "Sen Daniel Kahneman'sın. Bilişsel önyargıları analiz et. Yanıtın TÜRKÇE olsun.", freeModel: "google/gemini-2.0-flash-lite:free" },
+        aristotle: { prompt: "Sen Aristo'sun. Sınıflandırma ve mantık çerçevesinde analiz et. Yanıtın TÜRKÇE olsun.", freeModel: "google/gemini-2.0-flash-lite:free" },
+        ada: { prompt: "Sen Ada Lovelace'sın. Matematiksel sınırlar ve algoritmik yapıya odaklan. Yanıtın TÜRKÇE olsun.", freeModel: "google/gemini-2.0-flash-lite:free" },
+        laotzu: { prompt: "Sen Lao Tzu'sun. Doğal akış ve beliriş (emergence) üzerinden yorumla. Yanıtın TÜRKÇE olsun.", freeModel: "openrouter/auto" },
+        musashi: { prompt: "Sen Miyamoto Musashi'sin. Zamanlama, disiplin ve tek odaklılık sun. Yanıtın TÜRKÇE olsun.", freeModel: "meta-llama/llama-3.1-8b-instruct:free" },
+        watts: { prompt: "Sen Alan Watts'sın. Konuyu farklı bir çerçeveye (reframing) oturt. Yanıtın TÜRKÇE olsun.", freeModel: "openrouter/auto" },
+        karpathy: { prompt: "Sen Andrej Karpathy'sin. Uygulamalı yapay zeka ve ampirik verilere odaklan. Yanıtın TÜRKÇE olsun.", freeModel: "google/gemini-2.0-flash-lite:free" },
+        sutskever: { prompt: "Sen Ilya Sutskever'sin. Yapay zekanın geleceği ve güvenlik sınırlarına odaklan. Yanıtın TÜRKÇE olsun.", freeModel: "google/gemini-2.0-flash-lite:free" },
+        munger: { prompt: "Sen Charlie Munger'sın. Zihinsel modeller ve tersine çevirme (inversion) kullan. Yanıtın TÜRKÇE olsun.", freeModel: "openrouter/auto" },
+        meadows: { prompt: "Sen Donella Meadows'sun. Geri bildirim döngüleri ve sistem dinamiklerine odaklan. Yanıtın TÜRKÇE olsun.", freeModel: "meta-llama/llama-3.1-8b-instruct:free" },
+        taleb: { prompt: "Sen Nassim Taleb'sin. Kuyruk riskleri ve anti-kırılganlık üzerinden analiz et. Yanıtın TÜRKÇE olsun.", freeModel: "openrouter/auto" },
+        rams: { prompt: "Sen Dieter Rams'sın. Tasarımın netliği ve kullanıcı deneyimine odaklan. Yanıtın TÜRKÇE olsun.", freeModel: "google/gemini-2.0-flash-lite:free" }
     };
 
     if (req.headers['content-type'] !== 'application/json') {
@@ -198,73 +108,26 @@ export default async function handler(req, res) {
 
     try {
         const membersToUse = members && members.length > 0 ? members : Object.keys(councilMembers);
-        
-        const useCrossExamination = membersToUse.length >= 2 && membersToUse.length <= 3;
-        
-        if (useCrossExamination && message) {
-            const round1Results = await Promise.all(
-                membersToUse.map(async (key) => {
-                    if (!councilMembers[key]) return { member: key, answer: "Üye bulunamadı." };
-                    const round1Prompt = `Aşağıdaki soruyu ${councilMembers[key].name} olarak bağımsız şekilde analiz et. Kendi uzmanlık alanına odaklanarak, 200 kelimeyi geçmeyen bir analiz yap:\n\nSoru: ${message}`;
-                    const answer = await getResponseWithFallback(key, round1Prompt);
-                    return { member: key, answer };
-                })
-            );
 
-            const round2Results = await Promise.all(
-                membersToUse.map(async (key) => {
-                    if (!councilMembers[key]) return { member: key, answer: "Üye bulunamadı." };
-                    
-                    const otherMembers = membersToUse.filter(m => m !== key);
-                    const otherAnalyses = round1Results
-                        .filter(r => otherMembers.includes(r.member))
-                        .map(r => `${councilMembers[r.member]?.name || r.member}: ${r.answer}`)
-                        .join("\n\n");
-                    
-                    const round2Prompt = `Sen ${councilMembers[key].name}'sin. Aşağıda diğer konsey üyelerinin soruya verdikleri yanıtlar var:\n\n${otherAnalyses}\n\nŞimdi sen, ${councilMembers[key].name} olarak, bu diğer üyelerin argümanlarına kendi perspektifinden yanıt ver. Şunlardan birini veya birkaçını yap:\n- Katıldığın noktaları belirt\n- Katılmadığın noktalara itiraz et\n- Eksik kalan noktaları tamamla\n- Kendi argümanını güçlendir\n\nHer üyenin argümanına ayrı ayrı yanıt ver. Toplam 250 kelimeyi geçme. Yanıtın TÜRKÇE olsun.`;
-                    
-                    const answer = await getResponseWithFallback(key, round2Prompt);
-                    return { member: key, answer };
-                })
-            );
+        const responses = await Promise.all(
+            membersToUse.map(async (key) => {
+                if (!councilMembers[key]) return { member: key, answer: "Üye bulunamadı." };
+                const answer = await getResponseWithFallback(key, message || '');
+                return { member: key, answer };
+            })
+        );
 
-            const combinedText = [...round1Results, ...round2Results]
-                .map(r => `${r.member.toUpperCase()}: ${r.answer}`)
-                .join("\n\n");
-            
-            let verdict = "";
-            try {
-                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun:\n\n## Nihai Karar\n[Genel değerlendirmen]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\nYanıtın TÜRKÇE olsun.`;
-                const modResponse = await callOpenRouter(STABLE_PAID_MODEL, verdictPrompt, "Tartışmayı özetle");
-                const modData = await modResponse.json();
-                verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
-            } catch (e) {
-                verdict = "Moderatör şu an ulaşılamaz durumda.";
-            }
-
-            res.status(200).json({ round1: round1Results, round2: round2Results, verdict });
-
-        } else {
-            const responses = await Promise.all(
-                membersToUse.map(async (key) => {
-                    if (!councilMembers[key]) return { member: key, answer: "Üye bulunamadı." };
-                    const answer = await getResponseWithFallback(key, message || '');
-                    return { member: key, answer };
-                })
-            );
-
-            const combinedText = responses.map(r => `${r.member.toUpperCase()}: ${r.answer}`).join("\n\n");
-            let verdict = "";
-            try {
-                const modResponse = await callOpenRouter(STABLE_PAID_MODEL, "Sen bir moderatörsün. Tartışmayı özetle ve Türkçe olarak nihai bir yargı sun.", combinedText);
-                const modData = await modResponse.json();
-                verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
-            } catch (e) {
-                verdict = "Moderatör şu an ulaşılamaz durumda.";
-            }
-
-            res.status(200).json({ responses, verdict });
+        const combinedText = responses.map(r => `${r.member.toUpperCase()}: ${r.answer}`).join("\n\n");
+        let verdict = "";
+        try {
+            const modResponse = await callOpenRouter(STABLE_PAID_MODEL, "Sen bir moderatörsün. Tartışmayı özetle ve Türkçe olarak nihai bir yargı sun.", combinedText);
+            const modData = await modResponse.json();
+            verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
+        } catch (e) {
+            verdict = "Moderatör şu an ulaşılamaz durumda.";
         }
+
+        res.status(200).json({ responses, verdict });
     } catch (error) {
         console.error("Genel Backend Hatası:", error);
         res.status(500).json({ error: "Sunucu hatası oluştu." });
