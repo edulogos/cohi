@@ -1,520 +1,138 @@
-:root {
-  --bg-dark: #0a0f1a;
-  --panel-bg: #141b2d;
-  --text-main: #e2e8f0;
-  --text-muted: #94a3b8;
-  --accent-glow: #38bdf8;
-  --accent-purple: #818cf8;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--bg-dark);
-  color: var(--text-main);
-  font-family: "Caladea", serif;
-  background-image: radial-gradient(
-    circle at 50% 0%,
-    rgba(56, 189, 248, 0.1),
-    transparent 50%
-  );
-}
-
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-header h1 {
-  font-family: "Caladea", serif;
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-  background: linear-gradient(
-    to right,
-    var(--accent-glow),
-    var(--accent-purple)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.dashboard {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-@media (max-width: 768px) {
-  .dashboard {
-    grid-template-columns: 1fr;
-  }
-}
-
-.input-panel,
-.output-panel {
-  background-color: var(--panel-bg);
-  padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.control-group {
-  margin-bottom: 1.5rem;
-}
-
-.control-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-select,
-textarea {
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--text-main);
-  padding: 1rem;
-  font-family: "Caladea", serif;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-}
-
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: var(--accent-glow);
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
-}
-
-button {
-  width: 100%;
-  background: linear-gradient(135deg, var(--accent-purple), var(--accent-glow));
-  color: white;
-  border: none;
-  padding: 1rem;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
-}
-
-.output-panel h2 {
-  font-family: "Caladea", serif;
-  margin-top: 0;
-  padding-bottom: 10px;
-  border-bottom: 2px solid rgba(74,144,226,0.3);
-}
-
-.placeholder-text {
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* Loading animasyonu */
-#loading {
-  text-align: center;
-  color: var(--accent-glow);
-  padding: 2rem 0;
-}
-
-.spinner {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 1rem auto;
-}
-
-.spinner::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  background-color: var(--accent-glow);
-  border-radius: 50%;
-  box-shadow: 0 0 15px var(--accent-glow), 0 0 30px var(--accent-glow);
-  animation: pulse-center 1.5s ease-in-out infinite;
-}
-
-.thought-particle {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 2px solid transparent;
-  border-top-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  animation: rotate-thought 2s linear infinite;
-}
-
-.particle-1 { animation-delay: 0s; width: 100%; height: 100%; top: 0; left: 0; }
-.particle-2 { animation-delay: -0.5s; width: 80%; height: 80%; top: 10%; left: 10%; }
-.particle-3 { animation-delay: -1s; width: 60%; height: 60%; top: 20%; left: 20%; }
-.particle-4 { animation-delay: -1.5s; width: 40%; height: 40%; top: 30%; left: 30%; }
-
-@keyframes rotate-thought {
-  0% { transform: rotate(0deg); border-top-color: rgba(255, 255, 255, 0.1); }
-  50% { border-top-color: var(--accent-glow); }
-  100% { transform: rotate(360deg); border-top-color: rgba(255, 255, 255, 0.1); }
-}
-
-@keyframes pulse-center {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-}
-
-/* Loading dots animasyonu - birer birer belirme */
-.loading-dots {
-  display: inline-flex;
-  margin-left: 2px;
-}
-
-.loading-dots .dot {
-  width: 4px;
-  height: 4px;
-  background-color: var(--accent-glow);
-  border-radius: 50%;
-  margin: 0 1px;
-  opacity: 0;
-  animation: dot-appear 1.5s infinite;
-}
-
-.loading-dots .dot:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.loading-dots .dot:nth-child(2) {
-  animation-delay: 0.5s;
-}
-
-.loading-dots .dot:nth-child(3) {
-  animation-delay: 1s;
-}
-
-@keyframes dot-appear {
-  0% { opacity: 0; }
-  25% { opacity: 1; }
-  75% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-/* Checkbox grid - scroll ile */
-.checkbox-grid {
-  max-height: 300px;
-  overflow-y: auto;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Scrollbar stili */
-.checkbox-grid::-webkit-scrollbar {
-  width: 6px;
-}
-
-.checkbox-grid::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.checkbox-grid::-webkit-scrollbar-thumb {
-  background: var(--accent-glow);
-}
-
-/* Checkbox container - flex ile dikey ortalama */
-.cb-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding-left: 32px;
-  cursor: pointer;
-  font-size: 13px;
-  user-select: none;
-  color: var(--text-main);
-  min-height: 24px;
-}
-
-.cb-container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-/* Checkmark kutusu */
-.checkmark {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 18px;
-  width: 18px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid var(--accent-glow);
-}
-
-.cb-container:hover input ~ .checkmark {
-  background-color: rgba(56, 189, 248, 0.2);
-}
-
-.cb-container input:checked ~ .checkmark {
-  background-color: var(--accent-glow);
-}
-
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-.cb-container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-.cb-container .checkmark:after {
-  left: 6px;
-  top: 2px;
-  width: 4px;
-  height: 9px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-
-/* Members name - aligned with checkbox */
-.members {
-  align-self: center;
-  line-height: 1;
-  margin-right: 4px;
-  vertical-align: -webkit-baseline-middle;
-}
-
-/* Member trait - aligned with checkbox */
-.member-trait {
-  color: #94a3b8;
-  font-size: 0.85em;
-  font-weight: normal;
-  opacity: 0.7;
-  font-style: italic;
-  align-self: center;
-  line-height: 1;
-  vertical-align: -webkit-baseline-middle;
-}
-
-.limit-warning {
-  background: rgba(255, 165, 0, 0.1);
-  border: 1px solid orange;
-  color: #ffcc00;
-  padding: 15px;
-  text-align: center;
-  line-height: 1.6;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(255, 165, 0, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0); }
-}
-
-.triads-container {
-  margin-bottom: 15px;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.triads-container p {
-  font-size: 0.85rem;
-  color: #aaa;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.triad-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  max-height: 150px;
-  overflow-y: auto;
-  justify-content: flex-start;
-}
-
-.triad-btn {
-  background: transparent;
-  border: 1px solid var(--accent-glow);
-  color: var(--accent-glow);
-  padding: 6px 16px;
-  cursor: pointer;
-  font-size: 0.75rem;
-  font-family: "Caladea", serif;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  width: auto;
-  min-width: max-content;
-}
-
-.triad-btn:hover {
-  background: var(--accent-glow);
-  color: var(--bg-dark);
-}
-
-/* Member response kartları */
-.member-response {
-  margin-top: 0;
-  padding: 15px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.member-response:first-child {
-  border-top: none;
-}
-
-.member-response h3 {
-  margin: 0 0 8px 0;
-  color: #4a90e2;
-  font-size: 1.1rem;
-  text-transform: uppercase;
-}
-
-.member-response p {
-  margin: 0;
-  line-height: 1.5;
-}
-
-.output-panel {
-  padding-top: 1rem;
-}
-
-.response-box {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.response-box p {
-  color: #bac2cd;
-  line-height: 20px;
-  font-size: 16px;
-}
-
-.final-verdict {
-  margin-top: 15px;
-  padding: 15px;
-  border-top: 2px solid var(--accent-glow);
-  background: rgba(56, 189, 248, 0.05);
-}
-
-.final-verdict h3 {
-  margin: 0 0 10px 0;
-  color: var(--accent-glow);
-  font-size: 1.2rem;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  filter: grayscale(0.8);
-  transform: none;
-  box-shadow: none;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-/* Tanıtım Kutusu Stilleri */
-.intro-box {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  max-width: 320px;
-  background: var(--panel-bg);
-  border: 1px solid var(--accent-glow);
-  padding: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  z-index: 1000;
-  animation: slideIn 0.5s ease;
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.intro-close {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 24px;
-  cursor: pointer;
-  width: auto;
-  padding: 0;
-}
-
-.intro-close:hover {
-  color: var(--text-main);
-}
-
-.intro-content h3 {
-  margin: 0 0 12px 0;
-  color: var(--accent-glow);
-  font-size: 1.1rem;
-}
-
-.intro-content p {
-  margin: 0 0 10px 0;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-main);
-}
-
-.intro-content a {
-  color: var(--accent-glow);
-  text-decoration: none;
-}
-
-.intro-content a:hover {
-  text-decoration: underline;
-}
-
-/* Mobilde küçük ekran */
-@media (max-width: 500px) {
-  .intro-box {
-    left: 10px;
-    right: 10px;
-    max-width: none;
-    bottom: 10px;
-  }
-}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/cohi/favicon.ico">
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Yüksek Zeka Konseyi (COHI)" />
+    <meta property="og:title" content="Yüksek Zeka Konseyi (COHI)" />
+    <meta property="og:description" content="Bu web sayfası, tarihi ve modern dönemin en etkili 18 düşünürünün personalarından oluşturulmuş bir yapay zeka konseyi uygulamasıdır." />
+    <meta property="og:image" content="/cohi/og.png" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Yüksek Zeka Konseyi (COHI)" />
+    <meta name="twitter:description" content="Bu web sayfası, tarihi ve modern dönemin en etkili 18 düşünürünün personalarından oluşturulmuş bir yapay zeka konseyi uygulamasıdır." />
+    <meta name="twitter:image" content="/cohi/og.png" />
+    <title>Yüksek Zeka Konseyi (COHI)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1 class="glow-text">Yüksek Zeka Konseyi</h1>
+        <p>Fikirlerinizi tarihin en büyük zihinleriyle tartışın.</p>
+    </header>
+
+    <main class="dashboard">
+
+        <section class="input-panel"> 
+            <div class="triads-container">
+                <p>Hızlı Grup Seçimi</p>
+                <div class="triad-buttons">
+                    <button type="button" class="triad-btn" onclick="selectTriad(['aristotle', 'ada', 'feynman'])">Mimari</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['suntzu', 'machiavelli', 'aurelius'])">Strateji</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['aurelius', 'socrates', 'laotzu'])">Etik</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['feynman', 'socrates', 'ada'])">Hata Ayıklama</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['ada', 'laotzu', 'aristotle'])">Yenilik</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['socrates', 'machiavelli', 'aurelius'])">Çatışma</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['laotzu', 'aristotle', 'ada'])">Karmaşıklık</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['suntzu', 'aurelius', 'feynman'])">Risk</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['torvalds', 'musashi', 'feynman'])">Sevkiyat</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['torvalds', 'machiavelli', 'watts'])">Ürün</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['musashi', 'suntzu', 'torvalds'])">Kurucu</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['karpathy', 'sutskever', 'ada'])">Yapay Zeka</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['karpathy', 'torvalds', 'machiavelli'])">YZ-Ürün</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['sutskever', 'aurelius', 'socrates'])">YZ-Güvenlik</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['kahneman', 'munger', 'aurelius'])">Karar</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['meadows', 'laotzu', 'aristotle'])">Sistemler</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['taleb', 'suntzu', 'sutskever'])">Belirsizlik</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['rams', 'torvalds', 'watts'])">Tasarım</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['munger', 'machiavelli', 'suntzu'])">Ekonom</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['kahneman', 'socrates', 'watts'])">Yanlılık</button>
+                </div>
+            </div>
+            
+            <div class="triads-container control-group">
+                <p>Konsey Üyelerini Seçin</p>
+                <div id="member-checkboxes" class="checkbox-grid">
+                    <label class="cb-container"><input type="checkbox" id="socrates" name="council-member" value="socrates"><span class="checkmark"></span><span class="members">Sokrates</span> <span class="member-trait">(Sorgulama)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="aurelius" name="council-member" value="aurelius"><span class="checkmark"></span><span class="members">Marcus Aurelıus</span> <span class="member-trait">(Stoacılık)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="aristotle" name="council-member" value="aristotle"><span class="checkmark"></span><span class="members">Arısto</span> <span class="member-trait">(Mantık)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="laotzu" name="council-member" value="laotzu"><span class="checkmark"></span><span class="members">Lao Tzu</span> <span class="member-trait">(Doğal Akış)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="suntzu" name="council-member" value="suntzu"><span class="checkmark"></span><span class="members">Sun Tzu</span> <span class="member-trait">(Savaş Sanatı)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="machiavelli" name="council-member" value="machiavelli"><span class="checkmark"></span><span class="members">Machıavellı</span> <span class="member-trait">(Güç)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="musashi" name="council-member" value="musashi"><span class="checkmark"></span><span class="members">Mıyamoto Musashı</span> <span class="member-trait">(Zamanlama)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="munger" name="council-member" value="munger"><span class="checkmark"></span><span class="members">Charlıe Munger</span> <span class="member-trait">(Zihinsel Modeller)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="feynman" name="council-member" value="feynman"><span class="checkmark"></span><span class="members">Rıchard Feynman</span> <span class="member-trait">(İlk Prensipler)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="ada" name="council-member" value="ada"><span class="checkmark"></span><span class="members">Ada Lovelace</span> <span class="member-trait">(Algoritmalar)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="torvalds" name="council-member" value="torvalds"><span class="checkmark"></span><span class="members">Lınus Torvalds</span> <span class="member-trait">(Pragmatizm)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="karpathy" name="council-member" value="karpathy"><span class="checkmark"></span><span class="members">Andrej Karpathy</span> <span class="member-trait">(Uygulamalı AI)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="sutskever" name="council-member" value="sutskever"><span class="checkmark"></span><span class="members">Ilya Sutskever</span> <span class="member-trait">(AI Sınırları)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="kahneman" name="council-member" value="kahneman"><span class="checkmark"></span><span class="members">Danıel Kahneman</span> <span class="member-trait">(Karar Bilimi)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="taleb" name="council-member" value="taleb"><span class="checkmark"></span><span class="members">Nassım Taleb</span> <span class="member-trait">(Belirsizlik)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="meadows" name="council-member" value="meadows"><span class="checkmark"></span><span class="members">Donella Meadows</span> <span class="member-trait">(Sistemler)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="rams" name="council-member" value="rams"><span class="checkmark"></span><span class="members">Dıeter Rams</span> <span class="member-trait">(Minimalizm)</span></label>
+                    <label class="cb-container"><input type="checkbox" id="watts" name="council-member" value="watts"><span class="checkmark"></span><span class="members">Alan Watts</span> <span class="member-trait">(Reframing)</span></label>
+                </div>
+            </div>
+
+            <div class="triads-container control-group">
+                <p>Tartışılacak Fikrini Yaz ! </p>
+                <textarea 
+                    id="user-input" 
+                    rows="5"
+                    placeholder="Startup için hangi iş modelini seçmeliyim? | Post-truth nedir? | İnsan ne kadar rasyoneldir?"
+                ></textarea>
+            </div>
+
+            <button id="submit-btn" onclick="askCouncil()">
+                Konseye sor ➔
+            </button>
+
+        </section>
+
+        <section class="output-panel">
+
+            <h2>Konseyin Analizi</h2>
+
+            <div id="loading" class="hidden">
+                <div class="spinner">
+                    <div class="thought-particle particle-1"></div>
+                    <div class="thought-particle particle-2"></div>
+                    <div class="thought-particle particle-3"></div>
+                    <div class="thought-particle particle-4"></div>
+                </div>
+                <p>Zihinler tartışıyor<span class="loading-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></p>
+            </div>
+
+            <div id="response-box" class="response-box">
+                <p class="placeholder-text">
+                    Henüz bir fikir sunulmadı.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
+<!-- Tanıtım Kutusu -->
+<div id="intro-box" class="intro-box hidden">
+    <button class="intro-close" onclick="closeIntroBox()">×</button>
+    <div class="intro-content">
+        <h3>Yüksek Zeka Konseyi (COHI)</h3>
+        <p>Bu web sayfası, tarihi ve modern dönemin en etkili 18 düşünürünün personalarından oluşturulmuş bir yapay zeka konseyi uygulamasıdır.</p>
+        <p>Seçtiğiniz üyeler (Sokrates, Feynman, Arısto, Machıavellı, Lınus Torvalds, Karpathy vb.) sorunuzu farklı perspektiflerden analiz eder ve yapay zeka moderatör nihai bir karar verir.</p>
+        <p>Bu proje <a href="https://github.com/0xNyk/council-of-high-intelligence" target="_blank">council-of-high-intelligence</a> alt yapısını kullanmaktadır.</p>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
