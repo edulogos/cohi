@@ -409,9 +409,9 @@ button:hover {
 }
 
 .response-box p {
-  color: var(--text-muted);
+  color: #bac2cd;
   line-height: 20px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .final-verdict {
@@ -426,6 +426,7 @@ button:hover {
   color: var(--accent-glow);
   font-size: 1.2rem;
 }
+.final-verdict p {padding: 15px;}
 
 button:disabled {
   opacity: 0.5;
