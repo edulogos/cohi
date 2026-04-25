@@ -5,7 +5,7 @@
 </p>
 
 ## 🚀 Web Uygulaması (Demo)
-- <a href="[https://github.com/0xNyk/council-of-high-intelligence](https://edulogos.github.io/cohi/)">Yüksek Zeka Konseyi</a>
+- <a href="https://edulogos.github.io/cohi/">Yüksek Zeka Konseyi 🔗</a>
 
 ## 🚀 Bu Fork ile Gelen Yenilikler
 - Vercel ile AI API Maskeleme
