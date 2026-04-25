@@ -233,7 +233,7 @@ export default async function handler(req, res) {
 
             let verdict = "";
             try {
-                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun:\n\n## Nihai Karar\n[Genel değerlendirmen]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\nYanıtın TÜRKÇE olsun.`;
+                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun. '## Nihai Karar' başlığını YAZMA - o başlık frontend'de zaten ekleniyor:\n\n[Genel değerlendirmen buraya]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\nYanıtın TÜRKÇE olsun.`;
                 const modResponse = await callOpenRouter(STABLE_PAID_MODEL, verdictPrompt, "Tartışmayı özetle");
                 const modData = await modResponse.json();
                 verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
