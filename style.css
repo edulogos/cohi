@@ -361,6 +361,19 @@ button:hover {
   justify-content: flex-start;
 }
 
+/* Triad buttons scrollbar */
+.triad-buttons::-webkit-scrollbar {
+  width: 6px;
+}
+
+.triad-buttons::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.triad-buttons::-webkit-scrollbar-thumb {
+  background: var(--accent-glow);
+}
+
 .triad-btn {
   background: transparent;
   border: 1px solid var(--accent-glow);
@@ -373,6 +386,11 @@ button:hover {
   white-space: nowrap;
   width: auto;
   min-width: max-content;
+}
+
+.triad-btn.selected {
+  background: var(--accent-glow);
+  color: var(--bg-dark);
 }
 
 .triad-btn:hover {
