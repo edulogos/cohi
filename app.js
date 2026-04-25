@@ -1,5 +1,7 @@
 const VERCEL_API_URL = "https://cohi-p46b.vercel.app/api/chat";
 
+let userManuallySelected = false;
+
 function selectTriad(memberIds) {
     const allCheckboxes = document.querySelectorAll('input[name="council-member"]');
     allCheckboxes.forEach(cb => cb.checked = false);
@@ -17,6 +19,59 @@ function selectTriad(memberIds) {
         return btnMemberIds.length === memberIds.length && btnMemberIds.every(id => memberIds.includes(id));
     });
     if (clickedBtn) clickedBtn.classList.add('selected');
+
+    userManuallySelected = false;
+    hideSelectionWarning();
+}
+
+function hideTriadSelection() {
+    const allTriadBtns = document.querySelectorAll('.triad-btn');
+    allTriadBtns.forEach(btn => btn.classList.remove('selected'));
+}
+
+function showSelectionWarning() {
+    const warning = document.getElementById('selection-warning');
+    if (warning) {
+        warning.classList.remove('hidden');
+        setTimeout(() => {
+            warning.classList.add('hidden');
+        }, 3000);
+    }
+}
+
+function hideSelectionWarning() {
+    const warning = document.getElementById('selection-warning');
+    if (warning) {
+        warning.classList.add('hidden');
+    }
+}
+
+function updateSelectionCount() {
+    const checked = document.querySelectorAll('input[name="council-member"]:checked').length;
+    const countEl = document.getElementById('selection-count');
+    if (countEl) {
+        countEl.textContent = `${checked}/3 üye seçildi`;
+    }
+}
+
+function handleMemberCheckboxClick(event) {
+    const checkbox = event.target;
+    if (!checkbox.classList.contains('member-checkbox')) return;
+
+    const checked = document.querySelectorAll('input[name="council-member"]:checked');
+
+    if (checked.length > 3) {
+        checkbox.checked = false;
+        showSelectionWarning();
+        return;
+    }
+
+    if (checkbox.checked) {
+        userManuallySelected = true;
+        hideTriadSelection();
+    }
+
+    updateSelectionCount();
 }
 
 const DAILY_LIMIT = 5;
@@ -186,39 +241,103 @@ function displayResults(data) {
     const responseBox = document.getElementById("response-box");
     responseBox.innerHTML = '';
 
+    if (data.round1 && data.round2) {
+        const round1Div = document.createElement('div');
+        round1Div.className = 'deliberation-round';
+        const round1Title = document.createElement('h4');
+        round1Title.textContent = '1. Tur: Bağımsız Analiz';
+        round1Div.appendChild(round1Title);
 
-    data.responses.forEach(res => {
-        const div = document.createElement('div');
-        div.className = 'member-response';
+        data.round1.forEach(res => {
+            const memberDiv = document.createElement('div');
+            memberDiv.className = 'member-response';
 
-        const h3 = document.createElement('h3');
-        h3.textContent = res.member.toUpperCase();
+            const h3 = document.createElement('h3');
+            h3.textContent = res.member.toUpperCase();
 
-        const content = document.createElement('div');
-        content.className = 'member-content';
-        content.innerHTML = parseMarkdown(res.answer);
+            const content = document.createElement('div');
+            content.className = 'member-content';
+            content.innerHTML = parseMarkdown(res.answer);
+
+            memberDiv.appendChild(h3);
+            memberDiv.appendChild(content);
+            round1Div.appendChild(memberDiv);
+        });
+
+        responseBox.appendChild(round1Div);
+
+        const round2Div = document.createElement('div');
+        round2Div.className = 'deliberation-round cross-exam';
+        const round2Title = document.createElement('h4');
+        round2Title.textContent = '2. Tur: Karşılıklı Tartışma';
+        round2Div.appendChild(round2Title);
+
+        data.round2.forEach(res => {
+            const memberDiv = document.createElement('div');
+            memberDiv.className = 'member-response cross-exam';
+
+            const h3 = document.createElement('h3');
+            h3.textContent = res.member.toUpperCase();
+
+            const content = document.createElement('div');
+            content.className = 'member-content';
+            content.innerHTML = parseMarkdown(res.answer);
+
+            memberDiv.appendChild(h3);
+            memberDiv.appendChild(content);
+            round2Div.appendChild(memberDiv);
+        });
+
+        responseBox.appendChild(round2Div);
+
+        const verdictDiv = document.createElement('div');
+        verdictDiv.className = 'final-verdict';
+
+        const verdictH3 = document.createElement('h3');
+        verdictH3.textContent = 'Nihai Karar';
+
+        const verdictContent = document.createElement('div');
+        verdictContent.className = 'verdict-content';
+        verdictContent.innerHTML = parseMarkdown(data.verdict);
+
+        verdictDiv.appendChild(verdictH3);
+        verdictDiv.appendChild(verdictContent);
+        responseBox.appendChild(verdictDiv);
+
+    } else if (data.responses) {
+        data.responses.forEach(res => {
+            const div = document.createElement('div');
+            div.className = 'member-response';
+
+            const h3 = document.createElement('h3');
+            h3.textContent = res.member.toUpperCase();
+
+            const content = document.createElement('div');
+            content.className = 'member-content';
+            content.innerHTML = parseMarkdown(res.answer);
 
 
-        div.appendChild(h3);
-        div.appendChild(content);
-        responseBox.appendChild(div);
-    });
+            div.appendChild(h3);
+            div.appendChild(content);
+            responseBox.appendChild(div);
+        });
 
 
-    const verdictDiv = document.createElement('div');
-    verdictDiv.className = 'final-verdict';
+        const verdictDiv = document.createElement('div');
+        verdictDiv.className = 'final-verdict';
 
-    const verdictH3 = document.createElement('h3');
-    verdictH3.textContent = 'Nihai Karar';
+        const verdictH3 = document.createElement('h3');
+        verdictH3.textContent = 'Nihai Karar';
 
-    const verdictContent = document.createElement('div');
-    verdictContent.className = 'verdict-content';
-    verdictContent.innerHTML = parseMarkdown(data.verdict);
+        const verdictContent = document.createElement('div');
+        verdictContent.className = 'verdict-content';
+        verdictContent.innerHTML = parseMarkdown(data.verdict);
 
 
-    verdictDiv.appendChild(verdictH3);
-    verdictDiv.appendChild(verdictContent);
-    responseBox.appendChild(verdictDiv);
+        verdictDiv.appendChild(verdictH3);
+        verdictDiv.appendChild(verdictContent);
+        responseBox.appendChild(verdictDiv);
+    }
 }
 
 function closeIntroBox() {
@@ -235,5 +354,15 @@ function showIntroBoxIfNeeded() {
     }
 }
 
-window.addEventListener("DOMContentLoaded", showIntroBoxIfNeeded);
-window.addEventListener("DOMContentLoaded", updateQueryCountDisplay);
+function initMemberCheckboxes() {
+    const checkboxes = document.querySelectorAll('.member-checkbox');
+    checkboxes.forEach(cb => {
+        cb.addEventListener('click', handleMemberCheckboxClick);
+    });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    showIntroBoxIfNeeded();
+    updateQueryCountDisplay();
+    initMemberCheckboxes();
+});
