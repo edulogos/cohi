@@ -1,4 +1,4 @@
-# Council of High Intelligence (Cohi) - Yapau Zeka ve Web Entegrasyonu
+# Council of High Intelligence (Cohi) - Yapay Zeka Web Entegrasyonu
 
 <p align="center">
   <img src="assets/header.jpeg" alt="Council of High Intelligence" width="800">
