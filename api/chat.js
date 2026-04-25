@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-    res.setHeader("Access-Control-Allow-Origin", "https://educaprof.github.io");
+    res.setHeader("Access-Control-Allow-Origin", "https://edulogos.github.io");
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-                "HTTP-Referer": "https://educaprof.github.io/cohi",
+                "HTTP-Referer": "https://edulogos.github.io/cohi",
                 "X-Title": "COHI Council",
                 "Content-Type": "application/json"
             },
