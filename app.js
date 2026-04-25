@@ -22,6 +22,7 @@ function selectTriad(memberIds) {
 
     userManuallySelected = false;
     hideSelectionWarning();
+    updateSelectionCount();
 }
 
 function hideTriadSelection() {
