@@ -337,6 +337,44 @@ button:hover {
   vertical-align: -webkit-baseline-middle;
 }
 
+/* Selection Warning Balloon */
+.selection-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 165, 0, 0.15);
+  border: 1px solid rgba(255, 165, 0, 0.5);
+  padding: 10px 15px;
+  margin-top: 10px;
+  animation: fadeInWarning 0.3s ease;
+}
+
+@keyframes fadeInWarning {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.selection-warning.hidden {
+  display: none;
+}
+
+.warning-icon {
+  font-size: 1.2rem;
+  color: #ffcc00;
+}
+
+.warning-text {
+  color: #ffcc00;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 .limit-warning {
   background: rgba(255, 165, 0, 0.1);
   border: 1px solid orange;
@@ -435,6 +473,31 @@ button:hover {
   color: var(--bg-dark);
 }
 
+/* Deliberation Rounds */
+.deliberation-round {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid var(--accent-purple);
+}
+
+.deliberation-round h4 {
+  margin: 0 0 15px 0;
+  color: var(--accent-purple);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.deliberation-round.cross-exam {
+  border-left: 3px solid var(--accent-glow);
+  background: rgba(56, 189, 248, 0.05);
+}
+
+.deliberation-round.cross-exam h4 {
+  color: var(--accent-glow);
+}
+
 /* Member response kartları */
 .member-response {
   margin-top: 0;
@@ -445,6 +508,10 @@ button:hover {
 
 .member-response:first-child {
   border-top: none;
+}
+
+.member-response.cross-exam {
+  background: rgba(56, 189, 248, 0.03);
 }
 
 .member-response h3 {
