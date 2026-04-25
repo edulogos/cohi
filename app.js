@@ -7,6 +7,16 @@ function selectTriad(memberIds) {
         const checkbox = document.getElementById(id);
         if (checkbox) checkbox.checked = true;
     });
+
+    const allTriadBtns = document.querySelectorAll('.triad-btn');
+    allTriadBtns.forEach(btn => btn.classList.remove('selected'));
+
+    const clickedBtn = Array.from(allTriadBtns).find(btn => {
+        const btnMemberIds = btn.getAttribute('onclick').match(/'([^']+)'/g)?.map(s => s.replace(/'/g, ''));
+        if (!btnMemberIds) return false;
+        return btnMemberIds.length === memberIds.length && btnMemberIds.every(id => memberIds.includes(id));
+    });
+    if (clickedBtn) clickedBtn.classList.add('selected');
 }
 
 const DAILY_LIMIT = 5;
