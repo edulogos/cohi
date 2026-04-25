@@ -232,6 +232,13 @@ function parseMarkdown(text) {
 
     html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
     html = html.replace(/\n/g, '<br>');
+    html = html.replace(/<\/li>(\s*)<br>/g, '</li>$1');
+    html = html.replace(/<br>(\s*)<ul>/g, '<ul>');
+    html = html.replace(/<\/ul>(\s*)<br>/g, '</ul>$1');
+    html = html.replace(/<\/h[34]>(\s*)<br>/g, '</h4>');
+    html = html.replace(/<br>(\s*)<h[34]>/g, '<h4>');
+    html = html.replace(/<br>(\s*)<blockquote>/g, '<blockquote>');
+    html = html.replace(/<\/blockquote>(\s*)<br>/g, '</blockquote>');
 
 
     return html;
