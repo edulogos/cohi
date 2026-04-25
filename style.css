@@ -417,9 +417,90 @@ button:hover {
   text-transform: uppercase;
 }
 
-.member-response p {
-  margin: 0;
-  line-height: 1.5;
+.member-content {
+  color: #bac2cd;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.member-content strong {
+  color: var(--accent-glow);
+  font-weight: 700;
+}
+
+.member-content em {
+  color: var(--accent-purple);
+  font-style: italic;
+}
+
+.member-content h2 {
+  color: var(--accent-glow);
+  font-size: 1.3rem;
+  margin: 1rem 0 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 0.3rem;
+}
+
+.member-content h3 {
+  color: var(--accent-purple);
+  font-size: 1.1rem;
+  margin: 0.8rem 0 0.4rem;
+}
+
+.member-content h4 {
+  color: var(--text-main);
+  font-size: 1rem;
+  margin: 0.6rem 0 0.3rem;
+}
+
+.member-content blockquote {
+  border-left: 3px solid var(--accent-purple);
+  padding-left: 1rem;
+  margin: 0.8rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+  background: rgba(129, 140, 248, 0.05);
+  padding: 0.5rem 1rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.member-content ul, .member-content ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.member-content li {
+  margin: 0.4rem 0;
+  color: #bac2cd;
+}
+
+.member-content li .list-number {
+  color: var(--accent-glow);
+  font-weight: 700;
+}
+
+.member-content code {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  color: var(--accent-glow);
+}
+
+.member-content pre {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 0.8rem 0;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.member-content pre code {
+  background: none;
+  padding: 0;
+  color: var(--text-main);
 }
 
 .output-panel {
@@ -449,6 +530,52 @@ button:hover {
   margin: 0 0 10px 0;
   color: var(--accent-glow);
   font-size: 1.2rem;
+}
+
+.verdict-content {
+  color: #bac2cd;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.verdict-content strong {
+  color: var(--accent-glow);
+  font-weight: 700;
+}
+
+.verdict-content em {
+  color: var(--accent-purple);
+}
+
+.verdict-content blockquote {
+  border-left: 3px solid var(--accent-glow);
+  padding-left: 1rem;
+  margin: 0.8rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.verdict-content h2, .verdict-content h3, .verdict-content h4 {
+  color: var(--accent-glow);
+  margin: 0.8rem 0 0.4rem;
+}
+
+.verdict-content ul, .verdict-content ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.verdict-content li {
+  margin: 0.4rem 0;
+}
+
+.verdict-content code {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  color: var(--accent-glow);
 }
 
 button:disabled {
