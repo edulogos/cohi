@@ -4,7 +4,8 @@
   <img src="assets/header.jpeg" alt="Council of High Intelligence" width="800">
 </p>
 
-Bu proje, orijinal "<a href="https://github.com/0xNyk/council-of-high-intelligence">Council of High Intelligence</a>" projesinin geliştirilmiş bir fork'udur.
+## 🚀 Web Uygulaması (Demo)
+- <a href="[https://github.com/0xNyk/council-of-high-intelligence](https://edulogos.github.io/cohi/)">Yüksek Zeka Konseyi</a>
 
 ## 🚀 Bu Fork ile Gelen Yenilikler
 - Vercel ile AI API Maskeleme
@@ -14,4 +15,4 @@ Bu proje, orijinal "<a href="https://github.com/0xNyk/council-of-high-intelligen
 index.html, style.css, app.js, api/chat.js
 
 ## 📄 Lisans
-Bu proje  <a href="https://creativecommons.org/publicdomain/zero/1.0/"><img src="https://img.shields.io/badge/license-CC0-blue" alt="License"></a> lisansı altındadır. Orijinal çalışma <a href="https://github.com/0xNyk">0xNyk</a> aittir.
+Bu proje, orijinal "<a href="https://github.com/0xNyk/council-of-high-intelligence">Council of High Intelligence</a>" projesinin geliştirilmiş bir fork'udur. Bu proje  <a href="https://creativecommons.org/publicdomain/zero/1.0/"><img src="https://img.shields.io/badge/license-CC0-blue" alt="License"></a> lisansı altındadır. Orijinal çalışma <a href="https://github.com/0xNyk">0xNyk</a> aittir.
