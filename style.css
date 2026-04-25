@@ -473,6 +473,32 @@ button:hover {
   color: var(--bg-dark);
 }
 
+/* Deliberation Rounds */
+.deliberation-round {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid var(--accent-purple);
+}
+
+.deliberation-round h4 {
+  margin: 0 0 15px 0;
+  color: var(--accent-purple);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.deliberation-round.member-response {
+  border-left: none;
+  background: rgba(129, 140, 248, 0.05);
+}
+
+.deliberation-round.member-response.cross-exam {
+  border-left: 3px solid var(--accent-glow);
+  background: rgba(56, 189, 248, 0.05);
+}
+
 /* Member response kartları */
 .member-response {
   margin-top: 0;
