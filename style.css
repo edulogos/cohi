@@ -356,7 +356,7 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  max-height: 150px;
+  max-height: 200px;
   overflow-y: auto;
   justify-content: flex-start;
 }
