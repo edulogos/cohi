@@ -230,7 +230,7 @@ function parseMarkdown(text) {
         .replace(/^- (.+)$/gm, '<li>$1</li>');
 
 
-    html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+    html = html.replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$1</ul>');
     html = html.replace(/\n/g, '<br>');
     html = html.replace(/<\/li>(\s*)<br>/g, '</li>$1');
     html = html.replace(/<br>(\s*)<ul>/g, '<ul>');
