@@ -1,4 +1,4 @@
-# Council of High Intelligence (Cohi) - Yüksek Zeka Konseyi
+# Council of High Intelligence (COHI) - Yüksek Zeka Konseyi
 
 <p align="center">
   <img src="assets/header.jpeg" alt="Council of High Intelligence" width="800">
