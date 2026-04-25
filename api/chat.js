@@ -220,7 +220,7 @@ export default async function handler(req, res) {
                         .map(r => `${councilMembers[r.member]?.name || r.member}: ${r.answer}`)
                         .join("\n\n");
 
-                    const round2Prompt = `Sen ${councilMembers[key].name}'sin. Aşağıda diğer konsey üyelerinin soruya verdikleri yanıtlar var:\n\n${otherAnalyses}\n\nŞimdi sen, ${councilMembers[key].name} olarak, bu diğer üyelerin argümanlarına kendi perspektifinden yanıt ver. Şunlardan birini veya birkaçını yap:\n- Katıldığın noktaları belirt\n- Katılmadığın noktalara itiraz et\n- Eksik kalan noktaları tamamla\n- Kendi argümanını güçlendir\n\nHer üyenin argümanına ayrı ayrı yanıt ver. Toplam 250 kelimeyi geçme. Yanıtın TÜRKÇE olsun.`;
+                    const round2Prompt = `Sen ${councilMembers[key].name}'sin. Aşağıda diğer konsey üyelerinin soruya verdikleri yanıtlar var:\n\n${otherAnalyses}\n\nŞimdi sen, ${councilMembers[key].name} olarak, bu diğer üyelerin argümanlarına kendi perspektifinden yanıt ver. Şunlardan birini veya birkaçını yap:\n- Katıldığın noktaları belirt\n- Katılmadığın noktalara itiraz et\n- Eksik kalan noktaları tamamla\n- Kendi argümanını güçlendir\n\nHer üyenin argümanına ayrı ayrı yanıt ver. Toplam 250 kelimeyi geçme. Yanıtın TÜRKÇE olsun. Diğer üyelerden bahsederken <strong>İsim</strong> formatını kullan. Örnek: <strong>${councilMembers[otherMembers[0]]?.name || 'Üye Adı'}</strong>'a katılıyorum.`;
 
                     const answer = await getResponseWithFallback(key, round2Prompt);
                     return { member: key, answer };
@@ -233,7 +233,8 @@ export default async function handler(req, res) {
 
             let verdict = "";
             try {
-                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun. '## Nihai Karar' başlığını YAZMA - o başlık frontend'de zaten ekleniyor:\n\n[Genel değerlendirmen buraya]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\nYanıtın TÜRKÇE olsun.`;
+                const memberNamesList = membersToUse.map(m => councilMembers[m]?.name || m).join(', ');
+                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun. '## Nihai Karar' başlığını YAZMA - o başlık frontend'de zaten ekleniyor. Üyelerin isimlerini <strong>İsim</strong> formatında yaz. Örnek: <strong>Sokrates</strong> ve <strong>${councilMembers[membersToUse[1]]?.name || 'Üye'}</strong> farklı açılardan yaklaştı.\n\n[Genel değerlendirmen buraya]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\nYanıtın TÜRKÇE olsun.`;
                 const modResponse = await callOpenRouter(STABLE_PAID_MODEL, verdictPrompt, "Tartışmayı özetle");
                 const modData = await modResponse.json();
                 verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
@@ -255,7 +256,7 @@ export default async function handler(req, res) {
             const combinedText = responses.map(r => `${r.member.toUpperCase()}: ${r.answer}`).join("\n\n");
             let verdict = "";
             try {
-                const modResponse = await callOpenRouter(STABLE_PAID_MODEL, "Sen bir moderatörsün. Tartışmayı özetle ve Türkçe olarak nihai bir yargı sun.", combinedText);
+                const modResponse = await callOpenRouter(STABLE_PAID_MODEL, "Sen bir moderatörsün. Tartışmayı özetle ve Türkçe olarak nihai bir yargı sun. Üyelerin isimlerini <strong>İsim</strong> formatında yaz.", combinedText);
                 const modData = await modResponse.json();
                 verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
             } catch (e) {
