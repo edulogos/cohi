@@ -356,19 +356,23 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+  justify-content: flex-start;
 }
 
 .triad-btn {
   background: transparent;
   border: 1px solid var(--accent-glow);
   color: var(--accent-glow);
-  padding: 6px 12px;
+  padding: 6px 16px;
   cursor: pointer;
   font-size: 0.75rem;
   font-family: "Caladea", serif;
   transition: all 0.3s ease;
   white-space: nowrap;
   width: auto;
+  min-width: max-content;
 }
 
 .triad-btn:hover {
