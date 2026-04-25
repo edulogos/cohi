@@ -42,6 +42,7 @@ function checkDailyLimit() {
     const storedDate = localStorage.getItem(STORAGE_KEY_DATE);
     const count = parseInt(localStorage.getItem(STORAGE_KEY_COUNT) || '0', 10);
 
+
     if (storedDate !== today) {
         localStorage.setItem(STORAGE_KEY_DATE, today);
         localStorage.setItem(STORAGE_KEY_COUNT, '0');
@@ -70,6 +71,7 @@ function showLimitReachedMessage() {
     responseBox.innerHTML = '';
     loading.classList.add("hidden");
 
+
     const div = document.createElement('div');
     div.className = 'limit-warning';
     div.innerHTML = '<strong>Konsey dinlenmeye çekildi !</strong><br>Bugünlük 5 tartışma hakkınız doldu. Yarın tekrar bekleriz.';
@@ -81,6 +83,7 @@ function showLimitReachedMessage() {
     document.getElementById('submit-btn').disabled = true;
 }
 
+
 async function askCouncil() {
     const submitBtn = document.getElementById("submit-btn");
     const userInput = document.getElementById("user-input").value;
@@ -88,6 +91,7 @@ async function askCouncil() {
     const selectedMembers = Array.from(checkedCheckboxes).map(cb => cb.value);
     const responseBox = document.getElementById("response-box");
     const loading = document.getElementById("loading");
+
 
     if (selectedMembers.length === 0) {
         alert("Lütfen en az bir üye seçin.");
@@ -110,6 +114,7 @@ async function askCouncil() {
     loading.classList.remove("hidden");
     responseBox.innerHTML = "";
 
+
     try {
         const response = await fetch(VERCEL_API_URL, {
             method: "POST",
@@ -124,6 +129,7 @@ async function askCouncil() {
             throw new Error("Sunucu yanıt vermedi.");
         }
 
+
         const data = await response.json();
         incrementDailyCount();
         displayResults(data);
@@ -136,8 +142,9 @@ async function askCouncil() {
         if (error.message.includes("LIMIT_EXCEEDED") || error.message.includes("402")) {
             const div = document.createElement('div');
             div.className = 'limit-warning';
-            div.innerHTML = '<strong>Konsey Dinlenmeye Çekildi</strong><br>Bugünlük bilgelik kotamız dolmuştur. Yarın tekrar bekleriz.';
+            div.innerHTML = '<strong>Konsey dinlenmeye çekildi !</strong><br>Bugünlük 5 tartışma hakkınız doldu. Yarın tekrar bekleriz.';
             responseBox.appendChild(div);
+
         } else {
             const p = document.createElement('p');
             p.className = 'error';
@@ -150,60 +157,68 @@ async function askCouncil() {
     }
 }
 
-function escapeHtml(unsafe) {
-    if (typeof unsafe !== 'string') return '';
-    return unsafe
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+
+function parseMarkdown(text) {
+    if (!text) return '';
+
+
+    let html = text
+        .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+        .replace(/^### (.+)$/gm, '<h4>$1</h4>')
+        .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^# (.+)$/gm, '<h2>$1</h2>')
+        .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+        .replace(/^(\d+)\. (.+)$/gm, '<li><span class="list-number">$1.</span> $2</li>')
+        .replace(/^- (.+)$/gm, '<li>$1</li>');
+
+
+    html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+    html = html.replace(/\n/g, '<br>');
+
+
+    return html;
 }
 
 function displayResults(data) {
     const responseBox = document.getElementById("response-box");
     responseBox.innerHTML = '';
 
-    if (data.responses && Array.isArray(data.responses)) {
-        data.responses.forEach(res => {
-            const div = document.createElement('div');
-            div.className = 'member-response';
 
-            const h3 = document.createElement('h3');
-            h3.textContent = res.member?.toUpperCase() || 'UNKNOWN';
+    data.responses.forEach(res => {
+        const div = document.createElement('div');
+        div.className = 'member-response';
 
-            const p = document.createElement('p');
-            p.textContent = res.answer || '';
+        const h3 = document.createElement('h3');
+        h3.textContent = res.member.toUpperCase();
 
-            div.appendChild(h3);
-            div.appendChild(p);
-            responseBox.appendChild(div);
-        });
-    }
+        const content = document.createElement('div');
+        content.className = 'member-content';
+        content.innerHTML = parseMarkdown(res.answer);
 
-    if (data.round1) {
-        const verdictDiv = document.createElement('div');
-        verdictDiv.className = 'final-verdict';
 
-        const verdictH3 = document.createElement('h3');
-        verdictH3.textContent = 'Nihai Karar';
-        verdictDiv.appendChild(verdictH3);
+        div.appendChild(h3);
+        div.appendChild(content);
+        responseBox.appendChild(div);
+    });
 
-        const verdictContent = document.createElement('div');
-        verdictContent.className = 'verdict-content';
-        verdictContent.innerHTML = data.verdict || '';
-        verdictDiv.appendChild(verdictContent);
-        responseBox.appendChild(verdictDiv);
-    } else if (data.verdict) {
-        const verdictDiv = document.createElement('div');
-        verdictDiv.className = 'final-verdict';
 
-        const verdictContent = document.createElement('div');
-        verdictContent.className = 'verdict-content';
-        verdictContent.innerHTML = data.verdict;
-        verdictDiv.appendChild(verdictContent);
-        responseBox.appendChild(verdictDiv);
-    }
+    const verdictDiv = document.createElement('div');
+    verdictDiv.className = 'final-verdict';
+
+    const verdictH3 = document.createElement('h3');
+    verdictH3.textContent = 'Nihai Karar';
+
+    const verdictContent = document.createElement('div');
+    verdictContent.className = 'verdict-content';
+    verdictContent.innerHTML = parseMarkdown(data.verdict);
+
+
+    verdictDiv.appendChild(verdictH3);
+    verdictDiv.appendChild(verdictContent);
+    responseBox.appendChild(verdictDiv);
 }
 
 function closeIntroBox() {
