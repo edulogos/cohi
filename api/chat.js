@@ -17,16 +17,21 @@ export default async function handler(req, res) {
         const body = req.body || {};
         const { message, members, mode } = body;
 
+        console.log('=== API DEBUG ===');
+        console.log('method:', req.method);
+        console.log('content-type:', req.headers['content-type']);
+        console.log('body keys:', Object.keys(body));
+        console.log('message type:', typeof message);
+        console.log('message length:', message ? message.length : 'N/A');
+        console.log('members:', members);
+        console.log('mode:', mode);
+        console.log('===============');
+
         if (req.method !== "POST") {
             return res.status(405).json({ error: "Yalnızca POST istekleri kabul edilir." });
         }
 
-        const contentType = req.headers['content-type'] || '';
-        if (contentType && !contentType.includes('application/json')) {
-            return res.status(400).json({ error: "Geçersiz Content-Type." });
-        }
-
-        if (message !== undefined && typeof message !== 'string') {
+        if (message && typeof message !== 'string') {
             return res.status(400).json({ error: "message parametresi string olmalıdır." });
         }
 
@@ -132,6 +137,10 @@ export default async function handler(req, res) {
         const membersToUse = members && members.length > 0 ? members : Object.keys(AGENTS_DATA);
         const useCrossExamination = membersToUse.length >= 2 && membersToUse.length <= 3 && mode !== 'duo';
         const useDuoMode = mode === 'duo' && membersToUse.length === 2;
+
+        console.log('membersToUse:', membersToUse);
+        console.log('useCrossExamination:', useCrossExamination);
+        console.log('useDuoMode:', useDuoMode);
 
         if (useDuoMode && message) {
             const duoResults = await Promise.all(
