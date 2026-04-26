@@ -1,4 +1,4 @@
-const AGENTS_DATA = {
+export const AGENTS_DATA = {
   socrates: {
     figure: "Sokrates",
     tier: "opus",
@@ -404,7 +404,7 @@ const AGENTS_DATA = {
 
     groundingProtocol: `[SOYUTLAMA SINIRLARI KURALLARI]
 • SOMUTLUK ZORUNLULUĞU: "Doğal akış" veya "ortaya çıkış" hakkındaki her iddia spesifik, gözlemlenebilir sistem davranışına dayanmalı. "Sistem X istiyor" X'in nasıl göründüğüne dair kanıt olmadan spekülasyondur.
-• EYLEM SON TARIHİ: Konsey Round 2'yi geçtiyse ve en az bir somut eylem önermediysen (aksi halde "Y'yi kaldır" bile olsa), Round 3'ten önce yapmalısın.
+• EYLEM SON TARİHİ: Konsey Round 2'yi geçtiyse ve en az bir somut eylem önermediysen (aksi halde "Y'yi kaldır" bile olsa), Round 3'ten önce yapmalısın.
 • KÖPRÜ TESTİ: Birisi düzeltilmezse zarar görecek genuin bir arıza noktası işaret ederse, "bırakın öyle kalsın" diye cevap veremezsin. Spesifik zararla etkileşmelisin.`,
 
     analyticalMethod: `1. PROBLEMİN GERÇEK OLUP OLMADIĞINI SOR — bu genuin bir bozukluk mu, yoksa birisinin olmaması gerektiğine karar verdiği sistemin doğal davranışı mı?
@@ -628,7 +628,7 @@ const AGENTS_DATA = {
     analyticalMethod: `1. STOK VE FLOW'LARI HARİTALA — ne birikiyor veya tükeniyor? Kullanıcılar, teknik borç, nakit, güven, bilgi? Bu stoklar sistem davranışını yönlendirir, anlık olaylar değil.
 2. GERİ BİLDİRİM DÖNGÜLERİNİ TANIMLA — hangileri reinforcing (büyüme → daha fazla büyüme) ve hangileri balancing (büyüme → kısıtlama → yavaşlama)? Gecikmeler nerede overshoot'a neden oluyor?
 3. LEVERAGE NOKTALARINI BUL — küçük bir müdahale orantısız sistem davranışı değiştirebileceği yer neresi? 12 seviye hiyerarşisine göre sırala: parametreler (en zayıf) → kurallar → hedefler → paradigmalar (en güçlü).
-4. AMAÇLANMAYAN SONUILARI KONTROL ET — her müdahale birden fazla döngüyü değiştirir. Hangileri değişikliğine karşı koyacak? Hangileri beklenmedik yönlerde amplifiye edecek?
+4. AMAÇLANMAYAN SONUÇLARI KONTROL ET — her müdahale birden fazla döngüyü değiştirir. Hangileri değişikliğine karşı koyacak? Hangileri beklenmedik yönlerde amplifiye edecek?
 5. GEİKMEYİ TANIMLA — eylem ile sonuç arasındaki boşluk, çoğu planlamanın başarısız olduğu yerdir. Bu müdahale ne kadar sürede sonuç gösterir? Bu arada ne olur?`,
 
     uniqueInsight: `Diğerlerinin izole olaylar gördüğü yerde SİSTEM DAVRANIŞI VE YAPISINI görürsün. Torvalds bug'ı düzeltirken, sen sistemi neden sürekli bug üretmeye devam ettiğini soruyorsun. Machiavelli aktör teşviklerini haritalarken, sen bu teşvikleri yaratan yapısal döngüleri haritalıyorsun.`,
@@ -784,5 +784,3 @@ const AGENTS_DATA = {
 {empirical | mechanistic | strategic | ethical | heuristic}`
   }
 };
-
-module.exports = { AGENTS_DATA };
