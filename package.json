@@ -1,5 +1,9 @@
 {
   "name": "cohi-api",
   "version": "1.0.0",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@upstash/ratelimit": "^2.0.0",
+    "@vercel/kv": "^0.2.0"
+  }
 }
