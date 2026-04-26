@@ -1,7 +1,7 @@
 const { AGENTS_DATA } = require('./agents-data.js');
 
 export default async function handler(req, res) {
-    res.setHeader("Access-Control-Allow-Origin", "https://edulogos.github.io");
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
@@ -156,7 +156,7 @@ export default async function handler(req, res) {
 
             let verdict = "";
             try {
-                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun:\n\n[Genel değerlendirmen]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\nYanıtın TÜRKÇE olsun.`;
+                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun:\n\n[Genel değerlendirmen]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\n\nYanıtın TÜRKÇE olsun.`;
                 const modResponse = await callOpenRouter(STABLE_PAID_MODEL, verdictPrompt, "Tartışmayı özetle");
                 const modData = await modResponse.json();
                 verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
@@ -194,7 +194,7 @@ export default async function handler(req, res) {
 
             let verdict = "";
             try {
-                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun:\n\n[Genel değerlendirmen]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\nYanıtın TÜRKÇE olsun.`;
+                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun:\n\n[Genel değerlendirmen]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\nYanıtın TÜRKÇE olsun.`;
                 const modResponse = await callOpenRouter(STABLE_PAID_MODEL, verdictPrompt, "Tartışmayı özetle");
                 const modData = await modResponse.json();
                 verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
