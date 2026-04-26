@@ -220,4 +220,52 @@ export default async function handler(req, res) {
                         .map(r => `${councilMembers[r.member]?.name || r.member}: ${r.answer}`)
                         .join("\n\n");
 
-                    const round2Prompt = `Sen ${councilMembers[key].name}'sin. Aşağıda diğer konsey üyelerinin soruya verdikleri yanıtlar var:\n\n${otherAnalyses}\n\nŞimdi sen, ${councilMembers[key].name} olarak, bu diğer üyelerin argümanlarına kendi perspektifinden yanıt ver.\n\n\nYANIT FORMATI (bu formatı takip et):\nHer üyenin argümanına şu şekilde yanıt ver:\n[ÜYE_ADI]: [Katıldığın/katılmadığın noktalar]... [Kendi eklediğin noktalar]...\n\nToplam 250 kelimeyi geçme. Yanıtın TÜRKÇE olsun. Başka başlık veya alt başlık kullanma.`;
+                    const round2Prompt = `Sen ${councilMembers[key].name}'sin. Aşağıda diğer konsey üyelerinin soruya verdikleri yanıtlar var:\n\n${otherAnalyses}\n\nŞimdi sen, ${councilMembers[key].name} olarak, bu diğer üyelerin argümanlarına kendi perspektifinden yanıt ver.\n\nYANIT FORMATI:\nHer üyenin argümanına şu şekilde yanıt ver:\n[ÜYE_ADI]: [Katıldığın/katılmadığın noktalar]... [Kendi eklediğin noktalar]...\n\nToplam 250 kelimeyi geçme. Yanıtın TÜRKÇE olsun. Başka başlık veya alt başlık kullanma.`;
+
+                    const answer = await getResponseWithFallback(key, round2Prompt);
+                    return { member: key, answer };
+                })
+            );
+
+            const combinedText = [...round1Results, ...round2Results]
+                .map(r => `${r.member.toUpperCase()}: ${r.answer}`)
+                .join("\n\n");
+
+            let verdict = "";
+            try {
+                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle. Türkçe olarak şu bölümleri kullan:\n\n**Genel Değerlendirme:** [Ana sonuç ve değerlendirme]\n\n**Çözümsüz Sorular:** [Belirsizlikler ve açık sorular - madde madde]\n\n**Önerilen Sonraki Adımlar:** [Ne yapılmalı - madde madde]\n\nBaşka başlık veya format kullanma. Yanıtın TÜRKÇE olsun.`;
+                const modResponse = await callOpenRouter(STABLE_PAID_MODEL, verdictPrompt, "Tartışmayı özetle");
+                const modData = await modResponse.json();
+                verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
+            } catch (e) {
+                verdict = "Moderatör şu an ulaşılamaz durumda.";
+            }
+
+            res.status(200).json({ round1: round1Results, round2: round2Results, verdict });
+
+        } else {
+            const responses = await Promise.all(
+                membersToUse.map(async (key) => {
+                    if (!councilMembers[key]) return { member: key, answer: "Üye bulunamadı." };
+                    const answer = await getResponseWithFallback(key, message || '');
+                    return { member: key, answer };
+                })
+            );
+
+            const combinedText = responses.map(r => `${r.member.toUpperCase()}: ${r.answer}`).join("\n\n");
+            let verdict = "";
+            try {
+                const modResponse = await callOpenRouter(STABLE_PAID_MODEL, "Sen bir moderatörsün. Tartışmayı özetle ve Türkçe olarak nihai bir yargı sun.", combinedText);
+                const modData = await modResponse.json();
+                verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
+            } catch (e) {
+                verdict = "Moderatör şu an ulaşılamaz durumda.";
+            }
+
+            res.status(200).json({ responses, verdict });
+        }
+    } catch (error) {
+        console.error("Genel Backend Hatası:", error);
+        res.status(500).json({ error: "Sunucu hatası oluştu." });
+    }
+}
