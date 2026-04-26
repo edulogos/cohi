@@ -1,3 +1,13 @@
+import { Ratelimit } from "@upstash/ratelimit";
+import { kv } from "@vercel/kv";
+
+const ratelimit = new Ratelimit({
+  redis: kv,
+  limiter: Ratelimit.slidingWindow(5, "1 m"),
+  analytics: true,
+  prefix: "cohi-rate-limit",
+});
+
 export default async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Origin", "https://edulogos.github.io");
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
@@ -5,6 +15,18 @@ export default async function handler(req, res) {
 
     if (req.method === "OPTIONS") {
         return res.status(200).end();
+    }
+
+    const ip = req.headers?.["x-forwarded-for"]?.[0] || req.headers?.["x-real-ip"] || "127.0.0.1";
+    const { success, limit, remaining, reset } = await ratelimit.limit(ip);
+
+    if (!success) {
+        return res.status(429).json({
+            error: "Çok fazla istek. Lütfen " + Math.ceil((reset - Date.now()) / 1000) + " saniye bekleyin.",
+            limit,
+            remaining,
+            reset: new Date(reset).toISOString()
+        });
     }
 
     if (req.method !== "POST") {
