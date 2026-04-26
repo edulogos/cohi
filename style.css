@@ -100,8 +100,8 @@ textarea::placeholder,
 textarea::-webkit-input-placeholder,
 textarea::-moz-placeholder,
 textarea:-ms-input-placeholder {
-  color: #a0b4c8;
-  opacity: 1;
+  color: #a0b4c8 !important;
+  opacity: 1 !important;
 }
 
 select:focus,
