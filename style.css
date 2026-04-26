@@ -144,6 +144,68 @@ button:hover {
   display: none !important;
 }
 
+/* Mode Selector Buttons */
+.mode-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.mode-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid var(--accent-glow);
+  color: var(--accent-glow);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: auto;
+}
+
+.mode-btn.active {
+  background: var(--accent-glow);
+  color: var(--bg-dark);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+}
+
+.mode-btn.active .mode-check {
+  display: inline-block;
+}
+
+.mode-btn.dimmed {
+  opacity: 0.4;
+  border-color: var(--text-muted);
+  color: var(--text-muted);
+}
+
+.mode-btn:hover:not(.dimmed) {
+  background: rgba(56, 189, 248, 0.2);
+  transform: none;
+  box-shadow: none;
+}
+
+.mode-btn.active:hover {
+  background: var(--accent-glow);
+}
+
+.mode-check {
+  display: none;
+  font-size: 1rem;
+}
+
+.mode-icon {
+  font-size: 1.2rem;
+}
+
+.mode-text {
+  white-space: nowrap;
+}
+
 /* Loading animasyonu */
 #loading {
   text-align: center;
