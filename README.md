@@ -15,4 +15,4 @@
 index.html, style.css, app.js, api/chat.js
 
 ## 📄 Lisans
-Bu proje, orijinal "<a href="https://github.com/0xNyk/council-of-high-intelligence">Council of High Intelligence</a>" projesinin geliştirilmiş bir fork'udur. Bu proje  <a href="https://creativecommons.org/publicdomain/zero/1.0/"><img src="https://img.shields.io/badge/license-CC0-blue" alt="License"></a> lisansı altındadır. Orijinal çalışma <a href="https://github.com/0xNyk">0xNyk</a> aittir.
+Bu proje, orijinal "<a href="https://github.com/0xNyk/council-of-high-intelligence">Council of High Intelligence</a>" projesinin geliştirilmiş bir fork'udur.  Orijinal çalışma <a href="https://github.com/0xNyk">0xNyk</a> aittir.
