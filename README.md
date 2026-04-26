@@ -8,7 +8,8 @@
 - <a href="https://edulogos.github.io/cohi/">Yüksek Zeka Konseyi</a>
 
 ## 🚀 Bu Fork ile Gelen Yenilikler
-- Vercel ile AI API Maskeleme
+- Vercel entegrasyon
+- "Agents" web entregrasyon
 - Web Tasarım
 
 ## 🛠 Kurulum
