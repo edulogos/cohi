@@ -157,7 +157,7 @@ button:hover {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 6px 8px;
   background: rgba(0, 0, 0, 0.3);
   border: 2px solid var(--accent-glow);
   color: var(--accent-glow);
@@ -175,6 +175,8 @@ button:hover {
 
 .mode-btn.active .mode-check {
   display: inline-block;
+  color: #ed143d;
+  font-size: x-large;
 }
 
 .mode-btn.dimmed {
