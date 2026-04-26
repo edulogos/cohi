@@ -54,9 +54,11 @@ function selectTriad(memberIds) {
     allTriadBtns.forEach(btn => btn.classList.remove('selected'));
 
     const clickedBtn = Array.from(allTriadBtns).find(btn => {
-        const btnMemberIds = btn.getAttribute('onclick').match(/'([^']+)'/g)?.map(s => s.replace(/'/g, ''));
+        const btnMemberIds = btn.getAttribute('data-members');
         if (!btnMemberIds) return false;
-        return btnMemberIds.length === memberIds.length && btnMemberIds.every(id => memberIds.includes(id));
+        const parsed = JSON.parse(btnMemberIds);
+        if (parsed.length !== memberIds.length) return false;
+        return parsed.every((id, index) => id === memberIds[index]);
     });
     if (clickedBtn) clickedBtn.classList.add('selected');
 
