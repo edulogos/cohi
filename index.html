@@ -53,26 +53,26 @@
             <div class="triads-container" id="triads-section">
                 <p>Uzmanlık Alanları Seçimi</p>
                 <div class="triad-buttons">
-                    <button type="button" class="triad-btn" onclick="selectTriad(['aristotle', 'ada', 'feynman'])" title="Sınıflandır + Biçimlendir + Sadelik-Test">Mimari</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['suntzu', 'machiavelli', 'aurelius'])" title="Arazi + Teşvikler + Ahlaki Temel">Strateji</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['aurelius', 'socrates', 'laotzu'])" title="Görev + Sorgulama + Doğal Düzen">Etik</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['feynman', 'socrates', 'ada'])" title="Aşağıdan Yukarıya + Varsayım Testi + Biçimsel Doğrulama">Hata Ayıklama</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['ada', 'laotzu', 'aristotle'])" title="Soyutlama + Ortaya Çıkış + Sınıflandırma">Yenilik</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['socrates', 'machiavelli', 'aurelius'])" title="ortaya Çıkar + Tahmin Et + Temelle">Çatışma</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['laotzu', 'aristotle', 'ada'])" title="Ortaya Çıkış + Kategoriler + Biçimsellik">Karmaşıklık</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['suntzu', 'aurelius', 'feynman'])" title="Tehditler + Dayanıklılık + Ampirik Doğrulama">Risk</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['torvalds', 'musashi', 'feynman'])" title="Pragmatizm + Zamanlama + İlk Prensipler">Sevkiyat</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['torvalds', 'machiavelli', 'watts'])" title="Sevk Et + Teşvikler + Yeniden Çerçeveleme">Ürün</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['musashi', 'suntzu', 'torvalds'])" title="Zamanlama + Arazi + Mühendislik Gerçekliği">Kurucu</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['karpathy', 'sutskever', 'ada'])" title="Ampirik Öğrenme + Ölçeklenebilirlik + Resmi Sınırlar">Yapay Zeka</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['karpathy', 'torvalds', 'machiavelli'])" title="ML Yeteneği + Sevkiyat Pragmatizmi + Teşvikler">YZ-Ürün</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['sutskever', 'aurelius', 'socrates'])" title="Güvenlik Sınırı + Ahlaki Netlik + Varsayım Yıkımı">YZ-Güvenlik</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['kahneman', 'munger', 'aurelius'])" title="Yanlılık Tespiti + Tersine Çevirme + Ahlaki Netlik">Karar</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['meadows', 'laotzu', 'aristotle'])" title="Geri Bildirim Döngüleri + ortaya Çıkış + Kategoriler">Sistemler</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['taleb', 'suntzu', 'sutskever'])" title="Kuyruk Riski + Arazi + Ölçeklenebilirlik">Belirsizlik</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['rams', 'torvalds', 'watts'])" title="Kullanıcı Netliği + Sürdürülebilirlik + Yeniden Çerçeveleme">Tasarım</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['munger', 'machiavelli', 'suntzu'])" title="Modeller + Teşvikler + Rekabet">Ekonomi</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['kahneman', 'socrates', 'watts'])" title="Bilişsel Yanlılık + Varsayım Yıkımı + Çerçeve Denetimi">Yanlılık</button>
+                    <button type="button" class="triad-btn" data-members='["aristotle", "ada", "feynman"]' onclick='selectTriad(["aristotle", "ada", "feynman"])' title="Sınıflandır + Biçimlendir + Sadelik-Test">Mimari</button>
+                    <button type="button" class="triad-btn" data-members='["suntzu", "machiavelli", "aurelius"]' onclick='selectTriad(["suntzu", "machiavelli", "aurelius"])' title="Arazi + Teşvikler + Ahlaki Temel">Strateji</button>
+                    <button type="button" class="triad-btn" data-members='["aurelius", "socrates", "laotzu"]' onclick='selectTriad(["aurelius", "socrates", "laotzu"])' title="Görev + Sorgulama + Doğal Düzen">Etik</button>
+                    <button type="button" class="triad-btn" data-members='["feynman", "socrates", "ada"]' onclick='selectTriad(["feynman", "socrates", "ada"])' title="Aşağıdan Yukarıya + Varsayım Testi + Biçimsel Doğrulama">Hata Ayıklama</button>
+                    <button type="button" class="triad-btn" data-members='["ada", "rams", "aristotle"]' onclick='selectTriad(["ada", "rams", "aristotle"])' title="Soyutlama + Ortaya Çıkış + Sınıflandırma">Yenilik</button>
+                    <button type="button" class="triad-btn" data-members='["socrates", "machiavelli", "aurelius"]' onclick='selectTriad(["socrates", "machiavelli", "aurelius"])' title="ortaya Çıkar + Tahmin Et + Temelle">Çatışma</button>
+                    <button type="button" class="triad-btn" data-members='["laotzu", "meadows", "taleb"]' onclick='selectTriad(["laotzu", "meadows", "taleb"])' title="Ortaya Çıkış + Kategoriler + Biçimsellik">Karmaşıklık</button>
+                    <button type="button" class="triad-btn" data-members='["suntzu", "aurelius", "feynman"]' onclick='selectTriad(["suntzu", "aurelius", "feynman"])' title="Tehditler + Dayanıklılık + Ampirik Doğrulama">Risk</button>
+                    <button type="button" class="triad-btn" data-members='["torvalds", "musashi", "feynman"]' onclick='selectTriad(["torvalds", "musashi", "feynman"])' title="Pragmatizm + Zamanlama + İlk Prensipler">Sevkiyat</button>
+                    <button type="button" class="triad-btn" data-members='["torvalds", "machiavelli", "watts"]' onclick='selectTriad(["torvalds", "machiavelli", "watts"])' title="Sevk Et + Teşvikler + Yeniden Çerçeveleme">Ürün</button>
+                    <button type="button" class="triad-btn" data-members='["musashi", "suntzu", "torvalds"]' onclick='selectTriad(["musashi", "suntzu", "torvalds"])' title="Zamanlama + Arazi + Mühendislik Gerçekliği">Kurucu</button>
+                    <button type="button" class="triad-btn" data-members='["karpathy", "sutskever", "ada"]' onclick='selectTriad(["karpathy", "sutskever", "ada"])' title="Ampirik Öğrenme + Ölçeklenebilirlik + Resmi Sınırlar">Yapay Zeka</button>
+                    <button type="button" class="triad-btn" data-members='["karpathy", "torvalds", "machiavelli"]' onclick='selectTriad(["karpathy", "torvalds", "machiavelli"])' title="ML Yeteneği + Sevkiyat Pragmatizmi + Teşvikler">YZ-Ürün</button>
+                    <button type="button" class="triad-btn" data-members='["sutskever", "aurelius", "socrates"]' onclick='selectTriad(["sutskever", "aurelius", "socrates"])' title="Güvenlik Sınırı + Ahlaki Netlik + Varsayım Yıkımı">YZ-Güvenlik</button>
+                    <button type="button" class="triad-btn" data-members='["kahneman", "munger", "aurelius"]' onclick='selectTriad(["kahneman", "munger", "aurelius"])' title="Yanlılık Tespiti + Tersine Çevirme + Ahlaki Netlik">Karar</button>
+                    <button type="button" class="triad-btn" data-members='["meadows", "laotzu", "aristotle"]' onclick='selectTriad(["meadows", "laotzu", "aristotle"])' title="Geri Bildirim Döngüleri + ortaya Çıkış + Kategoriler">Sistemler</button>
+                    <button type="button" class="triad-btn" data-members='["taleb", "suntzu", "sutskever"]' onclick='selectTriad(["taleb", "suntzu", "sutskever"])' title="Kuyruk Riski + Arazi + Ölçeklenebilirlik">Belirsizlik</button>
+                    <button type="button" class="triad-btn" data-members='["rams", "torvalds", "watts"]' onclick='selectTriad(["rams", "torvalds", "watts"])' title="Kullanıcı Netliği + Sürdürülebilirlik + Yeniden Çerçeveleme">Tasarım</button>
+                    <button type="button" class="triad-btn" data-members='["munger", "machiavelli", "suntzu"]' onclick='selectTriad(["munger", "machiavelli", "suntzu"])' title="Modeller + Teşvikler + Rekabet">Ekonomi</button>
+                    <button type="button" class="triad-btn" data-members='["kahneman", "socrates", "watts"]' onclick='selectTriad(["kahneman", "socrates", "watts"])' title="Bilişsel Yanlılık + Varsayım Yıkımı + Çerçeve Denetimi">Yanlılık</button>
                 </div>
             </div>
 
