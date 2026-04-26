@@ -1,8 +1,43 @@
 const VERCEL_API_URL = "https://cohi-p46b.vercel.app/api/chat";
 
 let userManuallySelected = false;
+let currentMode = 'full';
+const MAX_MEMBERS_FULL = 3;
+const MAX_MEMBERS_DUO = 2;
+
+function setMode(mode) {
+    currentMode = mode;
+    const btnFull = document.getElementById('mode-full');
+    const btnDuo = document.getElementById('mode-duo');
+    const triadsSection = document.getElementById('triads-section');
+    const warningText = document.getElementById('selection-warning-text');
+
+    if (mode === 'full') {
+        btnFull.classList.add('active');
+        btnDuo.classList.remove('active');
+        triadsSection.style.display = 'block';
+        warningText.textContent = 'En fazla 3 seçim yapılabilir !';
+    } else {
+        btnFull.classList.remove('active');
+        btnDuo.classList.add('active');
+        triadsSection.style.display = 'none';
+        warningText.textContent = 'En fazla 2 seçim yapılabilir !';
+    }
+
+    document.querySelectorAll('input[name="council-member"]').forEach(cb => cb.checked = false);
+    userManuallySelected = false;
+    hideTriadSelection();
+    hideSelectionWarning();
+    updateSelectionCount();
+}
+
+function getMaxMembers() {
+    return currentMode === 'duo' ? MAX_MEMBERS_DUO : MAX_MEMBERS_FULL;
+}
 
 function selectTriad(memberIds) {
+    if (currentMode === 'duo') return;
+
     const allCheckboxes = document.querySelectorAll('input[name="council-member"]');
     allCheckboxes.forEach(cb => cb.checked = false);
     memberIds.forEach(id => {
@@ -49,9 +84,14 @@ function hideSelectionWarning() {
 
 function updateSelectionCount() {
     const checked = document.querySelectorAll('input[name="council-member"]:checked').length;
+    const max = getMaxMembers();
     const countEl = document.getElementById('selection-count');
     if (countEl) {
-        countEl.textContent = `${checked}/3 üye seçildi`;
+        if (currentMode === 'duo') {
+            countEl.textContent = `${checked}/2 üye seçildi`;
+        } else {
+            countEl.textContent = `${checked}/3 üye seçildi`;
+        }
     }
 }
 
@@ -60,8 +100,9 @@ function handleMemberCheckboxClick(event) {
     if (!checkbox.classList.contains('member-checkbox')) return;
 
     const checked = document.querySelectorAll('input[name="council-member"]:checked');
+    const max = getMaxMembers();
 
-    if (checked.length > 3) {
+    if (checked.length > max) {
         checkbox.checked = false;
         showSelectionWarning();
         return;
@@ -149,8 +190,11 @@ async function askCouncil() {
     const loading = document.getElementById("loading");
 
 
-    if (selectedMembers.length === 0) {
-        alert("Lütfen en az bir üye seçin.");
+    const max = getMaxMembers();
+    const min = currentMode === 'duo' ? 2 : 1;
+
+    if (selectedMembers.length < min) {
+        alert(`Lütfen en az ${min} üye seçin.`);
         return;
     }
     if (!userInput.trim()) {
@@ -177,7 +221,8 @@ async function askCouncil() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 message: userInput,
-                members: selectedMembers
+                members: selectedMembers,
+                mode: currentMode
             })
         });
 
@@ -387,4 +432,5 @@ window.addEventListener("DOMContentLoaded", () => {
     showIntroBoxIfNeeded();
     updateQueryCountDisplay();
     initMemberCheckboxes();
+    setMode('full');
 });
