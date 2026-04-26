@@ -93,6 +93,21 @@ textarea {
   box-sizing: border-box;
 }
 
+textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 1 !important;
+}
+
+textarea::-webkit-input-placeholder {
+  color: var(--text-muted);
+  opacity: 1 !important;
+}
+
+textarea:-moz-placeholder {
+  color: var(--text-muted);
+  opacity: 1 !important;
+}
+
 select:focus,
 textarea:focus {
   outline: none;
