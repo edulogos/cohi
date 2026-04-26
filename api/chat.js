@@ -3,6 +3,8 @@ import { Redis } from "@upstash/redis";
 
 const redis = Redis.fromEnv();
 
+console.log("Redis client initialized:", !!redis);
+
 const ratelimit = new Ratelimit({
   redis,
   limiter: Ratelimit.slidingWindow(5, "1 m"),
@@ -20,14 +22,23 @@ export default async function handler(req, res) {
     }
 
     const ip = req.headers?.["x-forwarded-for"]?.[0] || req.headers?.["x-real-ip"] || "127.0.0.1";
-    const { success, limit, remaining, reset } = await ratelimit.limit(ip);
+    console.log("IP:", ip);
 
-    if (!success) {
+    let rateLimitResult;
+    try {
+        rateLimitResult = await ratelimit.limit(ip);
+        console.log("Rate limit success:", rateLimitResult.success);
+    } catch (err) {
+        console.error("Rate limit error:", err.message);
+        rateLimitResult = { success: true };
+    }
+
+    if (!rateLimitResult.success) {
         return res.status(429).json({
-            error: "Çok fazla istek. Lütfen " + Math.ceil((reset - Date.now()) / 1000) + " saniye bekleyin.",
-            limit,
-            remaining,
-            reset: new Date(reset).toISOString()
+            error: "Çok fazla istek. Lütfen " + Math.ceil((rateLimitResult.reset - Date.now()) / 1000) + " saniye bekleyin.",
+            limit: rateLimitResult.limit,
+            remaining: rateLimitResult.remaining,
+            reset: new Date(rateLimitResult.reset).toISOString()
         });
     }
 
