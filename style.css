@@ -91,21 +91,17 @@ textarea {
   font-family: "Caladea", serif;
   transition: all 0.3s ease;
   box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
-textarea::placeholder {
-  color: var(--text-muted);
-  opacity: 1 !important;
-}
-
-textarea::-webkit-input-placeholder {
-  color: var(--text-muted);
-  opacity: 1 !important;
-}
-
-textarea:-moz-placeholder {
-  color: var(--text-muted);
-  opacity: 1 !important;
+textarea::placeholder,
+textarea::-webkit-input-placeholder,
+textarea::-moz-placeholder,
+textarea:-ms-input-placeholder {
+  color: #a0b4c8;
+  opacity: 1;
 }
 
 select:focus,
@@ -129,6 +125,9 @@ button {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .btn-icon {
@@ -180,6 +179,9 @@ button:hover {
   font-weight: 600;
   transition: all 0.3s ease;
   width: auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .mode-btn.active {
@@ -541,6 +543,9 @@ button:hover {
   white-space: nowrap;
   width: auto;
   min-width: max-content;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .triad-btn.selected {
