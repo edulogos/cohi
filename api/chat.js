@@ -1,8 +1,10 @@
 import { Ratelimit } from "@upstash/ratelimit";
-import { kv } from "@vercel/kv";
+import { Redis } from "@upstash/redis";
+
+const redis = Redis.fromEnv();
 
 const ratelimit = new Ratelimit({
-  redis: kv,
+  redis,
   limiter: Ratelimit.slidingWindow(5, "1 m"),
   analytics: true,
   prefix: "cohi-rate-limit",
