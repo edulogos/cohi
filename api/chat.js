@@ -19,7 +19,8 @@ export default async function handler(req, res) {
             return res.status(405).json({ message: "Yalnızca POST istekleri kabul edilir." });
         }
 
-        if (req.headers['content-type'] !== 'application/json') {
+        const contentType = req.headers['content-type'] || '';
+        if (!contentType.includes('application/json')) {
             return res.status(400).json({ error: "Geçersiz Content-Type. application/json gerekli." });
         }
 
