@@ -450,11 +450,7 @@ function initMemberCheckboxes() {
 }
 
 function selectDefaultMembers() {
-    DEFAULT_TRIAD.forEach(id => {
-        const checkbox = document.getElementById(id);
-        if (checkbox) checkbox.checked = true;
-    });
-    updateSelectionCount();
+    selectTriad(DEFAULT_TRIAD);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
