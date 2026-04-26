@@ -226,7 +226,10 @@ async function askCouncil() {
     }
 
     submitBtn.disabled = true;
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    const isMobile = window.innerWidth <= 768;
+    const scrollTarget = isMobile ? document.body.scrollHeight : 0;
+    window.scrollTo({ top: scrollTarget, behavior: "smooth" });
 
     loading.classList.remove("hidden");
     responseBox.innerHTML = "";
