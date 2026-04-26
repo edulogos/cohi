@@ -92,7 +92,7 @@ export const AGENTS_DATA = {
     figure: "Aristo",
     tier: "opus",
     polarity: "Classifies everything",
-    polarityPairs: ["lao-tzu", "munger"],
+    polarityPairs: ["laotzu", "munger"],
     triads: ["architecture", "innovation", "complexity", "systems"],
     duoKeywords: ["architecture", "structure", "categories"],
     color: "amber",
@@ -305,7 +305,7 @@ export const AGENTS_DATA = {
 {empirical | mechanistic | strategic | ethical | heuristic}`
   },
 
-  sun_tzu: {
+  suntzu: {
     figure: "Sun Tzu",
     tier: "sonnet",
     polarity: "Reads terrain & competition",
@@ -352,7 +352,7 @@ export const AGENTS_DATA = {
     figure: "Marcus Aurelius",
     tier: "opus",
     polarity: "Control vs acceptance",
-    polarityPairs: ["sun-tzu"],
+    polarityPairs: ["suntzu"],
     triads: ["strategy", "ethics", "conflict", "risk", "decision"],
     duoKeywords: ["strategy", "competition", "market"],
     color: "silver",
@@ -391,7 +391,7 @@ export const AGENTS_DATA = {
 {empirical | mechanistic | strategic | ethical | heuristic}`
   },
 
-  lao_tzu: {
+  laotzu: {
     figure: "Lao Tzu",
     tier: "opus",
     polarity: "When less is more",
