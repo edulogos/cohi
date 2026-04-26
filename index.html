@@ -37,7 +37,18 @@
     <main class="dashboard">
 
         <section class="input-panel">
-            <div class="triads-container">
+            <div class="mode-selector">
+                <button type="button" class="mode-btn active" id="mode-full" onclick="setMode('full')">
+                    <span class="mode-icon">👥</span>
+                    <span class="mode-text">Konsey (3 Üye)</span>
+                </button>
+                <button type="button" class="mode-btn" id="mode-duo" onclick="setMode('duo')">
+                    <span class="mode-icon">⚔</span>
+                    <span class="mode-text">Düello (2 Üye)</span>
+                </button>
+            </div>
+
+            <div class="triads-container" id="triads-section">
                 <p>Uzmanlık Alanları Seçimi</p>
                 <div class="triad-buttons">
                     <button type="button" class="triad-btn" onclick="selectTriad(['aristotle', 'ada', 'feynman'])" title="Sınıflandır + Biçimlendir + Sadelik-Test">Mimari</button>
@@ -45,7 +56,7 @@
                     <button type="button" class="triad-btn" onclick="selectTriad(['aurelius', 'socrates', 'laotzu'])" title="Görev + Sorgulama + Doğal Düzen">Etik</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['feynman', 'socrates', 'ada'])" title="Aşağıdan Yukarıya + Varsayım Testi + Biçimsel Doğrulama">Hata Ayıklama</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['ada', 'laotzu', 'aristotle'])" title="Soyutlama + Ortaya Çıkış + Sınıflandırma">Yenilik</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['socrates', 'machiavelli', 'aurelius'])" title="Ortaya Çıkar + Tahmin Et + Temelle">Çatışma</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['socrates', 'machiavelli', 'aurelius'])" title="ortaya Çıkar + Tahmin Et + Temelle">Çatışma</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['laotzu', 'aristotle', 'ada'])" title="Ortaya Çıkış + Kategoriler + Biçimsellik">Karmaşıklık</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['suntzu', 'aurelius', 'feynman'])" title="Tehditler + Dayanıklılık + Ampirik Doğrulama">Risk</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['torvalds', 'musashi', 'feynman'])" title="Pragmatizm + Zamanlama + İlk Prensipler">Sevkiyat</button>
@@ -55,7 +66,7 @@
                     <button type="button" class="triad-btn" onclick="selectTriad(['karpathy', 'torvalds', 'machiavelli'])" title="ML Yeteneği + Sevkiyat Pragmatizmi + Teşvikler">YZ-Ürün</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['sutskever', 'aurelius', 'socrates'])" title="Güvenlik Sınırı + Ahlaki Netlik + Varsayım Yıkımı">YZ-Güvenlik</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['kahneman', 'munger', 'aurelius'])" title="Yanlılık Tespiti + Tersine Çevirme + Ahlaki Netlik">Karar</button>
-                    <button type="button" class="triad-btn" onclick="selectTriad(['meadows', 'laotzu', 'aristotle'])" title="Geri Bildirim Döngüleri + Ortaya Çıkış + Kategoriler">Sistemler</button>
+                    <button type="button" class="triad-btn" onclick="selectTriad(['meadows', 'laotzu', 'aristotle'])" title="Geri Bildirim Döngüleri + ortaya Çıkış + Kategoriler">Sistemler</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['taleb', 'suntzu', 'sutskever'])" title="Kuyruk Riski + Arazi + Ölçeklenebilirlik">Belirsizlik</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['rams', 'torvalds', 'watts'])" title="Kullanıcı Netliği + Sürdürülebilirlik + Yeniden Çerçeveleme">Tasarım</button>
                     <button type="button" class="triad-btn" onclick="selectTriad(['munger', 'machiavelli', 'suntzu'])" title="Modeller + Teşvikler + Rekabet">Ekonomi</button>
@@ -87,7 +98,7 @@
                 </div>
                 <div id="selection-warning" class="selection-warning hidden">
                     <span class="warning-icon">⚠</span>
-                    <span class="warning-text">En fazla 3 seçim yapılabilir !</span>
+                    <span class="warning-text" id="selection-warning-text">En fazla 3 seçim yapılabilir !</span>
                 </div>
             </div>
 
