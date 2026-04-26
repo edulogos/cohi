@@ -186,6 +186,18 @@ function showLimitReachedMessage() {
     document.getElementById('submit-btn').disabled = true;
 }
 
+function showRateLimitMessage(seconds) {
+    const responseBox = document.getElementById("response-box");
+    const loading = document.getElementById("loading");
+    responseBox.innerHTML = '';
+    loading.classList.add("hidden");
+
+    const div = document.createElement('div');
+    div.className = 'limit-warning';
+    div.innerHTML = `<strong>Çok fazla istek !</strong><br>Lütfen ${seconds} saniye bekleyin.`;
+    responseBox.appendChild(div);
+}
+
 
 async function askCouncil() {
     const submitBtn = document.getElementById("submit-btn");
@@ -231,6 +243,18 @@ async function askCouncil() {
             })
         });
 
+        if (response.status === 429) {
+            const data = await response.json().catch(() => ({}));
+            loading.classList.add("hidden");
+            submitBtn.disabled = false;
+
+            const waitSeconds = data.reset
+                ? Math.ceil((new Date(data.reset) - Date.now()) / 1000)
+                : 60;
+            showRateLimitMessage(Math.max(waitSeconds, 60));
+            return;
+        }
+
         if (!response.ok) {
             throw new Error("Sunucu yanıt vermedi.");
         }
@@ -245,18 +269,10 @@ async function askCouncil() {
         console.error("Hata Detayı:", error);
         responseBox.innerHTML = '';
 
-        if (error.message.includes("LIMIT_EXCEEDED") || error.message.includes("402")) {
-            const div = document.createElement('div');
-            div.className = 'limit-warning';
-            div.innerHTML = '<strong>Konsey dinlenmeye çekildi !</strong><br>Bugünlük 5 tartışma hakkınız doldu. Yarın tekrar bekleriz.';
-            responseBox.appendChild(div);
-
-        } else {
-            const p = document.createElement('p');
-            p.className = 'error';
-            p.textContent = 'Bir sorun oluştu: ' + error.message;
-            responseBox.appendChild(p);
-        }
+        const p = document.createElement('p');
+        p.className = 'error';
+        p.textContent = 'Bir sorun oluştu: ' + error.message;
+        responseBox.appendChild(p);
     } finally {
         loading.classList.add("hidden");
         submitBtn.disabled = false;
