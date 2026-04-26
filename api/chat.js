@@ -10,18 +10,20 @@ export default async function handler(req, res) {
         return res.status(200).end();
     }
 
-    const { message, members, mode } = req.body;
     const STABLE_PAID_MODEL = "openai/gpt-4o-mini";
     const OPUS_MODEL = "anthropic/claude-3.5-sonnet";
 
     try {
+        const body = req.body || {};
+        const { message, members, mode } = body;
+
         if (req.method !== "POST") {
-            return res.status(405).json({ message: "Yalnızca POST istekleri kabul edilir." });
+            return res.status(405).json({ error: "Yalnızca POST istekleri kabul edilir." });
         }
 
         const contentType = req.headers['content-type'] || '';
-        if (!contentType.includes('application/json')) {
-            return res.status(400).json({ error: "Geçersiz Content-Type. application/json gerekli." });
+        if (contentType && !contentType.includes('application/json')) {
+            return res.status(400).json({ error: "Geçersiz Content-Type." });
         }
 
         if (message !== undefined && typeof message !== 'string') {
@@ -39,7 +41,7 @@ export default async function handler(req, res) {
             }
         }
 
-        if (members !== undefined) {
+        if (members !== undefined && members !== null) {
             if (!Array.isArray(members)) {
                 return res.status(400).json({ error: "members parametresi array olmalıdır." });
             }
@@ -145,7 +147,7 @@ export default async function handler(req, res) {
                     const otherAgent = AGENTS_DATA[otherMember];
                     const otherAnalysis = duoResults.find(r => r.member === otherMember)?.answer || "";
 
-                    const round2Prompt = `Sen ${AGENTS_DATA[key]?.figure || key}'sin. Aşağıda konsey arkadaşının soruya verdiği yanıt var:\n\n${otherAgent?.figure || otherMember}: ${otherAnalysis}\n\nŞimdi sen, ${AGENTS_DATA[key]?.figure || key} olarak, bu arkadaşının argümanına kendi perspektifinden yanıt ver. Şunlardan birini veya birkaçını yap:\n- Katıldığın noktaları belirt\n- Katılmadığın noktalara itiraz et\n- Eksik kalan noktaları tamamla\n- Kendi argümanını güçlendir\n\n300 kelimeyu geçme. Yanıtın TÜRKÇE olsun.`;
+                    const round2Prompt = `Sen ${AGENTS_DATA[key]?.figure || key}'sin. Aşağıda konsey arkadaşının soruya verdiği yanıt var:\n\n${otherAgent?.figure || otherMember}: ${otherAnalysis}\nŞimdi sen, ${AGENTS_DATA[key]?.figure || key} olarak, bu arkadaşının argümanına kendi perspektifinden yanıt ver. Şunlardan birini veya birkaçını yap:\n- Katıldığın noktaları belirt\n- Katılmadığın noktalara itiraz et\n- Eksik kalan noktaları tamamla\n- Kendi argümanını güçlendir\n\n300 kelimeyu geçme. Yanıtın TÜRKÇE olsun.`;
 
                     return getResponseWithFallback(key, round2Prompt, 2);
                 })
