@@ -1,3 +1,5 @@
+const { AGENTS_DATA } = require('./agents-data.js');
+
 export default async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Origin", "https://edulogos.github.io");
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
@@ -11,119 +13,9 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: "Yalnızca POST istekleri kabul edilir." });
     }
 
-    const { message, members } = req.body;
+    const { message, members, mode } = req.body;
     const STABLE_PAID_MODEL = "openai/gpt-4o-mini";
-
-    const councilMembers = {
-        socrates: {
-            prompt: "Sen Sokrates'sin. Varsayımları sorgula. Yanıtın TÜRKÇE olsun.",
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Sokrates",
-            trait: "Varsayımları sorgulama"
-        },
-        feynman: {
-            prompt: "Sen Richard Feynman'sın. Konuyu basitleştir, ilk prensiplere indir. Yanıtın TÜRKÇE olsun.",
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Richard Feynman",
-            trait: "İlk prensipler"
-        },
-        machiavelli: {
-            prompt: "Sen Machiavelli'sin. Stratejik ve gerçekçi ol, güç dinamiklerini analiz et. Yanıtın TÜRKÇE olsun.",
-            freeModel: "meta-llama/llama-3.1-8b-instruct:free",
-            name: "Machiavelli",
-            trait: "Güç dinamikleri"
-        },
-        torvalds: {
-            prompt: "Sen Linus Torvalds'sın. Pragmatik mühendisliğe odaklan, pragmatik çözümler sun. Yanıtın TÜRKÇE olsun.",
-            freeModel: "openrouter/auto",
-            name: "Linus Torvalds",
-            trait: "Pragmatizm"
-        },
-        aurelius: {
-            prompt: "Sen Marcus Aurelius'sun. Stoacı perspektif sun, ahlaki netlik ver. Yanıtın TÜRKÇE olsun.",
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Marcus Aurelius",
-            trait: "Stoacılık"
-        },
-        suntzu: {
-            prompt: "Sen Sun Tzu'sun. Strateji ve arazi avantajına odaklan. Yanıtın TÜRKÇE olsun.",
-            freeModel: "openrouter/auto",
-            name: "Sun Tzu",
-            trait: "Savaş Stratejisi"
-        },
-        kahneman: {
-            prompt: "Sen Daniel Kahneman'sın. Bilişsel önyargıları analiz et, karar tuzaklarını göster. Yanıtın TÜRKÇE olsun.",
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Daniel Kahneman",
-            trait: "Bilişsel Yanlılıklar"
-        },
-        aristotle: {
-            prompt: "Sen Aristo'sun. Sınıflandırma ve mantık çerçevesinde analiz et. Yanıtın TÜRKÇE olsun.",
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Aristo",
-            trait: "Mantık ve Sınıflandırma"
-        },
-        ada: {
-            prompt: "Sen Ada Lovelace'sın. Matematiksel sınırlar ve algoritmik yapıya odaklan. Yanıtın TÜRKÇE olsun.",
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Ada Lovelace",
-            trait: "Algoritmalar"
-        },
-        laotzu: {
-            prompt: "Sen Lao Tzu'sun. Doğal akış ve beliriş (emergence) üzerinden yorumla. Yanıtın TÜRKÇE olsun.",
-            freeModel: "openrouter/auto",
-            name: "Lao Tzu",
-            trait: "Doğal Akış"
-        },
-        musashi: {
-            prompt: "Sen Miyamoto Musashi'sin. Zamanlama, disiplin ve tek odaklılık sun. Yanıtın TÜRKÇE olsun.",
-            freeModel: "meta-llama/llama-3.1-8b-instruct:free",
-            name: "Miyamoto Musashi",
-            trait: "Zamanlama ve Disiplin"
-        },
-        watts: {
-            prompt: "Sen Alan Watts'sın. Konuyu farklı bir çerçeveye (reframing) oturt. Yanıtın TÜRKÇE olsun.",
-            freeModel: "openrouter/auto",
-            name: "Alan Watts",
-            trait: "Perspektif Çerçeveleme"
-        },
-        karpathy: {
-            prompt: "Sen Andrej Karpathy'sin. Uygulamalı yapay zeka ve ampirik verilere odaklan. Yanıtın TÜRKÇE olsun.",
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Andrej Karpathy",
-            trait: "Uygulamalı AI"
-        },
-        sutskever: {
-            prompt: "Sen Ilya Sutskever'sin. Yapay zekanın geleceği ve güvenlik sınırlarına odaklan. Yanıtın TÜRKÇE olsun.",
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Ilya Sutskever",
-            trait: "AI Güvenlik"
-        },
-        munger: {
-            prompt: "Sen Charlie Munger'sın. Zihinsel modeller ve tersine çevirme (inversion) kullan. Yanıtın TÜRKÇE olsun.",
-            freeModel: "openrouter/auto",
-            name: "Charlie Munger",
-            trait: "Zihinsel Modeller"
-        },
-        meadows: {
-            prompt: "Sen Donella Meadows'sun. Geri bildirim döngüleri ve sistem dinamiklerine odaklan. Yanıtın TÜRKÇE olsun.",
-            freeModel: "meta-llama/llama-3.1-8b-instruct:free",
-            name: "Donella Meadows",
-            trait: "Sistemler Düşüncesi"
-        },
-        taleb: {
-            prompt: "Sen Nassim Taleb'sin. Kuyruk riskleri ve anti-kırılganlık üzerinden analiz et. Yanıtın TÜRKÇE olsun.",
-            freeModel: "openrouter/auto",
-            name: "Nassim Taleb",
-            trait: "Kuyruk Riski"
-        },
-        rams: {
-            prompt: "Sen Dieter Rams'sın. Tasarımın netliği ve kullanıcı deneyimine odaklan. Yanıtın TÜRKÇE olsun.",
-            freeModel: "google/gemini-2.0-flash-lite:free",
-            name: "Dieter Rams",
-            trait: "Tasarım Netliği"
-        }
-    };
+    const OPUS_MODEL = "anthropic/claude-3.5-sonnet";
 
     if (req.headers['content-type'] !== 'application/json') {
         return res.status(400).json({ error: "Geçersiz Content-Type. application/json gerekli." });
@@ -148,10 +40,13 @@ export default async function handler(req, res) {
         if (!Array.isArray(members)) {
             return res.status(400).json({ error: "members parametresi array olmalıdır." });
         }
-        if (members.length > 18) {
+        if (mode === 'duo' && members.length !== 2) {
+            return res.status(400).json({ error: "Duo modu için tam olarak 2 üye seçilmelidir." });
+        }
+        if (mode !== 'duo' && members.length > 18) {
             return res.status(400).json({ error: "En fazla 18 üye seçilebilir." });
         }
-        const validMemberIds = Object.keys(councilMembers);
+        const validMemberIds = Object.keys(AGENTS_DATA);
         const invalidMembers = members.filter(m => !validMemberIds.includes(m));
         if (invalidMembers.length > 0) {
             return res.status(400).json({ error: `Geçersiz üye: ${invalidMembers.join(', ')}` });
@@ -177,53 +72,119 @@ export default async function handler(req, res) {
         });
     }
 
-    async function getResponseWithFallback(memberKey, userMsg) {
-        const member = councilMembers[memberKey];
+    function buildSystemPrompt(memberKey, roundType, otherMembers = []) {
+        const agent = AGENTS_DATA[memberKey];
+        if (!agent) {
+            return "Sen bir konsey üyesisin. Yanıtın TÜRKÇE olsun.";
+        }
+
+        let prompt = `${agent.identity}\n\n${agent.groundingProtocol}\n\n${agent.analyticalMethod}\n\n${agent.uniqueInsight}\n\n${agent.blindSpot}\n\n${agent.deliberationStyle}`;
+
+        if (roundType === 1) {
+            prompt += `\n\nYanıtın TÜRKÇE olsun. 200 kelimeyu geçme.`;
+        } else if (roundType === 2) {
+            prompt += `\n\n[YENİ] Round 2 çıktı formatın zorunludur:\n${agent.outputFormatRound2}`;
+            prompt += `\n\nYanıtın TÜRKÇE olsun. 250 kelimeyu geçme.`;
+        }
+
+        return prompt;
+    }
+
+    async function getResponseWithFallback(memberKey, userMsg, roundType = 1, otherMembers = []) {
+        const agent = AGENTS_DATA[memberKey];
+        if (!agent) {
+            return { member: memberKey, answer: "Üye bulunamadı." };
+        }
+
+        const systemPrompt = buildSystemPrompt(memberKey, roundType, otherMembers);
+        const freeModel = agent.freeModel || "google/gemini-2.0-flash-lite:free";
+
         try {
-            const freeResponse = await callOpenRouter(member.freeModel, member.prompt, userMsg);
+            const freeResponse = await callOpenRouter(freeModel, systemPrompt, userMsg);
             if (!freeResponse.ok) throw new Error("Free model unavailable");
             const freeData = await freeResponse.json();
             if (freeData.error) throw new Error(freeData.error.message);
-            return freeData.choices?.[0]?.message?.content || "Cevap üretilemedi.";
+            return { member: memberKey, answer: freeData.choices?.[0]?.message?.content || "Cevap üretilemedi." };
         } catch (err) {
             console.warn(`${memberKey} için ücretli modele geçiliyor...`);
-            const paidResponse = await callOpenRouter(STABLE_PAID_MODEL, member.prompt, userMsg);
-            if (paidResponse.status === 402) {
-                throw new Error("LIMIT_EXCEEDED");
+            try {
+                const paidModel = agent.tier === "opus" ? OPUS_MODEL : STABLE_PAID_MODEL;
+                const paidResponse = await callOpenRouter(paidModel, systemPrompt, userMsg);
+                if (paidResponse.status === 402) {
+                    throw new Error("LIMIT_EXCEEDED");
+                }
+                const paidData = await paidResponse.json();
+                return { member: memberKey, answer: paidData.choices?.[0]?.message?.content || "Cevap alınamadı." };
+            } catch (paidErr) {
+                if (paidErr.message === "LIMIT_EXCEEDED") {
+                    throw new Error("LIMIT_EXCEEDED");
+                }
+                return { member: memberKey, answer: "Cevap alınamadı." };
             }
-            const paidData = await paidResponse.json();
-            return paidData.choices?.[0]?.message?.content || "Cevap alınamadı.";
         }
     }
 
     try {
-        const membersToUse = members && members.length > 0 ? members : Object.keys(councilMembers);
-        const useCrossExamination = membersToUse.length >= 2 && membersToUse.length <= 3;
+        const membersToUse = members && members.length > 0 ? members : Object.keys(AGENTS_DATA);
+        const useCrossExamination = membersToUse.length >= 2 && membersToUse.length <= 3 && mode !== 'duo';
+        const useDuoMode = mode === 'duo' && membersToUse.length === 2;
 
-        if (useCrossExamination && message) {
-            const round1Results = await Promise.all(
+        if (useDuoMode && message) {
+            const duoResults = await Promise.all(
                 membersToUse.map(async (key) => {
-                    if (!councilMembers[key]) return { member: key, answer: "Üye bulunamadı." };
-                    const round1Prompt = `Aşağıdaki soruyu ${councilMembers[key].name} olarak bağımsız şekilde analiz et. Kendi uzmanlık alanına odaklanarak, 200 kelimeyi geçmeyen bir analiz yap:\n\nSoru: ${message}`;
-                    const answer = await getResponseWithFallback(key, round1Prompt);
-                    return { member: key, answer };
+                    const otherMember = membersToUse.find(m => m !== key);
+                    const round1Prompt = `Aşağıdaki soruyu ${AGENTS_DATA[key]?.figure || key} olarak bağımsız şekilde analiz et. Kendi uzmanlık alanına odaklanarak, 300 kelimeyu geçmeyen bir analiz yap:\n\nSoru: ${message}`;
+                    return getResponseWithFallback(key, round1Prompt, 1);
                 })
             );
 
             const round2Results = await Promise.all(
                 membersToUse.map(async (key) => {
-                    if (!councilMembers[key]) return { member: key, answer: "Üye bulunamadı." };
+                    const otherMember = membersToUse.find(m => m !== key);
+                    const otherAgent = AGENTS_DATA[otherMember];
+                    const otherAnalysis = duoResults.find(r => r.member === otherMember)?.answer || "";
 
+                    const round2Prompt = `Sen ${AGENTS_DATA[key]?.figure || key}'sin. Aşağıda konsey arkadaşının soruya verdiği yanıt var:\n\n${otherAgent?.figure || otherMember}: ${otherAnalysis}\n\nŞimdi sen, ${AGENTS_DATA[key]?.figure || key} olarak, bu arkadaşının argümanına kendi perspektifinden yanıt ver. Şunlardan birini veya birkaçını yap:\n- Katıldığın noktaları belirt\n- Katılmadığın noktalara itiraz et\n- Eksik kalan noktaları tamamla\n- Kendi argümanını güçlendir\n\n300 kelimeyu geçme. Yanıtın TÜRKÇE olsun.`;
+
+                    return getResponseWithFallback(key, round2Prompt, 2);
+                })
+            );
+
+            const combinedText = [...duoResults, ...round2Results]
+                .map(r => `${r.member.toUpperCase()}: ${r.answer}`)
+                .join("\n\n");
+
+            let verdict = "";
+            try {
+                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun:\n\n[Genel değerlendirmen]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\nYanıtın TÜRKÇE olsun.`;
+                const modResponse = await callOpenRouter(STABLE_PAID_MODEL, verdictPrompt, "Tartışmayı özetle");
+                const modData = await modResponse.json();
+                verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
+            } catch (e) {
+                verdict = "Moderatör şu an ulaşılamaz durumda.";
+            }
+
+            res.status(200).json({ round1: duoResults, round2: round2Results, verdict });
+
+        } else if (useCrossExamination && message) {
+            const round1Results = await Promise.all(
+                membersToUse.map(async (key) => {
+                    const round1Prompt = `Aşağıdaki soruyu ${AGENTS_DATA[key]?.figure || key} olarak bağımsız şekilde analiz et. Kendi uzmanlık alanına odaklanarak, 200 kelimeyu geçmeyen bir analiz yap:\n\nSoru: ${message}`;
+                    return getResponseWithFallback(key, round1Prompt, 1);
+                })
+            );
+
+            const round2Results = await Promise.all(
+                membersToUse.map(async (key) => {
                     const otherMembers = membersToUse.filter(m => m !== key);
                     const otherAnalyses = round1Results
                         .filter(r => otherMembers.includes(r.member))
-                        .map(r => `${councilMembers[r.member]?.name || r.member}: ${r.answer}`)
+                        .map(r => `${AGENTS_DATA[r.member]?.figure || r.member}: ${r.answer}`)
                         .join("\n\n");
 
-                    const round2Prompt = `Sen ${councilMembers[key].name}'sin. Aşağıda diğer konsey üyelerinin soruya verdikleri yanıtlar var:\n\n${otherAnalyses}\n\nŞimdi sen, ${councilMembers[key].name} olarak, bu diğer üyelerin argümanlarına kendi perspektifinden yanıt ver. Şunlardan birini veya birkaçını yap:\n- Katıldığın noktaları belirt\n- Katılmadığın noktalara itiraz et\n- Eksik kalan noktaları tamamla\n- Kendi argümanını güçlendir\n\nHer üyenin argümanına ayrı ayrı yanıt ver. Toplam 250 kelimeyi geçme. Yanıtın TÜRKÇE olsun. Diğer üyelerden bahsederken <strong>İsim</strong> formatını kullan. Örnek: <strong>${councilMembers[otherMembers[0]]?.name || 'Üye Adı'}</strong>'a katılıyorum.`;
+                    const round2Prompt = `Sen ${AGENTS_DATA[key]?.figure || key}'sin. Aşağıda diğer konsey üyelerinin soruya verdikleri yanıtlar var:\n\n${otherAnalyses}\n\nŞimdi sen, ${AGENTS_DATA[key]?.figure || key} olarak, bu diğer üyelerin argümanlarına kendi perspektifinden yanıt ver. Şunlardan birini veya birkaçını yap:\n- Katıldığın noktaları belirt\n- Katılmadığın noktalara itiraz et\n- Eksik kalan noktaları tamamla\n- Kendi argümanını güçlendir\n\nHer üyenin argümanına ayrı ayrı yanıt ver. Toplam 250 kelimeyu geçme.\n\n[YENİ] Round 2 çıktı formatın zorunludur:\n${AGENTS_DATA[key]?.outputFormatRound2 || ''}\n\nYanıtın TÜRKÇE olsun.`;
 
-                    const answer = await getResponseWithFallback(key, round2Prompt);
-                    return { member: key, answer };
+                    return getResponseWithFallback(key, round2Prompt, 2);
                 })
             );
 
@@ -233,8 +194,7 @@ export default async function handler(req, res) {
 
             let verdict = "";
             try {
-                const memberNamesList = membersToUse.map(m => councilMembers[m]?.name || m).join(', ');
-                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun. '## Nihai Karar' başlığını YAZMA - o başlık frontend'de zaten ekleniyor. Üyelerin isimlerini <strong>İsim</strong> formatında yaz. Örnek: <strong>Sokrates</strong> ve <strong>${councilMembers[membersToUse[1]]?.name || 'Üye'}</strong> farklı açılardan yaklaştı.\n\n[Genel değerlendirmen buraya]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\nYanıtın TÜRKÇE olsun.`;
+                const verdictPrompt = `Sen bir moderatörsün. Aşağıda bir konsey tartışması var:\n\n${combinedText}\n\nBu tartışmayı sentezle ve Türkçe olarak şu formatta bir nihai karar sun:\n\n[Genel değerlendirmen]\n\n## Çözümsüz Kalan Sorular\n- [Belirsizlikler ve açık sorular]\n\n## Önerilen Sonraki Adımlar\n- [Ne yapılmalı]\n\nYanıtın TÜRKÇE olsun.`;
                 const modResponse = await callOpenRouter(STABLE_PAID_MODEL, verdictPrompt, "Tartışmayı özetle");
                 const modData = await modResponse.json();
                 verdict = modData.choices?.[0]?.message?.content || "Özet oluşturulamadı.";
@@ -247,9 +207,8 @@ export default async function handler(req, res) {
         } else {
             const responses = await Promise.all(
                 membersToUse.map(async (key) => {
-                    if (!councilMembers[key]) return { member: key, answer: "Üye bulunamadı." };
-                    const answer = await getResponseWithFallback(key, message || '');
-                    return { member: key, answer };
+                    const answer = await getResponseWithFallback(key, message || '', 1);
+                    return answer;
                 })
             );
 
