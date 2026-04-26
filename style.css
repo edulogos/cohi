@@ -178,7 +178,7 @@ button:hover {
   font-size: 0.9rem;
   font-weight: 600;
   transition: all 0.3s ease;
-  width: auto;
+  width: 50%;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
