@@ -721,7 +721,7 @@ html { scroll-behavior: smooth; }
   .input-panel, .output-panel { padding: 0; }
   .triads-container p { font-size: 0.7rem; }
   .t2 { font-size: 0.6rem; }
-  .output-panel h2, .response-box p { padding-left: 10px; }
+  .output-panel h2, .response-box p { padding-left: 10px;padding-top: 10px; }
 }
 
 @media (min-width: 769px) {
