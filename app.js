@@ -4,6 +4,7 @@ let userManuallySelected = false;
 let currentMode = 'full';
 const MAX_MEMBERS_FULL = 3;
 const MAX_MEMBERS_DUO = 2;
+const DEFAULT_TRIAD = ['socrates', 'aurelius', 'kahneman'];
 
 function setMode(mode) {
     currentMode = mode;
@@ -14,12 +15,16 @@ function setMode(mode) {
 
     if (mode === 'full') {
         btnFull.classList.add('active');
+        btnFull.classList.remove('dimmed');
         btnDuo.classList.remove('active');
+        btnDuo.classList.add('dimmed');
         triadsSection.style.display = 'block';
         warningText.textContent = 'En fazla 3 seçim yapılabilir !';
     } else {
         btnFull.classList.remove('active');
+        btnFull.classList.add('dimmed');
         btnDuo.classList.add('active');
+        btnDuo.classList.remove('dimmed');
         triadsSection.style.display = 'none';
         warningText.textContent = 'En fazla 2 seçim yapılabilir !';
     }
@@ -168,7 +173,6 @@ function showLimitReachedMessage() {
     responseBox.innerHTML = '';
     loading.classList.add("hidden");
 
-
     const div = document.createElement('div');
     div.className = 'limit-warning';
     div.innerHTML = '<strong>Konsey dinlenmeye çekildi !</strong><br>Bugünlük 5 tartışma hakkınız doldu. Yarın tekrar bekleriz.';
@@ -188,7 +192,6 @@ async function askCouncil() {
     const selectedMembers = Array.from(checkedCheckboxes).map(cb => cb.value);
     const responseBox = document.getElementById("response-box");
     const loading = document.getElementById("loading");
-
 
     const max = getMaxMembers();
     const min = currentMode === 'duo' ? 2 : 1;
@@ -428,9 +431,18 @@ function initMemberCheckboxes() {
     });
 }
 
+function selectDefaultMembers() {
+    DEFAULT_TRIAD.forEach(id => {
+        const checkbox = document.getElementById(id);
+        if (checkbox) checkbox.checked = true;
+    });
+    updateSelectionCount();
+}
+
 window.addEventListener("DOMContentLoaded", () => {
     showIntroBoxIfNeeded();
     updateQueryCountDisplay();
     initMemberCheckboxes();
     setMode('full');
+    selectDefaultMembers();
 });
