@@ -449,14 +449,9 @@ function initMemberCheckboxes() {
     });
 }
 
-function selectDefaultMembers() {
-    selectTriad(DEFAULT_TRIAD);
-}
-
 window.addEventListener("DOMContentLoaded", () => {
     showIntroBoxIfNeeded();
     updateQueryCountDisplay();
     initMemberCheckboxes();
     setMode('full');
-    selectDefaultMembers();
 });
