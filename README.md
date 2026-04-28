@@ -12,8 +12,8 @@
 - "Agents" web entregrasyon
 - Web Tasarım
 
-## 🛠 Kurulum
-index.html, style.css, app.js, api/chat.js
+## 🛠 Eklenenler
+index.html, style.css, app.js, api/chat.js, api/agents-data.js
 
 ## 📄 Lisans
 Bu proje, orijinal "<a href="https://github.com/0xNyk/council-of-high-intelligence">Council of High Intelligence</a>" projesinin geliştirilmiş bir fork'udur.  Orijinal çalışma <a href="https://github.com/0xNyk">0xNyk</a> aittir.
